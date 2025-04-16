@@ -1,0 +1,177 @@
+
+  .top-seller-section {
+    padding: 50px 20px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    /* text-align: center; */
+    width: 1200px;
+    /* border: 2px solid black; */
+  }
+
+  .top-seller-section .top-seller-top{
+   display: flex;
+   align-items: flex-start;
+  }
+
+  .top-seller-section .top-seller-left{
+    width: 40%;
+  }
+
+  .ethnic-highlight {
+    margin-top: 1.5rem;
+    padding-right: 2rem;
+  }
+  
+  .ethnic-subheading {
+    font-size: 0.95rem;
+    color: #b84a4a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+  }
+  
+  .ethnic-heading {
+    font-size: 2.8rem;
+    font-weight: 500;
+    color: #222;
+    line-height: 1.3;
+    margin-bottom: 0.8rem;
+  }
+  
+  .ethnic-description {
+    width: 80%;
+    font-size: 1.35rem;
+    color: #444;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+    letter-spacing: 0.1px;
+  }
+  
+  .ethnic-button {
+    padding: 10px 20px;
+    font-size: 1.25rem;
+    color: var(--dark-bg);
+    background-color: transparent;
+    border: 1px solid var(--dark-bg);
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .ethnic-button:hover {
+    background-color: var(--dark-bg);
+    color: white;
+  }
+  
+  .top-seller-section .top-seller-right{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+  }
+
+  .top-seller-section .top-seller-grid{
+    display: flex;
+    gap: 2rem;
+    margin-top: 0.4rem;
+  }
+  
+    .top-seller-section  .category {
+    min-width: 280px;
+    max-width: 300px;
+    padding: 0;
+  }
+  
+    .top-seller-section  .category h2 {
+    font-size: 3rem;
+    margin-bottom: 5px;
+    font-weight: 200;
+    position: relative;
+    display: inline-block;
+    align-items: left;
+    text-align: left;
+    padding-bottom: 0.5rem;
+  }
+
+  .top-seller-section  .category h2::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 80px;
+    background-color: var(--dark-bg);
+  }
+  
+  .top-seller-section  .starting-price {
+    color: #888;
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+  }
+  
+  .top-seller-section  .product {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 8px;
+    /* justify-content: center; */
+    cursor: pointer;
+  }
+
+  .top-seller-section  .product .product-img{
+    /* width: 50%; */
+  }
+  
+  .top-seller-section  .product img {
+    max-width: 140px;
+    max-height: 140px;
+    margin-bottom: 10px;
+    object-fit: contain;
+  }
+  
+  .top-seller-section  .product .product-details{
+   /* width: 50%; */
+  }
+
+  .top-seller-section  .product-name {
+    font-size: 1.6rem;
+    text-align: left;
+    color: #2b2b2b;
+    letter-spacing: 0.1px;
+  }
+  
+  .top-seller-section .product-price {
+    font-size: 1.6rem;
+    letter-spacing: 0.2px;
+    margin-top: 0.4rem;
+    text-align: left;
+    color: #181818;
+  }
+  
+  .top-seller-section  .see-more-container {
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+
+  .top-seller-section  .see-more-container hr{
+    transform: rotate(90deg);
+  }
+  
+  .top-seller-section  .see-more-btn {
+    padding: 10px 80px;
+    border: 1px solid var(--dark-bg);
+    background: transparent;
+    color: var(--dark-bg);
+    cursor: pointer;
+    font-size: 1.4rem;
+    transition: 0.3s ease;
+    margin-left: -6rem;
+  }
+  
+  .top-seller-section  .see-more-btn:hover {
+    background-color: var(--dark-bg);
+    color: white;
+  }
+  

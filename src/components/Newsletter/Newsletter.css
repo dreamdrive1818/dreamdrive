@@ -1,0 +1,59 @@
+.newsletter-section {
+    background-color: #DA5E42;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60px 100px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .newsletter-left h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 10px;
+  }
+  
+  .newsletter-left p {
+    font-size: 14px;
+    color: #ececec;
+  }
+  
+  .newsletter-right {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #eeeeee;
+    padding-bottom: 5px;
+  }
+  
+  .newsletter-right input {
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 10px;
+    font-size: 16px;
+    width: 250px;
+    color: #ffffff;
+  }
+  
+  .newsletter-right input::placeholder {
+    color: #ccc;
+  }
+  
+  .newsletter-right button {
+    background-color: white;
+    color: var(--dark-bg);
+    border: none;
+    padding: 12px 25px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    margin-left: 10px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .newsletter-right button:hover {
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+  }
+  

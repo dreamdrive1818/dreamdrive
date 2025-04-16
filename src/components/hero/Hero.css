@@ -1,0 +1,203 @@
+.hero-matoa-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin: 0rem auto;
+    margin-top: 3rem;
+    /* border: 2px solid black; */
+  }
+
+  .hero-matoa-section .vector-group{
+    position: absolute;
+    z-index: 10;
+    right:0;
+    top:-5%;
+  }
+  
+  .hero-matoa-container {
+    display: flex;
+    width: 80%;
+    height: 62rem;
+  position: relative;
+    max-width: 1400px;
+    background: var(--secondary-color);
+    padding: 8rem auto;
+    justify-content: space-between;
+  }
+  
+  /* Left Side */
+  .hero-photo-box {
+    width: 35%;
+    position: relative;
+    bottom:0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .photo-placeholder {
+    width: 80%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    background-color: #2e2e2e;
+  }
+  
+  
+  /* Right Side */
+  .hero-details-box {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+  }
+  
+  .hero-title {
+    width: 60%;
+    margin-top: -10rem;
+    font-size: 5rem;
+    font-weight: 500;
+    color: #2e2e2e;
+    line-height: 1.4;
+  }
+  
+  .hero-divider {
+    width: 40px;
+    height: 2px;
+    background: #2e2e2e;
+    border: none;
+    margin: 1rem 0;
+  }
+  
+  .hero-description {
+    width: 75%;
+    color: #444;
+    line-height: 2rem;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-discover-link {
+    text-decoration: underline;
+    margin-bottom: 1rem;
+    margin: 0.8rem 0;
+    color: #000;
+    font-size: 1.4rem;
+    letter-spacing: 0.8px;
+    text-underline-offset: 4px;
+  }
+  
+  .hero-action-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  /* Quantity Selector */
+  .quantity-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--dark-bg);
+    padding: 1.3rem 1.25rem;
+    font-size: 1.4rem;
+  }
+  
+  .quantity-selector button {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    width: 1.5rem;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .quantity-selector span {
+    margin: 0 0.5rem;
+    min-width: 2rem;
+    text-align: center;
+    font-size: 1.25rem;
+  }
+  
+  /* Buttons */
+  .cta-btn {
+    font-size: 1.3rem;
+    font-weight: 600;
+    padding: 1.25rem 3rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  
+  .add-to-cart {
+    background: var(--dark-bg);
+    color: white;
+  }
+  
+  .add-to-cart .dot {
+    width: 12px;
+    height: 12px;
+    background: #ccc;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  
+  .cicil-btn {
+    background: #2e2e2e;
+    color: white;
+  }
+  
+  /* Arrows */
+  .hero-arrows {
+    display: flex;
+    gap: 1rem;
+    position: absolute;
+    margin-top: 1.5rem;
+    bottom: -3.4%;
+    right: 11%;
+  }
+  
+  .arrow-btn {
+    font-size: 1.4rem;
+    padding: 1.2rem 2rem;
+    cursor: pointer;
+  }
+  
+  .arrow-btn.outline {
+    background: transparent;
+    border: 1px solid var(--dark-bg);
+    color: var(--dark-bg);
+  }
+  
+  .arrow-btn.filled {
+    background: var(--dark-bg);
+    color: white;
+    border: none;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-matoa-container {
+      flex-direction: column;
+      padding: 4rem 2rem;
+    }
+  
+    .hero-photo-box,
+    .hero-details-box {
+      width: 100%;
+    }
+  
+    .photo-placeholder {
+      padding: 6rem 4rem;
+    }
+  
+    .hero-arrows {
+      justify-content: center;
+    }
+  }
+  

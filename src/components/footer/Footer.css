@@ -1,0 +1,82 @@
+.matoa-footer {
+    background-color: var(--dark-bg);
+    color: white;
+    padding: 50px 30px;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 14px;
+    position: relative;
+    /* overflow: hidden; */
+  }
+
+  .matoa-footer .vector-group{
+    top:-25rem;
+    z-index: 1000;
+    
+  }
+  
+  .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 40px;
+    justify-content: space-between;
+  }
+  
+  .footer-column {
+    flex: 1 1 200px;
+    min-width: 220px;
+  }
+  
+  .footer-column h3,
+  .footer-column h4 {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-column p{
+    margin-top: 1rem;
+  }
+  
+  .footer-column ul li {
+    margin-bottom: 10px;
+  }
+  
+  .footer-column ul li a {
+    text-decoration: none;
+    color: white;
+  }
+  
+  .footer-column ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  .social-icons {
+    margin-top: 15px;
+    display: flex;
+    gap: 15px;
+  }
+
+    
+  .social-icons a{
+    color: white;
+  }
+
+  
+  .social-icons img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+    transition: 0.3s;
+  }
+  
+  .social-icons img:hover {
+    filter: brightness(0.8) invert(1);
+  }
+  
