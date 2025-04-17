@@ -8,20 +8,20 @@ html{
     font-size:10px;
 }
 
-/* ===== Root Theme Variables ===== */
 :root {
     /* Brand Colors */
-    --primary-color: #8d7b4f;         /* Warm earthy brown */
-    --secondary-color: #f3dfc9;       /* Light beige (used for cart bg) */
-    --accent-color: #e2c6a2;          /* Slightly deeper beige */
-    --ternary-color: #f0ddc7;
-    /* Background & Text */
-    --light-bg:#f5f5f5 ;
-    --medium-bg:#E5E5E5 ;
-    --dark-bg: #d54a2a;
+    --primary-color: #0072ce;       /* Bright blue from the logo */
+    --secondary-color: #d5e9f8;     /* Light background blue */
+    --accent-color: #63b400;        /* Lime green for highlights */
+    --ternary-color: #a0db8e;       /* Softer green if needed */
   
-    --text-dark: #222;
-    --text-light: #fff;
+    /* Background & Text */
+    --light-bg: #f6fbfe;            /* Very light blue background */
+    --medium-bg: #dbeeff;
+    --dark-bg: #0b2d4a;             /* Dark navy for header/footer */
+  
+    --text-dark: #0c1d2c;           /* Very dark blue */
+    --text-light: #ffffff;
   
     /* Font */
     --font-family-main: 'Segoe UI', sans-serif;
@@ -35,6 +35,8 @@ html{
 body{
     width: 100%;
     background-color: var(--light-bg);
+    font-family: var(--font-family-main);
+    padding: 0rem 4rem;
 }
 
 

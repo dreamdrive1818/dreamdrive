@@ -1,89 +1,63 @@
-import React, { useState } from "react";
-import "./Hero.css";
-import VectorGroup from "../Vector/VectorGroup";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartArrowDown, faCartPlus } from "@fortawesome/free-solid-svg-icons";
-import HeroCategories from "./HeroCategories";
-
-const productData = [
-  {
-    title: "ROYAL KURTA SET",
-    description: "A classic silk kurta with churidar that blends tradition and royalty. Featuring fine embroidery and a graceful silhouette, this ensemble is perfect for festive gatherings, cultural events, and grand wedding celebrations.",
-    imageText: "https://static.wixstatic.com/media/fef19b_f6e311acea8c43868064cb720157628e~mv2.png/v1/crop/x_2,y_0,w_1998,h_2613/fill/w_560,h_732,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fef19b_f6e311acea8c43868064cb720157628e~mv2.png",
-  },
-  {
-    title: "ELEGANT SAREE",
-    description: "This handwoven Kanjivaram silk saree embodies grace and timeless tradition. Accented with jacquard work and rich mustard tones, it's the perfect drape for festivals, weddings, and evening rituals where elegance meets culture.",
-    imageText: "https://gunjfashion.com/cdn/shop/files/sophisticated-kanjivaram-silk-elegant-saree-with-jacquard-work-in-mustard_1.jpg?v=1712574180",
-  },
-  {
-    title: "FESTIVE SHERWANI",
-    description: "Crafted for the modern groom, this sherwani features intricate embroidery and a luxurious silhouette. Complete with a matching stole, it's the ideal choice for engagement ceremonies, sangeets, and regal receptions.",
-    imageText: "https://www.tasva.com/cdn/shop/articles/MicrosoftTeams-image_13.jpg?v=1668154515&width=2048",
-  },
-];
+import React from 'react';
+import './Hero.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 
 const Hero = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [quantity, setQuantity] = useState(1);
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % productData.length);
-    setQuantity(1); // reset quantity on slide change
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + productData.length) % productData.length);
-    setQuantity(1);
-  };
-
-  const increase = () => setQuantity((q) => Math.min(q + 1, 99));
-  const decrease = () => setQuantity((q) => Math.max(q - 1, 1));
-
-  const { title, description, imageText } = productData[currentIndex];
-
   return (
-    <>
-    <section className="hero-matoa-section">
-     <VectorGroup />
-      <div className="hero-matoa-container">
-        {/* Left: Photo */}
-        <div className="hero-photo-box">
-        <img className="photo-placeholder" src={imageText} alt={title} />
+    <section className="hero">
+      <div className="hero-left">
+        <h1>Your Journey,<br />Your Car,<br />Your Way</h1>
+        <p>
+          Experience the ultimate freedom of choice with GoCar – tailor your
+          adventure by choosing from our premium fleet of vehicles.
+        </p>
+        <button className="btn-started">Get Started</button>
+        <div className="hero-socials">
+  <a href="https://facebook.com" target="_blank" rel="noreferrer">
+    <FontAwesomeIcon icon={faFacebookF} />
+  </a>
+  <a href="https://instagram.com" target="_blank" rel="noreferrer">
+    <FontAwesomeIcon icon={faInstagram} />
+  </a>
+  <a href="https://twitter.com" target="_blank" rel="noreferrer">
+    <FontAwesomeIcon icon={faTwitter} />
+  </a>
+</div>
 
-        </div>
+      </div>
 
-        {/* Right: Details */}
-        <div className="hero-details-box">
-          <h1 className="hero-title">{title}</h1>
-          <hr className="hero-divider" />
-          <p className="hero-description">{description}</p>
-          <a href="#" className="hero-discover-link"><span>Discover Now</span></a>
-
-          <div className="hero-action-row">
-            <div className="quantity-selector">
-              <button onClick={decrease}>−</button>
-              <span>{quantity.toString().padStart(2, '0')}</span>
-              <button onClick={increase}>+</button>
-            </div>
-
-            <button className="cta-btn add-to-cart">
-              <FontAwesomeIcon icon={faCartArrowDown} />Add to cart
-            </button>
-            {/* <button className="cta-btn cicil-btn">cicil</button> */}
-          </div>
+      <div className="hero-center">
+        <img src="https://res.cloudinary.com/dcrfks1tq/image/upload/v1744881450/istockphoto-184127993-612x612-removebg-preview_caadfj.png" alt="Red Car" className="hero-car" />
+        <div className="hero-badge">
+          <span>50+</span>
+          <small>Car Types Available</small>
         </div>
       </div>
 
-      {/* Arrows */}
-      <div className="hero-arrows">
-        <button className="arrow-btn outline" onClick={prevSlide}>←</button>
-        <button className="arrow-btn filled" onClick={nextSlide}>→</button>
+      <div className="hero-right">
+        <div className="hero-right-top">
+          <div className="hero-users">
+          <img src="https://images.unsplash.com/flagged/photo-1571367034861-e6729ad9c2d5?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="User 1" />
+          <img src="https://images.unsplash.com/photo-1540569014015-19a7be504e3a?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="User 2" />
+          <img src="https://images.unsplash.com/photo-1577760960310-c49bbb09161e?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="User 3" />
+          </div>
+          <p><strong>12.5K+ PEOPLE</strong></p>
+          <p>have used our services such as renting, buying, or even selling their car.</p>    
+        </div>
+        <div className="hero-right-bot">
+       
+        <div className="hero-actions">
+          <button>Rent</button>
+          <button>Buy</button>
+          <button>Sell</button>
+          <button>Consult</button>
+        </div>
+        <a href="#" className="learn-more">Learn more →</a>
+        </div>
       </div>
     </section>
-    <HeroCategories />
-    </>
   );
 };
 

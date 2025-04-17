@@ -30,57 +30,55 @@ const Header = () => {
 
   return (
     <header className="matoa-header">
-      <div className="header-inner">
-        {/* Logo */}
-        <div className="logo" onClick={() => navigate("/")}>
-          {/* <img src="/logo.png" alt="Logo" /> */}
-          <h2>Varstraa</h2>
-        </div>
+  <div className="header-inner">
+    {/* Logo */}
+    <div className="logo" onClick={() => navigate("/")}>
+      {/* <h2>DRIVOXE.</h2> */}
+      <img src="https://res.cloudinary.com/dcrfks1tq/image/upload/v1744822234/WhatsApp_Image_2025-04-14_at_20.57.15_b7644c4b-removebg-preview_ebkbxf.png" alt="" />
+    </div>
 
-       {/* Desktop Navigation */}
-<nav className="nav-links">
-  <p onClick={() => handleNavigation("/ethnic/mens")}>Men's Ethnic</p>
-  <p onClick={() => handleNavigation("/ethnic/womens")}>Women's Ethnic</p>
-  <p onClick={() => handleNavigation("/ethnic/sarees")}>Kid's Ethnic</p>
-  <p onClick={() => handleNavigation("/ethnic/sherwanis")}>Sherwanis</p>
-</nav>
+    {/* Hamburger (Mobile Only) */}
+    <div className="hamburger" onClick={() => setIsMobileMenuOpen(true)}>
+      <FontAwesomeIcon icon={faBars} />
+    </div>
 
+    {/* Center Navigation (Desktop Only) */}
+    <nav className="nav-links">
+      <p onClick={() => handleNavigation("/services")}>Service</p>
+      <p onClick={() => handleNavigation("/cars")}>Cars</p>
+      <p onClick={() => handleNavigation("/pricing")}>Pricing</p>
+      <p onClick={() => handleNavigation("/about")}>About</p>
+    </nav>
 
-        {/* Icons */}
-        <div className="actions">
-          <FontAwesomeIcon icon={faSearch} className="icon" title="Search" />
-          <div className="login" onClick={() => handleNavigation("/login")}>
-            <FontAwesomeIcon icon={faUser} size="xl" />
-            <span>Log In</span>
-          </div>
-          <div className="cart" onClick={() => handleNavigation("/cart")}>
-            <FontAwesomeIcon icon={faShoppingCart} size="2x" />
-            {cartItemCount > 0 && <span className="cart-badge">{cartItemCount}</span>}
-          </div>
-         {isMobileMenuOpen && <div className="hamburger" onClick={() => setIsMobileMenuOpen(true)}>
-            <FontAwesomeIcon icon={faBars} />
-          </div>
-         }
-        </div>
+    {/* Right Actions */}
+    <div className="header-actions">
+      <button className="contact-btn" onClick={() => handleNavigation("/contact")}>
+        Contact
+      </button>
+      <span>|</span>
+      <button className="signup-btn" onClick={() => handleNavigation("/signup")}>
+        Sign up
+      </button>
+    </div>
+  </div>
+
+  {/* Mobile Menu */}
+  {isMobileMenuOpen && (
+    <div className="mobile-menu">
+      <div className="mobile-header">
+        <FontAwesomeIcon icon={faTimes} onClick={() => setIsMobileMenuOpen(false)} />
       </div>
-
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="mobile-menu">
-          <div className="mobile-header">
-            <FontAwesomeIcon icon={faTimes} onClick={() => setIsMobileMenuOpen(false)} />
-          </div>
-          <div className="mobile-links">
-            <p onClick={() => handleNavigation("/watches")}>Watches</p>
-            <p onClick={() => handleNavigation("/eyewear")}>Eyewear</p>
-            <p onClick={() => handleNavigation("/accessories")}>Accessories</p>
-            <p onClick={() => handleNavigation("/news")}>News</p>
-            <p onClick={() => handleNavigation("/login")}>Log In</p>
-            <p onClick={() => handleNavigation("/cart")}>Cart</p>
-          </div>
-        </div>
-      )}
-    </header>
+      <div className="mobile-links">
+        <p onClick={() => handleNavigation("/services")}>Service</p>
+        <p onClick={() => handleNavigation("/cars")}>Cars</p>
+        <p onClick={() => handleNavigation("/pricing")}>Pricing</p>
+        <p onClick={() => handleNavigation("/about")}>About</p>
+        <p onClick={() => handleNavigation("/contact")}>Contact</p>
+        <p onClick={() => handleNavigation("/signup")}>Sign up</p>
+      </div>
+    </div>
+  )}
+</header>
   );
 };
 
