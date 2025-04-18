@@ -7,6 +7,8 @@ import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-sv
 const Hero = () => {
   return (
     <section className="hero">
+      <div className="hero-div">
+    
       <div className="hero-left">
         <h1>Your Journey,<br />Your Car,<br />Your Way</h1>
         <p>
@@ -15,15 +17,18 @@ const Hero = () => {
         </p>
         <button className="btn-started">Get Started</button>
         <div className="hero-socials">
-  <a href="https://facebook.com" target="_blank" rel="noreferrer">
+        <div className="hero-socials">
+  <a href="https://facebook.com" target="_blank" rel="noreferrer" className="social-icon fb">
     <FontAwesomeIcon icon={faFacebookF} />
   </a>
-  <a href="https://instagram.com" target="_blank" rel="noreferrer">
+  <a href="https://instagram.com" target="_blank" rel="noreferrer" className="social-icon insta">
     <FontAwesomeIcon icon={faInstagram} />
   </a>
-  <a href="https://twitter.com" target="_blank" rel="noreferrer">
+  <a href="https://twitter.com" target="_blank" rel="noreferrer" className="social-icon tw">
     <FontAwesomeIcon icon={faTwitter} />
   </a>
+</div>
+
 </div>
 
       </div>
@@ -56,6 +61,8 @@ const Hero = () => {
         </div>
         <a href="#" className="learn-more">Learn more →</a>
         </div>
+      </div>
+          
       </div>
     </section>
   );

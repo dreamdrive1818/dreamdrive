@@ -13,7 +13,18 @@ import {
 const Header = () => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const cartItemCount = 2; // You can replace this with actual cart context value
+  const cartItemCount = 2; 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+useEffect(() => {
+  const handleScroll = () => {
+    setIsScrolled(window.scrollY > 10);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
 
   const handleNavigation = (route) => {
     navigate(route);
@@ -29,7 +40,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="matoa-header">
+    <header className={`matoa-header ${isScrolled ? "scrolled" : ""}`}>
   <div className="header-inner">
     {/* Logo */}
     <div className="logo" onClick={() => navigate("/")}>

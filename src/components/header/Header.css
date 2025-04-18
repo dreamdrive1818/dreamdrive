@@ -4,9 +4,15 @@
   z-index: 1000;
 }
 
+/* On Scroll */
+.matoa-header.scrolled {
+  background-color: var(--light-bg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
 .header-inner {
   margin: auto;
-  padding: 0rem 2rem;
+  padding: 0rem 8rem;
   display: flex;
   align-items: center;
   justify-content: space-between;

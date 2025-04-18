@@ -1,0 +1,135 @@
+  .fleet-container {
+    text-align: center;
+    padding: 10rem 2rem;
+    font-family: var(--font-family-main);
+    display: flex;
+    justify-content: center;
+  }
+
+  .fleet-container .fleet-div{
+    width: 80%;
+  }
+  
+  .fleet-container h4 {
+    font-size: 1.2rem;
+    color: var(--dark-bg);
+    margin-bottom: 0.3rem;
+    opacity: 0.7;
+  }
+  
+  .fleet-container h2 {
+    font-size: 5rem;
+    color: var(--text-dark);
+    margin-bottom: 2rem;
+  }
+  
+  .fleet-cards {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .fleet-cards .fleet-card-bot-section{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .fleet-cards .fleet-card-bot-section span{
+    font-size: 1.5rem;
+    color: black;
+    font-weight: 600;
+  }
+  
+  .fleet-card {
+    background-color: var(--light-bg);
+    border-radius: 10px;
+    box-shadow: var(--shadow-soft);
+    padding: 2rem 1rem;
+    width: 240px;
+    /* text-align: center; */
+    transition: transform 0.3s;
+    border: 2px solid transparent;
+  }
+
+  .fleet-card:hover{
+    background-color: var(--dark-bg);
+    color: white;
+    transform: scale(1.05);
+    cursor: pointer;
+  }
+
+  .fleet-card:hover  h3, .fleet-card:hover  span{
+    color: white;
+  }
+  
+  .fleet-card img {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 1rem;
+    object-fit: contain;
+    background-color: white;
+  }
+  
+  .fleet-card h3 {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin: 0.5rem 0;
+    text-align: left;
+  }
+  
+  .fleet-card p {
+    color: #888;
+    margin: 0;
+    font-size: 1.1rem;
+    text-align: left;
+  }
+  
+  .fleet-card span {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 0.3rem 0;
+    color: var(--text-dark);
+  }
+  
+  .fleet-card button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5rem 1.5rem;
+    margin-top: 1rem;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
+  
+  .fleet-card.highlight {
+    border: 3px solid var(--primary-color);
+    background-color: var(--secondary-color);
+  }
+  
+  .carousel-dots {
+    margin-top: 5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .carousel-dots button {
+    background: none;
+    border: 1px solid var(--medium-bg);
+    border-radius: 50%;
+    padding: 1rem 1rem;
+    cursor: pointer;
+    color: var(--text-dark);
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  
+  .carousel-dots button.active {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border: none;
+  }
+  
