@@ -1,135 +1,184 @@
-  .fleet-container {
-    text-align: center;
-    padding: 10rem 2rem;
-    font-family: var(--font-family-main);
-    display: flex;
-    justify-content: center;
-  }
+.fleet-container {
+  text-align: center;
+  padding: 8rem 2rem;
+  font-family: var(--font-family-main);
+  display: flex;
+  justify-content: center;
+}
 
-  .fleet-container .fleet-div{
-    width: 80%;
-  }
-  
-  .fleet-container h4 {
-    font-size: 1.2rem;
-    color: var(--dark-bg);
-    margin-bottom: 0.3rem;
-    opacity: 0.7;
-  }
-  
-  .fleet-container h2 {
-    font-size: 5rem;
-    color: var(--text-dark);
-    margin-bottom: 2rem;
-  }
-  
-  .fleet-cards {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
+.fleet-div {
+  width: 90%;
+}
 
-  .fleet-cards .fleet-card-bot-section{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+.fleet-container h4 {
+  font-size: 1.2rem;
+  color: var(--dark-bg);
+  margin-bottom: 0.3rem;
+  opacity: 0.7;
+}
 
-  .fleet-cards .fleet-card-bot-section span{
-    font-size: 1.5rem;
-    color: black;
-    font-weight: 600;
-  }
-  
-  .fleet-card {
-    background-color: var(--light-bg);
-    border-radius: 10px;
-    box-shadow: var(--shadow-soft);
-    padding: 2rem 1rem;
-    width: 240px;
-    /* text-align: center; */
-    transition: transform 0.3s;
-    border: 2px solid transparent;
-  }
+.fleet-container h2 {
+  font-size: 4rem;
+  color: var(--text-dark);
+  margin-bottom: 3rem;
+}
 
-  .fleet-card:hover{
-    background-color: var(--dark-bg);
-    color: white;
-    transform: scale(1.05);
-    cursor: pointer;
-  }
+.fleet-cards {
+  display: flex;
+  justify-content: center;
+  gap: 6rem;
+  flex-wrap: wrap;
+  margin-top: 6rem;
+}
 
-  .fleet-card:hover  h3, .fleet-card:hover  span{
-    color: white;
-  }
+.fleet-card {
+  background-color: var(--light-bg);
+  border-radius: 10px;
+  box-shadow: var(--shadow-soft);
+  padding: 2rem 1rem;
+  width: 280px;
+  position: relative;
+  transition: transform 0.3s ease;
+  border: 2px solid transparent;
+  /* overflow: hidden; */
   
-  .fleet-card img {
-    width: 100%;
-    height: 200px;
-    margin-bottom: 1rem;
-    object-fit: contain;
-    background-color: white;
-  }
-  
-  .fleet-card h3 {
-    font-size: 1.5rem;
-    color: var(--text-dark);
-    margin: 0.5rem 0;
-    text-align: left;
-  }
-  
-  .fleet-card p {
-    color: #888;
-    margin: 0;
-    font-size: 1.1rem;
-    text-align: left;
-  }
-  
-  .fleet-card span {
-    font-size: 1.4rem;
-    font-weight: bold;
-    margin: 0.3rem 0;
-    color: var(--text-dark);
-  }
-  
-  .fleet-card button {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 0.5rem 1.5rem;
-    margin-top: 1rem;
-    font-size: 1.25rem;
-    cursor: pointer;
-  }
-  
-  .fleet-card.highlight {
-    border: 3px solid var(--primary-color);
-    background-color: var(--secondary-color);
-  }
-  
-  .carousel-dots {
-    margin-top: 5rem;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-  }
-  
-  .carousel-dots button {
-    background: none;
-    border: 1px solid var(--medium-bg);
-    border-radius: 50%;
-    padding: 1rem 1rem;
-    cursor: pointer;
-    color: var(--text-dark);
-    font-weight: bold;
-    font-size: 0.9rem;
-  }
-  
-  .carousel-dots button.active {
-    background-color: var(--primary-color);
-    color: var(--text-light);
-    border: none;
-  }
-  
+}
+
+
+.fleet-card:hover {
+  transform: translateY(-15%);
+  background-color: var(--dark-bg);
+  color: white;
+}
+
+.fleet-card:hover h3,
+.fleet-card:hover span,
+.fleet-card:hover p {
+  color: white;
+}
+
+.fleet-card img {
+  width: 100%;
+  height: 180px;
+  margin-bottom: 1rem;
+  object-fit: contain;
+  background: white;
+  border-radius: 5px;
+}
+
+.fleet-card h3 {
+  font-size: 1.4rem;
+  color: var(--text-dark);
+  margin: 0.5rem 0;
+  text-align: left;
+}
+
+.fleet-card p {
+  color: #888;
+  margin: 0;
+  font-size: 1.1rem;
+  text-align: left;
+}
+
+.fleet-card span {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 0.3rem 0;
+  color: var(--text-dark);
+}
+
+.fleet-card button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.fleet-card-bot-section {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+  margin-top: 0.5rem;
+}
+
+/* Hover Extra Info Section */
+.car-hover-info {
+  width: 280px;
+  transform: translateY(10px);
+  opacity: 0;
+  position: absolute;
+  max-height: 300px;
+  left:-0.15rem;
+  right:0;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  background-color: var(--dark-bg);
+  border-radius: 10px;
+  box-shadow: var(--shadow-soft);
+  padding: 2rem 1rem;
+}
+
+.car-hover-info-show {
+  transform: translateY(0px);
+  opacity: 1;
+ 
+}
+
+
+/* Hover Sections Layout */
+.hover-top,
+.hover-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.hover-top div,
+.hover-bottom div {
+  flex: 1;
+  text-align: center;
+}
+
+.hover-top p,
+.hover-bottom p {
+  font-size: 0.75rem;
+  margin: 0.2rem 0;
+  color: #ccc;
+}
+
+.hover-bottom .icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 0.3rem;
+}
+
+/* Dots */
+.carousel-dots {
+  margin-top: 10rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.carousel-dots button {
+  background: none;
+  border: 1px solid var(--medium-bg);
+  border-radius: 50%;
+  padding: 1rem 1rem;
+  cursor: pointer;
+  color: var(--text-dark);
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.carousel-dots button.active {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  border: none;
+}
+

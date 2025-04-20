@@ -2,8 +2,12 @@ import React from "react";
 import "./Footer.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { useLocalContext } from "../../context/LocalContext";
 
 const Footer = () => {
+
+  const {webinfo} = useLocalContext();
+
   return (
     <footer className="footer">
         <div className="footer-top">
@@ -45,7 +49,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>Copyright © 2023 GoCar. All rights reserved.</p>
+        <p>Copyright © 2025 {webinfo.name}. All rights reserved.</p>
         <div className="scroll-up">
           <FontAwesomeIcon icon={faArrowUp} />
         </div>

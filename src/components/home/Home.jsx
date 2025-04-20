@@ -11,9 +11,9 @@ const Home = () => {
     <div className='home'>
       <Hero />
       <FleetCarousel />
-      <WhyChoose />
+      {/* <WhyChoose /> */}
       <HowItWorks />
-      <Achievements />
+      {/* <Achievements /> */}
       <DreamCarBanner />
     </div>
   )

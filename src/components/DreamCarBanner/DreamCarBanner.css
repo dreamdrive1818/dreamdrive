@@ -28,7 +28,7 @@
   }
   
   .banner-btn {
-    background-color: #ff3d3d;
+    background-color: var(--primary-color);
     color: #fff;
     padding: 12px 24px;
     font-size: 16px;
@@ -40,7 +40,7 @@
   }
   
   .banner-btn:hover {
-    background-color: #e63232;
+    background-color: var(--accent-color);
   }
   
   .banner-image {

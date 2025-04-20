@@ -46,7 +46,7 @@
   
   .btn-started {
     width: 20rem;
-    background-color: var(--accent-color);
+    background-color: var(--primary-color);
     color: var(--text-light);
     padding: 1rem 2rem;
     font-size: 1.3rem;
@@ -54,6 +54,11 @@
     border-radius: 2rem;
     cursor: pointer;
     box-shadow: var(--shadow-soft);
+    transition: 0.2s ease;
+  }
+
+  .btn-started:hover{
+    background-color: var(--accent-color);
   }
   
   .hero-socials {
@@ -189,3 +194,136 @@
     text-decoration: none;
   }
   
+  /* ==================== Responsive ==================== */
+
+/* Tablets (max width: 1024px) */
+@media (max-width: 1024px) {
+  .hero-div {
+    flex-direction: column;
+    height: auto;
+    padding: 3rem 2rem;
+    gap: 4rem;
+  }
+
+  .hero-left,
+  .hero-right {
+    max-width: 100%;
+    text-align: center;
+    align-items: center;
+  }
+
+  .hero-left h1 {
+    font-size: 4rem;
+  }
+
+  .hero-left p {
+    font-size: 1.6rem;
+  }
+
+  .btn-started {
+    margin: 0 auto;
+  }
+
+  .hero-center {
+    margin-left: 0;
+  }
+
+  .hero-car {
+    max-width: 400px;
+  }
+
+  .hero-badge {
+    right: 10%;
+  }
+
+  .hero-right .hero-right-bot,
+  .hero-right .hero-right-top {
+    align-items: center;
+  }
+
+  .hero-actions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-actions button {
+    margin: 0.5rem 0.8rem;
+  }
+}
+
+/* Mobile (max width: 768px) */
+@media (max-width: 768px) {
+  .hero-left h1 {
+    font-size: 3rem;
+  }
+
+  .hero-left p {
+    font-size: 1.5rem;
+  }
+
+  .hero-car {
+    max-width: 90%;
+  }
+
+  .hero-badge {
+    top: 5%;
+    right: 15%;
+    padding: 0.8rem 1rem;
+  }
+
+  .hero-badge span {
+    font-size: 1.5rem;
+  }
+
+  .hero-badge small {
+    font-size: 0.85rem;
+  }
+
+  .hero-users img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .hero-right p {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  .learn-more {
+    font-size: 1.3rem;
+  }
+
+  .hero-socials {
+    justify-content: center;
+  }
+}
+
+/* Extra Small Devices (max width: 480px) */
+@media (max-width: 480px) {
+  .hero-left h1 {
+    font-size: 2.4rem;
+  }
+
+  .hero-left p {
+    font-size: 1.3rem;
+  }
+
+  .btn-started {
+    width: 100%;
+  }
+
+  .hero-actions button {
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .hero-right p {
+    font-size: 1.2rem;
+  }
+
+  .learn-more {
+    font-size: 1.2rem;
+  }
+}
