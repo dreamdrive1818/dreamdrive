@@ -8,6 +8,7 @@ import {
   faCarSide,
   faCarOn,
 } from "@fortawesome/free-solid-svg-icons";
+import BookNowBanner from "../Booknow/BookNowBanner";
 
 const steps = [
   {
@@ -35,6 +36,7 @@ const steps = [
 
 const HowItWorks = () => {
   return (
+    <>
     <section className="how-it-works">
       <h4 className="sub-heading">HOW IT WORKS</h4>
       <h2 className="main-heading">Simple Steps to Get the Car</h2>
@@ -56,6 +58,8 @@ const HowItWorks = () => {
         ))}
       </div>
     </section>
+    <BookNowBanner />
+    </>
   );
 };
 
