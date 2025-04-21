@@ -55,10 +55,10 @@ useEffect(() => {
 
     {/* Center Navigation (Desktop Only) */}
     <nav className="nav-links">
-      <p onClick={() => handleNavigation("/services")}>Service</p>
+      <p onClick={() => handleNavigation("/about")}>How It Works</p>
       <p onClick={() => handleNavigation("/cars")}>Cars</p>
       <p onClick={() => handleNavigation("/pricing")}>Pricing</p>
-      <p onClick={() => handleNavigation("/about")}>About</p>
+      <p onClick={() => handleNavigation("/contact")}>Contact us</p>
     </nav>
 
     {/* Right Actions */}
