@@ -14,7 +14,7 @@ const Home = () => {
       <WhyChoose />
       <HowItWorks />
       <Achievements />
-      <DreamCarBanner />
+      {/* <DreamCarBanner /> */}
     </div>
   )
 }

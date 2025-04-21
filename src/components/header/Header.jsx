@@ -57,7 +57,7 @@ useEffect(() => {
     <nav className="nav-links">
       <p onClick={() => handleNavigation("/howitworks")}>How It Works</p>
       <p onClick={() => handleNavigation("/cars")}>Cars</p>
-      <p onClick={() => handleNavigation("/pricing")}>Pricing</p>
+      <p onClick={() => handleNavigation("/about")}>About Us</p>
       <p onClick={() => handleNavigation("/contact")}>Contact us</p>
     </nav>
 
@@ -84,7 +84,7 @@ useEffect(() => {
       <div className="mobile-modern-links">
       <p onClick={() => handleNavigation("/howitworks")}>How It Works</p>
       <p onClick={() => handleNavigation("/cars")}>Cars</p>
-      <p onClick={() => handleNavigation("/pricing")}>Pricing</p>
+      <p onClick={() => handleNavigation("/about")}>About Us</p>
       <p onClick={() => handleNavigation("/contact")}>Contact us</p>
         <p onClick={() => handleNavigation("/booking-form")}>Book Now</p>
       </div>
