@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from '../components/home/Home';
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
+import FleetCarousel from '../components/fleetCarousel/FleetCarousel';
 
 
 
@@ -12,9 +13,9 @@ const AppRoute = () => {
             <Header />
             <Routes>
              <Route path="/" element={<Home />} />
-             {/* <Route path="/about" element={<About />} /> */}
+             <Route path="/cars" element={<FleetCarousel />} />
             </Routes>
-            {/* <Footer /> */}
+            <Footer />
         </Router>
     );
 };

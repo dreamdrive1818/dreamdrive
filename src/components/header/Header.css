@@ -124,54 +124,96 @@
     display: block;
     color: #111;
   }
+
+  .header-inner {
+    padding: 0 2rem;
+    padding-left: 13rem;
+  }
+
+  .header-inner .logo img{
+    width: 100px;
+  }
 }
 
-/* Mobile Menu */
-.mobile-menu {
+/* Modern Fullscreen Mobile Nav Overlay */
+.mobile-nav-modern-overlay {
   position: fixed;
-  top: 0;
-  right: 0;
-  width: 80%;
-  max-width: 300px;
-  height: 100vh;
-  background: #fff;
-  z-index: 2000;
-  padding: 2rem;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-  animation: slideIn 0.3s ease forwards;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: mobileFadeIn 0.3s ease-in-out;
+}
+
+/* Container inside the overlay */
+.mobile-nav-modern-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 4rem 2rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: slideUp 0.4s ease-out;
 }
 
-@keyframes slideIn {
-  from {
-    right: -100%;
-  }
-  to {
-    right: 0;
-  }
-}
-
-.mobile-header {
-  display: flex;
-  justify-content: flex-end;
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.mobile-links {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  font-size: 1rem;
-  color: #333;
-}
-
-.mobile-links p {
+/* Close Button */
+.mobile-modern-close {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  background: transparent;
+  border: none;
+  font-size: 2.5rem;
+  color: #222;
   cursor: pointer;
-  transition: color 0.3s ease;
+  z-index: 999;
 }
 
-.mobile-links p:hover {
+/* Link styles */
+.mobile-modern-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.mobile-modern-links p {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #111;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.mobile-modern-links p:hover {
+  transform: scale(1.1);
   color: var(--primary-color);
 }
+
+/* Animations */
+@keyframes mobileFadeIn {
+  from {
+    background: rgba(255, 255, 255, 0);
+  }
+  to {
+    background: rgba(255, 255, 255, 0.15);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+

@@ -11,39 +11,36 @@
 }
 
 .fleet-container h4 {
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   color: var(--dark-bg);
-  margin-bottom: 0.3rem;
-  opacity: 0.7;
+  margin-bottom: 0.5rem;
+  opacity: 0.8;
 }
 
 .fleet-container h2 {
-  font-size: 4rem;
+  font-size: 4.8rem;
   color: var(--text-dark);
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
 }
 
 .fleet-cards {
   display: flex;
   justify-content: center;
-  gap: 6rem;
+  gap: 8rem;
   flex-wrap: wrap;
   margin-top: 6rem;
 }
 
 .fleet-card {
   background-color: var(--light-bg);
-  border-radius: 10px;
+  border-radius: 12px;
   box-shadow: var(--shadow-soft);
-  padding: 2rem 1rem;
-  width: 280px;
+  padding: 2.5rem 1.2rem;
+  width: 320px;
   position: relative;
   transition: transform 0.3s ease;
   border: 2px solid transparent;
-  /* overflow: hidden; */
-  
 }
-
 
 .fleet-card:hover {
   transform: translateY(-15%);
@@ -59,7 +56,7 @@
 
 .fleet-card img {
   width: 100%;
-  height: 180px;
+  height: 240px;
   margin-bottom: 1rem;
   object-fit: contain;
   background: white;
@@ -67,23 +64,23 @@
 }
 
 .fleet-card h3 {
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   color: var(--text-dark);
-  margin: 0.5rem 0;
+  margin: 0.8rem 0;
   text-align: left;
 }
 
 .fleet-card p {
   color: #888;
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   text-align: left;
 }
 
 .fleet-card span {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: bold;
-  margin: 0.3rem 0;
+  margin: 0.4rem 0;
   color: var(--text-dark);
 }
 
@@ -92,88 +89,90 @@
   color: white;
   border: none;
   border-radius: 20px;
-  padding: 0.5rem 1.5rem;
-  font-size: 1rem;
+  padding: 0.6rem 1.8rem;
+  font-size: 1.1rem;
   cursor: pointer;
 }
 
 .fleet-card-bot-section {
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
-  margin-top: 0.5rem;
+  margin-top: 0.6rem;
 }
 
 /* Hover Extra Info Section */
 .car-hover-info {
-  width: 280px;
+  width: 320px;
   transform: translateY(10px);
   opacity: 0;
   position: absolute;
-  max-height: 300px;
-  left:-0.15rem;
-  right:0;
+  max-height: 320px;
+  left: -0.15rem;
+  right: 0;
   overflow: hidden;
   transition: all 0.3s ease-in-out;
   background-color: var(--dark-bg);
   border-radius: 10px;
   box-shadow: var(--shadow-soft);
-  padding: 2rem 1rem;
+  padding: 2rem 1.2rem;
+
 }
 
 .car-hover-info-show {
   transform: translateY(0px);
   opacity: 1;
- 
 }
 
-
-/* Hover Sections Layout */
 .hover-top,
 .hover-bottom {
   display: flex;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: 0.6rem;
   flex-wrap: wrap;
-  margin-top: 1rem;
+  margin-top: 1.2rem;
 }
+
+
 
 .hover-top div,
 .hover-bottom div {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
   text-align: center;
 }
 
 .hover-top p,
 .hover-bottom p {
-  font-size: 0.75rem;
-  margin: 0.2rem 0;
+  font-size: 0.95rem;
+  margin: 0.6rem 0;
   color: #ccc;
 }
 
 .hover-bottom .icon {
-  width: 24px;
-  height: 24px;
+  width: 40px;
+  height: 40px;
   margin-bottom: 0.3rem;
 }
 
+
+
 /* Dots */
 .carousel-dots {
-  margin-top: 10rem;
+  margin-top: 15rem;
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
 .carousel-dots button {
   background: none;
   border: 1px solid var(--medium-bg);
   border-radius: 50%;
-  padding: 1rem 1rem;
+  padding: 1.2rem;
   cursor: pointer;
   color: var(--text-dark);
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
 }
 
 .carousel-dots button.active {
@@ -182,3 +181,37 @@
   border: none;
 }
 
+/* Arrow Navigation */
+.fleet-carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-arrow {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--text-dark);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+  z-index: 1;
+  padding: 0 1rem;
+}
+
+.carousel-arrow:hover {
+  color: var(--primary-color);
+  transform: scale(1.2);
+}
+
+.carousel-arrow.left {
+  position: absolute;
+  left: -4rem;
+}
+
+.carousel-arrow.right {
+  position: absolute;
+  right: -4rem;
+}

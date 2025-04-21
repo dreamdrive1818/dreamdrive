@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "./FleetCarousel.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCar, faCarSide, faChair, faCogs, faGasPump, faSuitcaseRolling, faUserFriends } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCarSide,
+  faUserFriends,
+  faSuitcaseRolling,
+  faGasPump,
+  faCogs,
+} from "@fortawesome/free-solid-svg-icons";
+import { useLocation } from "react-router-dom";
 
+// Your cars array (as you posted above)
 const cars = [
   {
     name: "BMW M4",
@@ -246,23 +254,35 @@ const cars = [
   },
 ];
 
-
 const FleetCarousel = () => {
+
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 4;
-
+  const totalPages = Math.ceil(cars.length / itemsPerPage);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  
+  const location = useLocation();
+  const isCarsPage = location.pathname === "/cars";
+
+
+  // Auto-slide every 15s
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentPage((prev) => (prev + 1) % Math.ceil(cars.length / itemsPerPage));
-    }, 10000);
+      setCurrentPage((prev) => (prev + 1) % totalPages);
+    }, 55000); // 15 seconds
     return () => clearInterval(interval);
-  }, []);
+  }, [totalPages]);
 
   const handleClick = (index) => {
     setCurrentPage(index);
+  };
+
+  const handlePrev = () => {
+    setCurrentPage((prev) => (prev === 0 ? totalPages - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentPage((prev) => (prev + 1) % totalPages);
   };
 
   const paginatedCars = cars.slice(
@@ -271,59 +291,107 @@ const FleetCarousel = () => {
   );
 
   return (
-    <div className="fleet-container">
+    <div className="fleet-container"
+    style={{ paddingTop: isCarsPage ? "2rem" : "8rem" }}>
       <div className="fleet-div">
         <h4>THE CARS</h4>
         <h2>Our Impressive Fleet</h2>
-        <div className="fleet-cards">
-          {paginatedCars.map((car, index) => {
 
-        const absoluteIndex = currentPage * itemsPerPage + index;
+        <div className="fleet-carousel-wrapper">
+          <button className="carousel-arrow left" onClick={handlePrev}>
+            &#8249;
+          </button>
 
-         return(
-            <div key={absoluteIndex}
-            className={`fleet-card`}
-            onMouseEnter={() => setHoveredIndex(absoluteIndex)}
-            onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <div className="fleet-card-top">
-                <img src={car.image} alt={car.name} />
-              </div>
-              <div className="fleet-card-bot">
-                <div className="fleet-card-bot-name">
-                  <h3>{car.name}</h3>
-                </div>
-                <div className="fleet-card-bot-section">
-                  <p>
-                    Starting at <br /> <span>{car.price}</span>
-                  </p>
-                  <button>Rent</button>
-                </div>
-              </div>
+          <div className="fleet-cards">
+            {paginatedCars.map((car, index) => {
+              const absoluteIndex = currentPage * itemsPerPage + index;
+              return (
+                <div
+                  key={absoluteIndex}
+                  className="fleet-card"
+                  onMouseEnter={() => setHoveredIndex(absoluteIndex)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  <div className="fleet-card-top">
+                    <img src={car.image} alt={car.name} />
+                  </div>
+                  <div className="fleet-card-bot">
+                    <div className="fleet-card-bot-name">
+                      <h3>{car.name}</h3>
+                    </div>
+                    <div className="fleet-card-bot-section">
+                      <p>
+                        Starting at <br /> <span>{car.price}</span>
+                      </p>
+                      <button>Rent</button>
+                    </div>
+                  </div>
 
-              {/* Hover Info */}
-              <div className={`car-hover-info ${hoveredIndex === absoluteIndex ? "car-hover-info-show" : ""}`}>
-                <div className="hover-top">
-                  <div><strong>{car.details.kilometer}</strong><p>Kilometer</p></div>
-                  <div><strong>{car.details.extraKm}</strong><p>Extra Km</p></div>
-                  <div><strong>{car.details.extraHr}</strong><p>Extra Hr</p></div>
+                  <div
+                    className={`car-hover-info ${
+                      hoveredIndex === absoluteIndex
+                        ? "car-hover-info-show"
+                        : ""
+                    }`}
+                  >
+                    <div className="hover-top">
+                      <div>
+                        <span>
+                          <strong>{car.details.kilometer}</strong>
+                        </span>
+                        <p>Kilometer</p>
+                      </div>
+                      <div>
+                        <span>
+                          <strong>{car.details.extraKm}</strong>
+                        </span>
+                        <p>Extra Km</p>
+                      </div>
+                      <div>
+                        <span>
+                          <strong>{car.details.extraHr}</strong>
+                        </span>
+                        <p>Extra Hr</p>
+                      </div>
+                    </div>
+                    <div className="hover-bottom">
+                      <div>
+                        <FontAwesomeIcon icon={faCarSide} size="lg" />
+                        <p>{car.details.type}</p>
+                      </div>
+                      <div>
+                        <FontAwesomeIcon icon={faUserFriends} size="lg" />
+                        <p>{car.details.seats}</p>
+                      </div>
+                      <div>
+                        <FontAwesomeIcon
+                          icon={faSuitcaseRolling}
+                          size="lg"
+                        />
+                        <p>{car.details.luggage}</p>
+                      </div>
+                      <div>
+                        <FontAwesomeIcon icon={faGasPump} size="lg" />
+                        <p>{car.details.fuel}</p>
+                      </div>
+                      <div>
+                        <FontAwesomeIcon icon={faCogs} size="lg" />
+                        <p>{car.details.mt}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="hover-bottom">
-                <div><FontAwesomeIcon icon={faCarSide} size="lg" /><p>{car.details.type}</p></div>
-    <div><FontAwesomeIcon icon={faUserFriends} size="lg" /><p>{car.details.seats}</p></div>
-    <div><FontAwesomeIcon icon={faSuitcaseRolling} size="lg" /><p>{car.details.luggage}</p></div>
-    <div><FontAwesomeIcon icon={faGasPump} size="lg" /><p>{car.details.fuel}</p></div>
-    <div><FontAwesomeIcon icon={faCogs} size="lg" /><p>{car.details.mt}</p></div>
-                </div>
-              </div>
-            </div>
-         );
-        })}
+              );
+            })}
+          </div>
+
+          <button className="carousel-arrow right" onClick={handleNext}>
+            &#8250;
+          </button>
         </div>
 
-        {/* Dots */}
         <div className="carousel-dots">
-          {Array.from({ length: Math.ceil(cars.length / itemsPerPage) }).map((_, i) => (
+          {Array.from({ length: totalPages }).map((_, i) => (
             <button
               key={i}
               className={i === currentPage ? "active" : ""}

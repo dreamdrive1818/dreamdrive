@@ -74,21 +74,25 @@ useEffect(() => {
   </div>
 
   {/* Mobile Menu */}
-  {isMobileMenuOpen && (
-    <div className="mobile-menu">
-      <div className="mobile-header">
-        <FontAwesomeIcon icon={faTimes} onClick={() => setIsMobileMenuOpen(false)} />
-      </div>
-      <div className="mobile-links">
-        <p onClick={() => handleNavigation("/services")}>Service</p>
+ {/* Mobile Menu */}
+{isMobileMenuOpen && (
+  <div className="mobile-nav-modern-overlay">
+    <div className="mobile-nav-modern-container">
+      <button className="mobile-modern-close" onClick={() => setIsMobileMenuOpen(false)}>
+        &times;
+      </button>
+      <div className="mobile-modern-links">
+        <p onClick={() => handleNavigation("/services")}>Services</p>
         <p onClick={() => handleNavigation("/cars")}>Cars</p>
         <p onClick={() => handleNavigation("/pricing")}>Pricing</p>
         <p onClick={() => handleNavigation("/about")}>About</p>
         <p onClick={() => handleNavigation("/contact")}>Contact</p>
-        <p onClick={() => handleNavigation("/signup")}>Sign up</p>
+        <p onClick={() => handleNavigation("/signup")}>Sign Up</p>
       </div>
     </div>
-  )}
+  </div>
+)}
+
 </header>
   );
 };
