@@ -67,8 +67,8 @@ useEffect(() => {
         Contact
       </button>
       <span>|</span>
-      <button className="signup-btn" onClick={() => handleNavigation("/signup")}>
-        Sign up
+      <button className="signup-btn" onClick={() => handleNavigation("/booking-form")}>
+        Book Now
       </button>
     </div>
   </div>
@@ -82,12 +82,11 @@ useEffect(() => {
         &times;
       </button>
       <div className="mobile-modern-links">
-        <p onClick={() => handleNavigation("/services")}>Services</p>
-        <p onClick={() => handleNavigation("/cars")}>Cars</p>
-        <p onClick={() => handleNavigation("/pricing")}>Pricing</p>
-        <p onClick={() => handleNavigation("/about")}>About</p>
-        <p onClick={() => handleNavigation("/contact")}>Contact</p>
-        <p onClick={() => handleNavigation("/signup")}>Sign Up</p>
+      <p onClick={() => handleNavigation("/howitworks")}>How It Works</p>
+      <p onClick={() => handleNavigation("/cars")}>Cars</p>
+      <p onClick={() => handleNavigation("/pricing")}>Pricing</p>
+      <p onClick={() => handleNavigation("/contact")}>Contact us</p>
+        <p onClick={() => handleNavigation("/booking-form")}>Book Now</p>
       </div>
     </div>
   </div>
