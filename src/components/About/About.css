@@ -1,0 +1,71 @@
+.about-us {
+    width: 100%;
+    background-color: #f9f9f9;
+    padding: 2rem 10rem;
+    font-family: 'Poppins', sans-serif;
+    color: #111;
+    box-sizing: border-box;
+  }
+  
+  .about-container {
+    max-width: 1400px;
+    margin: auto;
+  }
+  
+  .about-heading {
+    max-width: 900px;
+    margin: 0 auto 4rem auto;
+    text-align: center;
+  }
+  
+  .about-heading h2 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #111;
+  }
+  
+  .about-heading p {
+    font-size: 1.4rem;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+  
+  .about-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+  }
+  
+  .feature-box {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    transition: all 0.3s ease-in-out;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+  }
+  
+  .feature-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  .feature-box h4 {
+    font-size: 2rem;
+    color: var(--primary-color); /* Make sure this variable is defined */
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  
+  .feature-box p {
+    font-size: 1.25rem;
+    color: #666;
+    line-height: 1.6;
+  }
+  
