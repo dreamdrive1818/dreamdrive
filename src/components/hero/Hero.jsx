@@ -2,9 +2,13 @@ import React from 'react';
 import './Hero.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 
 const Hero = () => {
+
+  const navigate = useNavigate();
+
   return (
     <section className="hero">
       <div className="hero-div">
@@ -15,7 +19,7 @@ const Hero = () => {
           Experience the ultimate freedom of choice with GoCar – tailor your
           adventure by choosing from our premium fleet of vehicles.
         </p>
-        <button className="btn-started">Get Started</button>
+        <button className="btn-started" onClick={()=>navigate('/howitworks')}>Get Started</button>
         <div className="hero-socials">
         <div className="hero-socials">
   <a href="https://facebook.com" target="_blank" rel="noreferrer" className="social-icon fb">
@@ -36,7 +40,7 @@ const Hero = () => {
       <div className="hero-center">
         <img src="https://res.cloudinary.com/dcrfks1tq/image/upload/v1744881450/istockphoto-184127993-612x612-removebg-preview_caadfj.png" alt="Red Car" className="hero-car" />
         <div className="hero-badge">
-          <span>50+</span>
+          <span>08+</span>
           <small>Car Types Available</small>
         </div>
       </div>
@@ -54,12 +58,12 @@ const Hero = () => {
         <div className="hero-right-bot">
        
         <div className="hero-actions">
-          <button>Rent</button>
-          <button>Buy</button>
-          <button>Sell</button>
-          <button>Consult</button>
+          <button onClick={()=>navigate('/contact')}>Rent</button>
+          <button onClick={()=>navigate('/contact')}>Buy</button>
+          <button onClick={()=>navigate('/contact')}>Sell</button>
+          <button onClick={()=>navigate('/contact')}>Consult</button>
         </div>
-        <a href="#" className="learn-more">Learn more →</a>
+        <a href="/" className="learn-more">Learn more →</a>
         </div>
       </div>
           

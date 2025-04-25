@@ -18,21 +18,25 @@ const Contact = () => {
           <ul>
             <li>
               <FontAwesomeIcon icon={faMapMarkerAlt} className="contact-icon" />
-              <strong> Address:</strong>  123 Main St, Your City
+              <strong> Address:</strong> <span>Ranchi, Jharkhand, Pin - 834001</span>
             </li>
             <li>
               <FontAwesomeIcon icon={faPhoneAlt} className="contact-icon" />
-              <strong> Phone:</strong>  +91 9876543210
+              <strong> Phone:</strong> <span>+91 9876543210</span>
             </li>
             <li>
               <FontAwesomeIcon icon={faEnvelope} className="contact-icon" />
-              <strong> Email:</strong>  contact@example.com
+              <strong> Email:</strong> <span>Dreamdrive1818@gmail.com</span>
             </li>
           </ul>
+
+          {/* Booking Button */}
+          <a href="/booking" className="book-now-btn">Book Now</a>
         </div>
 
         {/* Right: Contact Form */}
         <form className="contact-form">
+          <h2> Or Write Your Message below:</h2>
           <div className="form-group">
             <input type="text" placeholder="Your Name" required />
           </div>

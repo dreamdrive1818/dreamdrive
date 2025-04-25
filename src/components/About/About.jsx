@@ -11,10 +11,10 @@ const About = () => {
         <div className="about-heading">
           <h2>About Us</h2>
           <p>
-            At <strong>{webinfo.name}</strong>, we believe in delivering seamless and affordable car rental solutions to every traveler. Whether you're planning a road trip, exploring a new city, or simply need a ride for your daily errands, we’ve got you covered with a wide fleet and flexible pricing.
+            At <strong>{webinfo.name}</strong>, we're a passionate team committed to redefining car rentals with comfort, transparency, and technology. Though we’re just 6 months into our journey, our focus on customer satisfaction and seamless experiences sets us apart.
           </p>
           <p>
-            Founded with a mission to simplify mobility, our platform connects drivers to quality vehicles across major cities in India. With transparency, technology, and trust at the heart of our service, <strong>{webinfo.name}</strong> is your go-to partner on the road.
+            Starting with a vision to simplify mobility for everyone, we’ve already helped hundreds of travelers get on the road with ease. Our growing platform connects drivers to well-maintained vehicles, blending trust and digital convenience to deliver a modern rental solution.
           </p>
         </div>
 
@@ -27,10 +27,9 @@ const About = () => {
             </p>
           </div>
           <div className="feature-box">
-            <h4>Trusted by Thousands</h4>
+            <h4>Growing Trust</h4>
             <p>
-              We’ve proudly served over 50,000 happy customers, earning
-              high ratings for our transparency, support, and punctual service.
+              In just a few months, we’ve earned the trust of hundreds of happy customers through our reliable service and transparent practices.
             </p>
           </div>
           <div className="feature-box">
