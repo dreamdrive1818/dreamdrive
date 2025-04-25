@@ -1,7 +1,11 @@
 import React from "react";
 import "./DreamCarBanner.css";
+import { useLocalContext } from "../../context/LocalContext";
 
 const DreamCarBanner = () => {
+
+  const {Goto} = useLocalContext();
+
   return (
     <section className="dream-banner">
       <div className="banner-content">
@@ -10,7 +14,7 @@ const DreamCarBanner = () => {
           Car Today and Feel <br />
           Best Experience Travel
         </h2>
-        <button className="banner-btn">Let’s Drive with Us</button>
+        <button className="banner-btn" onClick={Goto}>Let’s Drive with Us</button>
       </div>
       {/* <div className="banner-image">
         <img

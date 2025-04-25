@@ -9,12 +9,14 @@ import {
   faBars,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
+import { useLocalContext } from "../../context/LocalContext";
 
 const Header = () => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const cartItemCount = 2; 
   const [isScrolled, setIsScrolled] = useState(false);
+  const { Goto} = useLocalContext();
 
 useEffect(() => {
   const handleScroll = () => {
@@ -45,7 +47,7 @@ useEffect(() => {
     {/* Logo */}
     <div className="logo" onClick={() => navigate("/")}>
       {/* <h2>DRIVOXE.</h2> */}
-      <img src="https://res.cloudinary.com/dcrfks1tq/image/upload/v1744822234/WhatsApp_Image_2025-04-14_at_20.57.15_b7644c4b-removebg-preview_ebkbxf.png" alt="" />
+      <img src="https://res.cloudinary.com/dcf3mojai/image/upload/v1745574199/dream_drive-removebg-preview_x7duqr.png" alt="" />
     </div>
 
     {/* Hamburger (Mobile Only) */}
@@ -67,7 +69,7 @@ useEffect(() => {
         Contact
       </button>
       <span>|</span>
-      <button className="signup-btn" onClick={() => handleNavigation("/booking-form")}>
+      <button className="signup-btn" onClick={Goto}>
         Book Now
       </button>
     </div>

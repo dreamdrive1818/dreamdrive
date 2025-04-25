@@ -14,8 +14,14 @@ export const LocalProvider = ({ children }) => {
     email:"info@hcvatron.com"
 });
 
+
+
 const [selectedUserBlog, setSelectedUserBlog] = useState(()=> localStorage.getItem('selectedBlog') ? JSON.parse(localStorage.getItem('selectedBlog')) : null);
 
+
+const Goto = () =>{
+  window.location.href = "https://forms.zohopublic.in/dreamdrive1818gm1/form/CONSENTFORMFORCARHIRE/formperma/XcyUB9S6UcHoPngvocFg76vVhZcn4lJco34EPSjBy_o";
+}
 
 useEffect(()=>{
   localStorage.setItem('selectedBlog', JSON.stringify(selectedUserBlog));
@@ -56,7 +62,7 @@ useEffect(()=>{
   }, [currentTFN]);
 
   return (
-    <LocalContext.Provider value={{ webinfo, setwebinfo,selectedUserBlog, setSelectedUserBlog }}>
+    <LocalContext.Provider value={{ webinfo, setwebinfo,selectedUserBlog, setSelectedUserBlog, Goto }}>
       {children}
     </LocalContext.Provider>
   );

@@ -205,7 +205,7 @@ const FleetCarousel = () => {
                       <p>
                         Starting at <br /> <span>{car.price}</span>
                       </p>
-                      <button>Rent</button>
+                      <a href="https://forms.zohopublic.in/dreamdrive1818gm1/form/CONSENTFORMFORCARHIRE/formperma/XcyUB9S6UcHoPngvocFg76vVhZcn4lJco34EPSjBy_o"><button>Rent</button></a>
                     </div>
                   </div>
 

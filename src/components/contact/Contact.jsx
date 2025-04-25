@@ -6,8 +6,11 @@ import {
   faPhoneAlt,
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
+import { useLocalContext } from "../../context/LocalContext";
 
 const Contact = () => {
+
+  const {Goto}= useLocalContext();
   return (
     <section className="contact-section">
       <div className="contact-container">
@@ -31,7 +34,8 @@ const Contact = () => {
           </ul>
 
           {/* Booking Button */}
-          <a href="/booking" className="book-now-btn">Book Now</a>
+          <a onClick={Goto} className="book-now-btn">Book Now</a>
+          
         </div>
 
         {/* Right: Contact Form */}
