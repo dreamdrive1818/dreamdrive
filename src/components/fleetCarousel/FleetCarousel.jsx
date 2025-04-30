@@ -10,10 +10,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useLocation } from "react-router-dom";
 
-// Your cars array (as you posted above)
 const cars = [
-
   {
+    id: "car01",
     name: "Tata Nexon Dark Edition 2023",
     price: "$59/day",
     image: "https://www.bajajmall.in/emistore/media/catalog/product/t/a/tatanexonxzpluslux_376339_atlasblack_base.jpeg",
@@ -29,6 +28,7 @@ const cars = [
     },
   },
   {
+    id: "car02",
     name: "Hyundai i20 Asta IVT 2024",
     price: "$55/day",
     image: "https://ackodrive-assets.ackodrive.com/media/test_QkNB2Ri.png",
@@ -44,6 +44,7 @@ const cars = [
     },
   },
   {
+    id: "car03",
     name: "Jeep Compass Limited 2024",
     price: "$99/day",
     image: "https://images.dealer.com/autodata/us/color/2019/USC90JES152D0/PRM.jpg?impolicy=resize&w=414",
@@ -59,6 +60,7 @@ const cars = [
     },
   },
   {
+    id: "car04",
     name: "Renault Kiger 2025",
     price: "$49/day",
     image: "https://www.carbike360.com/_next/image?url=https%3A%2F%2Fd2uqhpl0gyo7mc.cloudfront.net%2FRenault_Kiger_09a2720671.jpg&w=3840&q=75",
@@ -74,6 +76,7 @@ const cars = [
     },
   },
   {
+    id: "car05",
     name: "Maruti Swift 2025",
     price: "$45/day",
     image: "https://5.imimg.com/data5/VL/UP/GLADMIN-66493026/maruti-swift-500x500.png",
@@ -89,6 +92,7 @@ const cars = [
     },
   },
   {
+    id: "car06",
     name: "Maruti Ertiga ZXI 2025",
     price: "$65/day",
     image: "https://www.carandbike.com/_next/image?url=https%3A%2F%2Fimages.carandbike.com%2Fcar-images%2Fcolors%2Fmaruti-suzuki%2Fertiga%2Fmaruti-suzuki-ertiga-splendid-silver.png%3Fv%3D1653313094&w=640&q=75",
@@ -104,6 +108,7 @@ const cars = [
     },
   },
   {
+    id: "car07",
     name: "Hyundai Aura SX 2025",
     price: "$49/day",
     image: "https://media.zigcdn.com/media/model/2023/Mar/aura_600x400.jpg",
@@ -119,6 +124,7 @@ const cars = [
     },
   },
   {
+    id: "car08",
     name: "Maruti FRONX 2025",
     price: "$55/day",
     image: "https://www.cars24.com/new-cars/_next/image/?url=https%3A%2F%2Fcdn.cars24.com%2Fprod%2Fnew-car-cms%2FMaruti-Suzuki%2FFRONX%2F2024%2F05%2F15%2Ff0dacce0-2ba2-4a6c-ac0f-3e5670e23309-Fronx-Car-Image.png&w=828&q=30",
@@ -134,7 +140,6 @@ const cars = [
     },
   },
 ];
-
 
 const FleetCarousel = () => {
 

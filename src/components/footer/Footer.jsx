@@ -1,9 +1,14 @@
 import React from "react";
 import "./Footer.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+
 import { useLocalContext } from "../../context/LocalContext";
 import { useNavigate } from "react-router-dom";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+
+library.add(fab, faArrowUp);
 
 const Footer = () => {
   const { webinfo } = useLocalContext();
@@ -44,15 +49,17 @@ const Footer = () => {
           </div>
           <div className="footer-column">
             <h4>Social Media</h4>
-            <p>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer">Facebook</a>
-            </p>
-            <p>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a>
-            </p>
-            <p>
-              <a href="https://twitter.com" target="_blank" rel="noreferrer">Twitter</a>
-            </p>
+            <div className="social-icons">
+              <a href="https://facebook.com" target="_blank" rel="noreferrer">
+                <FontAwesomeIcon icon={['fab', 'facebook-f']} />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noreferrer">
+                <FontAwesomeIcon icon={['fab', 'instagram']} />
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noreferrer">
+                <FontAwesomeIcon icon={['fab', 'twitter']} />
+              </a>
+            </div>
           </div>
         </div>
       </div>

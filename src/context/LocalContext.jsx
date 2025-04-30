@@ -20,7 +20,7 @@ const [selectedUserBlog, setSelectedUserBlog] = useState(()=> localStorage.getIt
 
 
 const Goto = () =>{
-  window.location.href = "https://forms.zohopublic.in/dreamdrive1818gm1/form/CONSENTFORMFORCARHIRE/formperma/XcyUB9S6UcHoPngvocFg76vVhZcn4lJco34EPSjBy_o";
+  window.location.href = "";
 }
 
 useEffect(()=>{

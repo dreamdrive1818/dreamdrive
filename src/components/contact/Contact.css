@@ -111,6 +111,25 @@
   background-color: #cc7a00;
 }
 
+.qr-section {
+  margin-top: 2rem;
+  /* text-align: center; */
+}
+
+.qr-section p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.qr-code {
+  width: 150px;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+
 /* Responsive */
 @media (max-width: 768px) {
   .contact-container {
