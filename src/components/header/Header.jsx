@@ -16,7 +16,7 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const cartItemCount = 2; 
   const [isScrolled, setIsScrolled] = useState(false);
-  const { Goto} = useLocalContext();
+  const { handleNavigation} = useLocalContext();
 
 useEffect(() => {
   const handleScroll = () => {
@@ -28,7 +28,7 @@ useEffect(() => {
 }, []);
 
 
-  const handleNavigation = (route) => {
+  const handleRoute = (route) => {
     navigate(route);
     setIsMobileMenuOpen(false);
   };
@@ -57,19 +57,19 @@ useEffect(() => {
 
     {/* Center Navigation (Desktop Only) */}
     <nav className="nav-links">
-      <p onClick={() => handleNavigation("/howitworks")}>How It Works</p>
-      <p onClick={() => handleNavigation("/cars")}>Cars</p>
-      <p onClick={() => handleNavigation("/about")}>About Us</p>
-      <p onClick={() => handleNavigation("/contact")}>Contact us</p>
+      <p onClick={() => handleRoute("/howitworks")}>How It Works</p>
+      <p onClick={() => handleRoute("/cars")}>Cars</p>
+      <p onClick={() => handleRoute("/about")}>About Us</p>
+      <p onClick={() => handleRoute("/contact")}>Contact us</p>
     </nav>
 
     {/* Right Actions */}
     <div className="header-actions">
-      <button className="contact-btn" onClick={() => handleNavigation("/contact")}>
+      <button className="contact-btn" onClick={() => handleRoute("/contact")}>
         Contact
       </button>
       <span>|</span>
-      <button className="signup-btn" onClick={Goto}>
+      <button className="signup-btn" onClick={handleNavigation}>
         Book Now
       </button>
     </div>
@@ -84,11 +84,11 @@ useEffect(() => {
         &times;
       </button>
       <div className="mobile-modern-links">
-      <p onClick={() => handleNavigation("/howitworks")}>How It Works</p>
-      <p onClick={() => handleNavigation("/cars")}>Cars</p>
-      <p onClick={() => handleNavigation("/about")}>About Us</p>
-      <p onClick={() => handleNavigation("/contact")}>Contact us</p>
-        <p onClick={() => handleNavigation("/booking-form")}>Book Now</p>
+      <p onClick={() => handleRoute("/howitworks")}>How It Works</p>
+      <p onClick={() => handleRoute("/cars")}>Cars</p>
+      <p onClick={() => handleRoute("/about")}>About Us</p>
+      <p onClick={() => handleRoute("/contact")}>Contact us</p>
+        <p onClick={() => handleRoute("/booking-form")}>Book Now</p>
       </div>
     </div>
   </div>

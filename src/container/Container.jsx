@@ -9,6 +9,7 @@ import Contact from '../components/contact/Contact';
 import DreamCarBanner from '../components/DreamCarBanner/DreamCarBanner';
 import TermsAndConditions from '../components/TermsAndConditions/TermsAndConditions';
 import About from '../components/About/About';
+import Order from '../components/Order/Order';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -28,6 +29,7 @@ const AppRoute = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cars" element={<FleetCarousel />} />
+        <Route path="/order" element={<Order />} />
         <Route path="/about" element={<About />} />
         <Route path="/howitworks" element={<HowItWorks />} />
         <Route path="/contact" element={<Contact />} />

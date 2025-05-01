@@ -14,18 +14,20 @@ export const LocalProvider = ({ children }) => {
     email:"info@hcvatron.com"
 });
 
+const [selectedCar, setSelectedCar] = useState(()=>localStorage.getItem('selectedCar') ? JSON.parse(localStorage.getItem('selectedCar')): null);
 
+const handleOrder = (car) =>{
+  setSelectedCar(car);
+}
 
-const [selectedUserBlog, setSelectedUserBlog] = useState(()=> localStorage.getItem('selectedBlog') ? JSON.parse(localStorage.getItem('selectedBlog')) : null);
-
-
-const Goto = () =>{
-  window.location.href = "";
+const handleNavigation = () =>{
+   
 }
 
 useEffect(()=>{
-  localStorage.setItem('selectedBlog', JSON.stringify(selectedUserBlog));
-})
+   localStorage.setItem('selectedCar',JSON.stringify(selectedCar));
+},[selectedCar,setSelectedCar])
+
   // Fetch TFN from Firebase
   useEffect(() => {
     const fetchTFN = async () => {
@@ -62,7 +64,7 @@ useEffect(()=>{
   }, [currentTFN]);
 
   return (
-    <LocalContext.Provider value={{ webinfo, setwebinfo,selectedUserBlog, setSelectedUserBlog, Goto }}>
+    <LocalContext.Provider value={{ webinfo, setwebinfo, handleOrder,selectedCar, setSelectedCar, handleNavigation }}>
       {children}
     </LocalContext.Provider>
   );

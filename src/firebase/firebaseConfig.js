@@ -4,13 +4,13 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } f
 import { getFirestore, doc, setDoc,getDoc,onSnapshot } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDPCQLH-FZkQe5aSw8moiaNbOrjqQxdvWw",
-  authDomain: "dreamdrive-e3fca.firebaseapp.com",
-  projectId: "dreamdrive-e3fca",
-  storageBucket: "dreamdrive-e3fca.firebasestorage.app",
-  messagingSenderId: "92154295508",
-  appId: "1:92154295508:web:ec0f8628ad0794aa497741",
-  measurementId: "G-QRHH1V2058"
+  apiKey: "AIzaSyDDfe2wUwf-TkLtqmm5Jq7axxwega4xWjY",
+  authDomain: "dreamdrive-307ed.firebaseapp.com",
+  projectId: "dreamdrive-307ed",
+  storageBucket: "dreamdrive-307ed.firebasestorage.app",
+  messagingSenderId: "669755502101",
+  appId: "1:669755502101:web:32375dd8fcbfcbcb8b281c",
+  measurementId: "G-QTMHB127TZ"
 };
 
 

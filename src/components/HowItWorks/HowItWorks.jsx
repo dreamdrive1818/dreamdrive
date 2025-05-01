@@ -4,9 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHandPointer,
   faCalendarCheck,
-//   faSteeringWheel,
-  faCarSide,
+  faPenNib,
   faCarOn,
+  faCarSide,
+  faIndianRupeeSign,
 } from "@fortawesome/free-solid-svg-icons";
 import BookNowBanner from "../Booknow/BookNowBanner";
 
@@ -17,15 +18,21 @@ const steps = [
     icon: faHandPointer,
   },
   {
-    title: "Book",
-    description: "Reserve your car online through form.",
-    icon: faCalendarCheck,
+    title: "Book & Pay",
+    description: "Reserve your car and pay securely online.",
+    icon: faIndianRupeeSign,
     highlight: true,
+  },
+  {
+    title: "Sign Consent",
+    description: "Consent form will be emailed. Sign it digitally.",
+    icon: faPenNib,
   },
   {
     title: "Drive",
     description: "Pick up your car and hit the road.",
     icon: faCarOn,
+    highlight: true,
   },
   {
     title: "Return",

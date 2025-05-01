@@ -9,7 +9,7 @@ import {
 import { useLocalContext } from "../../context/LocalContext";
 
 const Contact = () => {
-  const { Goto } = useLocalContext();
+  const { handleNavigation } = useLocalContext();
 
   return (
     <section className="contact-section">
@@ -34,7 +34,7 @@ const Contact = () => {
           </ul>
 
           {/* Booking Button */}
-          <a onClick={Goto} className="book-now-btn">Book Now</a>
+          <a onClick={handleNavigation} className="book-now-btn">Book Now</a>
 
           {/* QR Code */}
           <div className="qr-section">
