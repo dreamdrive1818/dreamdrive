@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
-import { db, auth } from '../firebase/firebaseConfig';
+import { db } from '../firebase/firebaseConfig';
 
 const LocalContext = createContext();
 
@@ -14,19 +14,14 @@ export const LocalProvider = ({ children }) => {
     email:"info@hcvatron.com"
 });
 
-const [selectedCar, setSelectedCar] = useState(()=>localStorage.getItem('selectedCar') ? JSON.parse(localStorage.getItem('selectedCar')): null);
 
-const handleOrder = (car) =>{
-  setSelectedCar(car);
-}
+
 
 const handleNavigation = () =>{
-   
+   window.location.href = '/cars';
 }
 
-useEffect(()=>{
-   localStorage.setItem('selectedCar',JSON.stringify(selectedCar));
-},[selectedCar,setSelectedCar])
+
 
   // Fetch TFN from Firebase
   useEffect(() => {
@@ -64,7 +59,7 @@ useEffect(()=>{
   }, [currentTFN]);
 
   return (
-    <LocalContext.Provider value={{ webinfo, setwebinfo, handleOrder,selectedCar, setSelectedCar, handleNavigation }}>
+    <LocalContext.Provider value={{ webinfo, setwebinfo, handleNavigation }}>
       {children}
     </LocalContext.Provider>
   );

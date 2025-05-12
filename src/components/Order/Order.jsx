@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Order.css";
-import { useLocalContext } from "../../context/LocalContext";
 import HowItWorks from "../HowItWorks/HowItWorks";
+import OrderModal from "./OrderModal/OrderModal";
+import { useOrderContext } from "../../context/OrderContext";
 
 const Order = () => {
-  const { selectedCar } = useLocalContext();
+  const { selectedCar } = useOrderContext();
   const car = selectedCar;
+  const [showModal, setShowModal] = useState(false);
 
   if (!car) {
     return <div className="order-error">No car selected.</div>;
@@ -33,12 +35,13 @@ const Order = () => {
             <li><strong>Extra Hour Charges:</strong> ₹{car.details.extraHr}</li>
           </ul>
 
-          <button className="order-book-btn">
+          <button className="order-book-btn" onClick={() => setShowModal(true)}>
             Proceed to Booking
           </button>
         </div>
       </div>
     </div>
+    {showModal && <OrderModal closeModal={() => setShowModal(false)} />}
     <HowItWorks />
     </>
   );

@@ -10,6 +10,8 @@ import DreamCarBanner from '../components/DreamCarBanner/DreamCarBanner';
 import TermsAndConditions from '../components/TermsAndConditions/TermsAndConditions';
 import About from '../components/About/About';
 import Order from '../components/Order/Order';
+import AdminLayout from './AdminLayout';
+import Payment from '../components/Payment/Payment';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -22,25 +24,42 @@ const ScrollToTop = () => {
 };
 
 const AppRoute = () => {
+
+   const location = useLocation();
+  const isAdminPage = location.pathname.includes("admin");
+
   return (
-    <Router>
+      <>
       <ScrollToTop />
-      <Header />
+      
+      {!isAdminPage  && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cars" element={<FleetCarousel />} />
         <Route path="/order" element={<Order />} />
+        <Route path="/payment" element={<Payment />} />
         <Route path="/about" element={<About />} />
         <Route path="/howitworks" element={<HowItWorks />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/termsandconditions" element={<TermsAndConditions />} />
+        
       </Routes>
-      <DreamCarBanner />
-      <Footer />
-    </Router>
+      {isAdminPage && <AdminLayout />}
+     
+     {!isAdminPage  && <DreamCarBanner />}
+      {!isAdminPage  && <Footer />}
+
+       
+    </>
   );
 };
 
-const Container = () => <AppRoute />;
+const Container = () => {
+  return (
+    <Router>
+      <AppRoute />
+    </Router>
+  );
+};
 
 export default Container;

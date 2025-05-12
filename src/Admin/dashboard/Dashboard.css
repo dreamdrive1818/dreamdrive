@@ -1,0 +1,117 @@
+/* General Container */
+.dashboard-container {
+    padding: 3rem;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Top Section - Stats in a row */
+  .top-section {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .stat-item {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    flex: 1 1 220px; /* Flex to allow wrapping and responsiveness */
+    text-align: center;
+  }
+  
+  .stat-item h3 {
+    font-size: 1.6rem;
+    margin-bottom: 0.8rem;
+    color: #2c3e50;
+  }
+  
+  .stat-item p {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #27ae60;
+  }
+  
+  /* Bottom Section - Split into Left and Right Parts */
+  .bottom-section {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .left-part {
+    flex: 0 0 60%; /* Takes 60% of the width */
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .right-part {
+    flex: 0 0 40%; /* Takes 40% of the width */
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .left-part h3, .right-part h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .latest-blogs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  /* Button Styling */
+  .tfn-clicks-btn {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+  
+  .tfn-clicks-btn:hover {
+    background-color: #2980b9;
+  }
+  
+  .see-all-btn {
+    background-color: #27ae60;
+    color: white;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-top: 2rem;
+  }
+  
+  .see-all-btn:hover {
+    background-color: #219150;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .top-section {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .bottom-section {
+      flex-direction: column;
+    }
+  
+    .left-part, .right-part {
+      flex: 1 1 100%; /* Full width for smaller screens */
+    }
+  }
+  

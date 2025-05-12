@@ -37,10 +37,10 @@ const Contact = () => {
           <a onClick={handleNavigation} className="book-now-btn">Book Now</a>
 
           {/* QR Code */}
-          <div className="qr-section">
+          {/* <div className="qr-section">
             <p>Or scan to fill the consent form:</p>
             <img src='https://res.cloudinary.com/dcf3mojai/image/upload/v1745951636/60040252249_CONSENTFORMFORCARHIRE_1_nmlbib.png' alt="Consent Form QR" className="qr-code" />
-          </div>
+          </div> */}
         </div>
 
         {/* Right: Contact Form */}

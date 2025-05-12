@@ -1,6 +1,6 @@
 .fleet-container {
   text-align: center;
-  padding: 8rem 2rem;
+  padding: 6rem 2rem;
   font-family: var(--font-family-main);
   display: flex;
   justify-content: center;
@@ -20,8 +20,18 @@
 .fleet-container h2 {
   font-size: 4.8rem;
   color: var(--text-dark);
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 }
+
+
+.fleet-subtitle {
+  font-size: 1.4rem;
+  color: var(--dark-bg);
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+
 
 .fleet-cards {
   display: flex;
@@ -158,10 +168,11 @@
 
 /* Dots */
 .carousel-dots {
-  margin-top: 15rem;
+  margin-top: 14rem;
   display: flex;
   justify-content: center;
   gap: 1.2rem;
+  z-index: 1000;
 }
 
 .carousel-dots button {
