@@ -49,6 +49,9 @@ const Success = () => {
           <FaCheckCircle className="success-icon" />
           <h2>Booking Confirmed!</h2>
           <p>Your ride has been successfully scheduled.</p>
+          <div className="order-id-box">
+  <p><strong>Ride ID:</strong> {order.id}</p>
+</div>
         </div>
 
         <div className="success-grid">

@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "dreamdrive-e3fca"
-  }
+    "default": "dreamdrive-e3fca",
+    " deploy": "dreamdrive-307ed"
+  },
+  "targets": {},
+  "etags": {}
 }

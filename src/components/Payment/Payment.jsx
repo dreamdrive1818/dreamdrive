@@ -3,55 +3,20 @@ import "./Payment.css";
 import { toast } from "react-toastify";
 import { useOrderContext } from "../../context/OrderContext";
 import { useNavigate } from "react-router-dom";
-import { db } from "../../firebase/firebaseConfig";
-import {
-  addDoc,
-  collection,
-  Timestamp,
-  doc,
-  updateDoc,
-  arrayUnion,
-} from "firebase/firestore";
 
 const Payment = () => {
-  const { order, clearOrder, user } = useOrderContext();
+  const { order, submitOrderToFirestore } = useOrderContext();
   const navigate = useNavigate();
 
- 
-  useEffect(()=>{
-       if (!order || !order.car) {
+  useEffect(() => {
+    if (!order || !order.car) {
       toast.warning("No order found. Please select a car first.");
       navigate("/cars");
     }
-  },[])
-  
+  }, []);
 
-  const handlePayment = async () => {
-    if (!order || !user) return;
-   
-    try {      
-      const orderWithPayment = {
-        ...order,
-        advancePaid: 1500,
-        paymentStatus: "paid",
-        createdAt: Timestamp.now(),
-      };
-
-      // 1. Save order globally
-      await addDoc(collection(db, "orders"), orderWithPayment);
-
-      // 2. Add to user's document
-      const userRef = doc(db, "users", user.email);
-      await updateDoc(userRef, {
-        orders: arrayUnion(orderWithPayment),
-      });
-
-      toast.success("Advance payment of ₹1500 saved. Order confirmed!");
-      navigate("/success"); // Or any confirmation page
-    } catch (error) {
-      console.error("Order save failed:", error);
-      toast.error("Failed to save order. Please try again.");
-    }
+  const handlePayment = () => {
+    submitOrderToFirestore(navigate);
   };
 
   return (

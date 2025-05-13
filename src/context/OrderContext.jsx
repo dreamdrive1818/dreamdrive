@@ -1,7 +1,15 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { db } from "../firebase/firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import {
+  addDoc,
+  collection,
+  Timestamp,
+  doc,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore";
+import axios from "axios";
 
 const OrderContext = createContext();
 
@@ -69,22 +77,47 @@ export const OrderProvider = ({ children }) => {
 
 
 
-  const submitOrderToFirestore = async (navigate, closeModal) => {
-    if (!order) {
-      toast.error("No order found to submit.");
-      return;
-    }
+const submitOrderToFirestore = async (navigate) => {
+  if (!order) {
+    toast.error("No order found to submit.");
+    return;
+  }
 
-    try {
-      await addDoc(collection(db, "orders"), order);
-      toast.success("Order submitted to Firestore!");
-      if (closeModal) closeModal();
-      if (navigate) navigate("/payment");
-    } catch (err) {
-      console.error("Order Save Error:", err.message);
-      toast.error("Failed to submit order to Firestore.");
-    }
+  const customId = `RIDE${Math.floor(100000 + Math.random() * 900000)}`;
+
+  const orderWithCustomId = {
+    ...order,
+    id: customId,
+    advancePaid: 1500,
+    paymentStatus: "paid",
+    createdAt: new Date(),
   };
+
+  try {
+    await addDoc(collection(db, "orders"), orderWithCustomId);
+    setOrder(orderWithCustomId);
+
+    const userRef = doc(db, "users", user.email);
+    await updateDoc(userRef, {
+      orders: arrayUnion(orderWithCustomId),
+    });
+
+   
+    await axios.post("https://your-server-domain.com/send-confirmation", {
+      user,
+      order: orderWithCustomId,
+    });
+
+    toast.success("Advance payment of ₹1500 saved. Order confirmed!");
+
+    
+    if (navigate) navigate("/success");
+
+  } catch (err) {
+    console.error("Order Save Error:", err.message);
+    toast.error("Failed to complete order. Please try again.");
+  }
+};
 
   return (
     <OrderContext.Provider
