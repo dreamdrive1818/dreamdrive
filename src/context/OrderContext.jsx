@@ -103,7 +103,7 @@ const submitOrderToFirestore = async (navigate) => {
     });
 
    
-    await axios.post("https://your-server-domain.com/send-confirmation", {
+    await axios.post("https://dreamdrive-1maq.onrender.com/send-confirmation", {
       user,
       order: orderWithCustomId,
     });
