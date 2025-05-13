@@ -52,7 +52,7 @@ const HowItWorks = () => {
         {steps.map((step, index) => (
           <div key={index} className={`step-block ${step.highlight ? "active" : ""}`}>
             <div className="step-circle" />
-            <div className="step-content">
+            <div className="step-content reveal-bottom">
               <div className="step-icon">
                 <FontAwesomeIcon icon={step.icon} />
               </div>

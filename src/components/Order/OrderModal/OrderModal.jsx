@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { useOrderContext } from "../../../context/OrderContext";
 import axios from "axios";
 
+
+
 const OrderModal = ({ closeModal }) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -14,6 +16,8 @@ const OrderModal = ({ closeModal }) => {
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [agreed, setAgreed] = useState(false);
+  const [isChecking, setIsChecking] = useState(false);
+const [isSendingOtp, setIsSendingOtp] = useState(false);
 
   const navigate = useNavigate();
   const { setUser, createPendingOrder, handleOrder } = useOrderContext();
@@ -29,6 +33,8 @@ const handleSendOtp = async () => {
   if (!/^\S+@\S+\.\S+$/.test(email)) return toast.error("Invalid email format.");
   if (!/^\d{10}$/.test(phone)) return toast.error("Enter a valid 10-digit phone number.");
   if (!agreed) return toast.warn("Please agree to the Terms & Conditions.");
+
+  setIsChecking(true);
 
   const userId = email;
   const userRef = doc(db, "users", userId);
@@ -50,14 +56,14 @@ const handleSendOtp = async () => {
       closeModal();
       navigate("/payment");
     } else {
-      // 🔒 First, try sending OTP
+      setIsChecking(false); 
+      setIsSendingOtp(true);
+
       const res = await axios.post("https://dreamdrive-1maq.onrender.com/send-otp", { email });
 
       if (res.status === 200) {
         toast.success("OTP sent to your email.");
         setOtpSent(true);
-
-        // ✅ Only save to Firestore if OTP was sent successfully
         await setDoc(userRef, userData);
         setUser(userData);
       } else {
@@ -66,11 +72,13 @@ const handleSendOtp = async () => {
     }
   } catch (err) {
     console.error("Send OTP Error:", err.message);
-    toast.error(
-      err.response?.data?.message || "Something went wrong while sending OTP."
-    );
+    toast.error(err.response?.data?.message || "Something went wrong while sending OTP.");
+  } finally {
+    setIsChecking(false);
+    setIsSendingOtp(false);
   }
 };
+
 
 
   // ✅ Verify OTP and then save local order
@@ -162,7 +170,16 @@ const handleSendOtp = async () => {
               </label>
             </div>
 
-            <button onClick={handleSendOtp}>Send OTP</button>
+            <button
+  onClick={handleSendOtp}
+  disabled={isChecking || isSendingOtp}
+>
+  {isChecking
+    ? "Checking..."
+    : isSendingOtp
+    ? "Sending OTP..."
+    : "Send OTP"}
+</button>
           </>
         ) : (
           <>

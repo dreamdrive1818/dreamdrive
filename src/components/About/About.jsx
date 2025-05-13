@@ -12,6 +12,7 @@ import {
   faShieldAlt,
    faThumbsUp
 } from "@fortawesome/free-solid-svg-icons";
+import Achievements from "../Achievements/Achievements";
 
 const features = [
   {
@@ -69,6 +70,7 @@ const About = () => {
   const { webinfo } = useLocalContext();
 
   return (
+    <>
     <section className="about-us">
       <div className="about-container">
         <div className="about-heading">
@@ -81,7 +83,7 @@ const About = () => {
           </p>
         </div>
 
-        <div className="about-features">
+        <div className="about-features reveal-bottom">
           {features.map((item, i) => (
             <div className="feature-box" key={i}>
               <div className="feature-icon">
@@ -94,6 +96,8 @@ const About = () => {
         </div>
       </div>
     </section>
+    <Achievements />
+    </>
   );
 };
 

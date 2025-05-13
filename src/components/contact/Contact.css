@@ -1,155 +1,118 @@
-.contact-section {
-  padding: 4rem 2rem;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f9f9f9;
+.contact-wrapper {
+  padding: 6rem 2rem;
+  background: #fff;
 }
 
-.contact-container {
-  max-width: 1100px;
+.contact-grid {
+  max-width: 1200px;
   margin: auto;
-  background: #fff;
   display: flex;
   flex-wrap: wrap;
-  gap: 3rem;
-  padding: 3rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  gap: 4rem;
+  align-items: flex-start;
 }
 
-.contact-info {
+.contact-info-box {
   flex: 1;
-  min-width: 280px;
+  min-width: 300px;
 }
 
-.contact-info h2 {
-  font-size: 3rem;
+.contact-info-box h2 {
+  font-size: 5rem;
   margin-bottom: 1rem;
+  color: #111;
 }
 
-.contact-info p {
-  margin-bottom: 2rem;
+.contact-info-box p {
+  font-size: 1.6rem;
   color: #555;
-  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  max-width: 400px;
 }
 
-.contact-info ul {
+.contact-info-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.contact-info li {
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
+.contact-info-list li {
+  font-size: 1.4rem;
   color: #333;
   display: flex;
   align-items: center;
+  margin-bottom: 1.5rem;
 }
 
-.contact-info li span {
-  margin-left: 1rem;
-}
-
-.contact-icon {
+.contact-info-list li svg {
   margin-right: 10px;
   color: var(--primary-color);
 }
 
-/* Booking Button */
-.book-now-btn {
+.contact-info-list span {
   display: inline-block;
-  margin-top: 2rem;
-  padding: 0.8rem 1.5rem;
-  font-size: 1.1rem;
-  color: white;
-  background-color: var(--primary-color, #ff9900);
-  border-radius: 6px;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
 }
 
-.book-now-btn:hover {
-  background-color: #cc7a00;
-}
 
-/* Contact form styles */
-.contact-form {
-  flex: 1;
-  min-width: 280px;
+/* Form Section */
+.contact-form-box {
+  flex: 1.5;
+  min-width: 320px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.5rem;
 }
 
-.form-group input,
-.form-group textarea {
+.name-fields {
+  display: flex;
+  gap: 1rem;
+}
+
+.name-fields input {
+  flex: 1;
+}
+
+.contact-form-box input,
+.contact-form-box textarea {
   width: 100%;
   padding: 14px;
-  font-size: 1.1rem;
-  border: 1px solid #ddd;
+  font-size: 1.4rem;
+  border: 1px solid #ccc;
   border-radius: 8px;
   outline: none;
-  transition: border 0.3s ease;
+  transition: border-color 0.3s ease;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-  border-color: var(--primary-color, #ff9900);
+.contact-form-box input:focus,
+.contact-form-box textarea:focus {
+  border-color: var(--primary-color);
 }
 
-.contact-submit {
-  background-color: var(--primary-color, #ff9900);
+.contact-wrapper .submit-btn {
+  align-self: start;
+  background-color: var(--primary-color);
   color: white;
   border: none;
-  padding: 1rem;
-  font-size: 1.1rem;
+  padding: 1.2rem 2rem;
+  font-size: 1.4rem;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease;
 }
 
-.contact-submit:hover {
-  background-color: #cc7a00;
-}
-
-.qr-section {
-  margin-top: 2rem;
-  /* text-align: center; */
-}
-
-.qr-section p {
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  color: #555;
-}
-
-.qr-code {
-  width: 150px;
-  height: auto;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
 
 
 /* Responsive */
 @media (max-width: 768px) {
-  .contact-container {
+  .contact-grid {
     flex-direction: column;
-    padding: 2rem;
   }
 
-  .contact-info h2 {
-    font-size: 2rem;
+  .name-fields {
+    flex-direction: column;
   }
 
-  .contact-info p {
-    font-size: 1rem;
-  }
-
-  .contact-info li {
-    font-size: 1rem;
-  }
-
-  .book-now-btn {
+  .submit-btn {
     width: 100%;
     text-align: center;
   }

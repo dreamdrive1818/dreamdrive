@@ -13,7 +13,7 @@ const Hero = () => {
     <section className="hero">
       <div className="hero-div">
     
-      <div className="hero-left">
+      <div className="hero-left reveal-bottom">
         <h1>Your Journey,<br />Your Car,<br />Your Way</h1>
         <p>
           Experience the ultimate freedom of choice with GoCar – tailor your
@@ -45,8 +45,8 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="hero-right">
-        <div className="hero-right-top">
+      <div className="hero-right ">
+        <div className="hero-right-top reveal-bottom">
           <div className="hero-users">
           <img src="https://images.unsplash.com/flagged/photo-1571367034861-e6729ad9c2d5?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="User 1" />
           <img src="https://images.unsplash.com/photo-1540569014015-19a7be504e3a?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="User 2" />
@@ -55,9 +55,9 @@ const Hero = () => {
           <p><strong>100+ PEOPLE</strong></p>
           <p>have used our services such as renting, buying, or even selling their car.</p>    
         </div>
-        <div className="hero-right-bot">
+        <div className="hero-right-bot reveal-bottom delay-0">
        
-        <div className="hero-actions">
+        <div className="hero-actions ">
           <button onClick={()=>navigate('/contact')}>Rent</button>
           <button onClick={()=>navigate('/contact')}>Buy</button>
           <button onClick={()=>navigate('/contact')}>Sell</button>

@@ -61,12 +61,10 @@ export const OrderProvider = ({ children }) => {
 
     setOrder(bookingData);
     console.log("Booking Details saved locally-->",bookingData);
-    toast.success("Order saved locally. Proceed to payment.");
   };
 
   const clearOrder = () => {
   setOrder(null);
-  toast.info("Order cleared from local storage.");
 };
 
 

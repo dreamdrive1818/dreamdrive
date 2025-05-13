@@ -14,3 +14,45 @@
 [info] https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform&response_type=code&state=1042079777&redirect_uri=http%3A%2F%2Flocalhost%3A9005
 [info] 
 [info] Waiting for authentication...
+[debug] [2025-05-12T20:57:30.948Z] ----------------------------------------------------------------------
+[debug] [2025-05-12T20:57:30.951Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\ricka\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2025-05-12T20:57:30.951Z] CLI Version:   14.2.1
+[debug] [2025-05-12T20:57:30.951Z] Platform:      win32
+[debug] [2025-05-12T20:57:30.951Z] Node Version:  v22.14.0
+[debug] [2025-05-12T20:57:30.951Z] Time:          Tue May 13 2025 02:27:30 GMT+0530 (India Standard Time)
+[debug] [2025-05-12T20:57:30.952Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-05-12T20:57:30.955Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2025-05-12T20:57:31.179Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-05-12T20:57:31.179Z] > authorizing via signed-in user (rickak825@gmail.com)
+[debug] [2025-05-12T20:57:31.179Z] [iam] checking project dreamdrive-e3fca for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2025-05-12T20:57:31.180Z] Checked if tokens are valid: false, expires at: 1746696609488
+[debug] [2025-05-12T20:57:31.180Z] Checked if tokens are valid: false, expires at: 1746696609488
+[debug] [2025-05-12T20:57:31.180Z] > refreshing access token with scopes: []
+[debug] [2025-05-12T20:57:31.181Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-05-12T20:57:31.181Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-05-12T20:57:31.737Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-05-12T20:57:31.737Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-05-12T20:57:31.742Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/dreamdrive-e3fca:testIamPermissions [none]
+[debug] [2025-05-12T20:57:31.742Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/dreamdrive-e3fca:testIamPermissions x-goog-quota-user=projects/dreamdrive-e3fca
+[debug] [2025-05-12T20:57:31.742Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/dreamdrive-e3fca:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-05-12T20:57:31.819Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2025-05-12T20:57:31.819Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2025-05-12T20:57:33.323Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/dreamdrive-e3fca:testIamPermissions 200
+[debug] [2025-05-12T20:57:33.323Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/dreamdrive-e3fca:testIamPermissions {}
+[debug] [2025-05-12T20:57:33.324Z] [iam] error while checking permissions, command may fail: Authorization failed. This account is missing the following required permissions on project dreamdrive-e3fca:
+
+  firebase.projects.get
+  firebasehosting.sites.update
+[debug] [2025-05-12T20:57:33.324Z] Checked if tokens are valid: true, expires at: 1747087050737
+[debug] [2025-05-12T20:57:33.324Z] Checked if tokens are valid: true, expires at: 1747087050737
+[debug] [2025-05-12T20:57:33.325Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/dreamdrive-e3fca [none]
+[debug] [2025-05-12T20:57:34.031Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/dreamdrive-e3fca 403
+[debug] [2025-05-12T20:57:34.031Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/dreamdrive-e3fca {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2025-05-12T20:57:34.032Z] Request to https://firebase.googleapis.com/v1beta1/projects/dreamdrive-e3fca had HTTP Error: 403, The caller does not have permission
+[debug] [2025-05-12T20:57:34.233Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects/dreamdrive-e3fca had HTTP Error: 403, The caller does not have permission
+    at responseToError (C:\Users\ricka\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:52:12)
+    at RetryOperation._fn (C:\Users\ricka\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:312:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[error] 
+[error] Error: Failed to get Firebase project dreamdrive-e3fca. Please make sure the project exists and your account has permission to access it.

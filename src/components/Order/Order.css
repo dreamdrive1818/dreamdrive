@@ -1,11 +1,10 @@
 .order-container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 10px 25px;
-    margin-bottom: 10rem;
+    padding: 1px 25px;
+    margin-bottom: 5rem;
     background-color: #f4f6f8;
     border-radius: 18px;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
   
@@ -111,6 +110,73 @@
     font-size: 1.5rem;
     color: red;
   }
+
+  .carousel-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-image {
+  width: 90%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.arrow {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  font-size: 22px;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  transition: background 0.3s;
+}
+
+.arrow:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.arrow.left {
+  left: 10px;
+}
+
+.arrow.right {
+  right: 10px;
+}
+
+.thumbnails {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.thumb {
+  width: 50px;
+  height: 38px;
+  object-fit: cover;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border 0.3s;
+}
+
+.thumb.active,
+.thumb:hover {
+  border-color: #2563eb;
+}
+
   
   /* RESPONSIVE STYLES */
   @media (max-width: 768px) {

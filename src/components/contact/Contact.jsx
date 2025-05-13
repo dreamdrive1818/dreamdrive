@@ -1,61 +1,34 @@
 import React from "react";
 import "./Contact.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMapMarkerAlt,
-  faPhoneAlt,
-  faEnvelope,
-} from "@fortawesome/free-solid-svg-icons";
-import { useLocalContext } from "../../context/LocalContext";
+import { faMapMarkerAlt, faPhoneAlt, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 const Contact = () => {
-  const { handleNavigation } = useLocalContext();
-
   return (
-    <section className="contact-section">
-      <div className="contact-container">
-        {/* Left: Contact Info */}
-        <div className="contact-info">
-          <h2>Get In Touch</h2>
-          <p>Have questions or want to work with us? Drop a message below.</p>
-          <ul>
-            <li>
-              <FontAwesomeIcon icon={faMapMarkerAlt} className="contact-icon" />
-              <strong> Address:</strong> <span>Ranchi, Jharkhand, Pin - 834001</span>
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faPhoneAlt} className="contact-icon" />
-              <strong> Phone:</strong> <span>+91 9876543210</span>
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faEnvelope} className="contact-icon" />
-              <strong> Email:</strong> <span>Dreamdrive1818@gmail.com</span>
-            </li>
+    <section className="contact-wrapper">
+      <div className="contact-grid">
+        {/* Left Column: Contact Info */}
+        <div className="contact-info-box">
+          <h2>Contact Us</h2>
+          <p>Feel free to use the form or drop us an email. Old-fashioned phone calls work too.</p>
+
+          <ul className="contact-info-list">
+            <li><FontAwesomeIcon icon={faPhoneAlt} /> <span>+91 9876543210</span></li>
+            <li><FontAwesomeIcon icon={faEnvelope} /> <span>Dreamdrive1818@gmail.com</span></li>
+            <li><FontAwesomeIcon icon={faMapMarkerAlt} /> <span>Ranchi, Jharkhand, Pin - 834001</span></li>
           </ul>
-
-          {/* Booking Button */}
-          <a onClick={handleNavigation} className="book-now-btn">Book Now</a>
-
-          {/* QR Code */}
-          {/* <div className="qr-section">
-            <p>Or scan to fill the consent form:</p>
-            <img src='https://res.cloudinary.com/dcf3mojai/image/upload/v1745951636/60040252249_CONSENTFORMFORCARHIRE_1_nmlbib.png' alt="Consent Form QR" className="qr-code" />
-          </div> */}
         </div>
 
-        {/* Right: Contact Form */}
-        <form className="contact-form">
-          <h2> Or Write Your Message below:</h2>
-          <div className="form-group">
-            <input type="text" placeholder="Your Name" required />
+        {/* Right Column: Form */}
+        <form className="contact-form-box">
+          <div className="name-fields">
+            <input type="text" placeholder="First" required />
+            <input type="text" placeholder="Last" required />
           </div>
-          <div className="form-group">
-            <input type="email" placeholder="Your Email" required />
-          </div>
-          <div className="form-group">
-            <textarea placeholder="Your Message" rows="5" required></textarea>
-          </div>
-          <button type="submit" className="contact-submit">Send Message</button>
+          <input type="email" placeholder="example@email.com" required />
+          <input type="tel" placeholder="Phone (optional)" />
+          <textarea placeholder="Type your message..." rows="5" required></textarea>
+          <button type="submit" className="submit-btn">Submit</button>
         </form>
       </div>
     </section>

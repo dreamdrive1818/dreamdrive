@@ -83,3 +83,60 @@ body{
 .discover-btn:hover{
     color: var(--dark-bg);
 }
+
+/* route-container */
+.route-container {
+  /* min-height: 80vh; */
+  padding: 2rem;
+}
+
+.route-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.fade-in-bottom {
+  animation: slideUp 0.4s ease-out both;
+}
+
+
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* reveal bottom */
+.reveal-bottom {
+  opacity: 0;
+  transform: translateY(80px);
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Delay classes starting from 2s to 4.5s */
+.delay-0 { animation-delay: 0.25s; }
+.delay-1 { animation-delay: 0.5s; }
+.delay-2 { animation-delay: 0.75s; }
+.delay-3 { animation-delay: 1s; }
+.delay-4 { animation-delay: 1.25s; }
+.delay-5 { animation-delay: 1.5s; }
+.delay-6 { animation-delay: 1.75s; }
+.delay-7 { animation-delay: 2s; }
+.delay-8 { animation-delay: 2.25s; }
+.delay-9 { animation-delay: 2.5s; }
+.delay-10 { animation-delay: 2.75s; }
