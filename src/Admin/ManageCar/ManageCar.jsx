@@ -13,6 +13,7 @@ const ManageCar = () => {
   const [formData, setFormData] = useState({
     name: "",
     price: "",
+    available: "Available",
     images: [""],
     details: {
       kilometer: "",
@@ -30,7 +31,7 @@ const ManageCar = () => {
     const carList = await fetchCars();
     setCars(carList);
     const indexMap = {};
-    carList.forEach(car => indexMap[car.id] = 0);
+    carList.forEach((car) => (indexMap[car.id] = 0));
     setCarouselIndex(indexMap);
   };
 
@@ -41,28 +42,28 @@ const ManageCar = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name in formData.details) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         details: { ...prev.details, [name]: value },
       }));
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
   const handleImageChange = (index, value) => {
     const updatedImages = [...formData.images];
     updatedImages[index] = value;
-    setFormData(prev => ({ ...prev, images: updatedImages }));
+    setFormData((prev) => ({ ...prev, images: updatedImages }));
   };
 
   const addImageField = () => {
-    setFormData(prev => ({ ...prev, images: [...prev.images, ""] }));
+    setFormData((prev) => ({ ...prev, images: [...prev.images, ""] }));
   };
 
   const removeImageField = (index) => {
     const updatedImages = formData.images.filter((_, i) => i !== index);
-    setFormData(prev => ({ ...prev, images: updatedImages }));
+    setFormData((prev) => ({ ...prev, images: updatedImages }));
   };
 
   const handleSubmit = async () => {
@@ -85,6 +86,7 @@ const ManageCar = () => {
     setFormData({
       name: "",
       price: "",
+      available: "Available",
       images: [""],
       details: {
         kilometer: "",
@@ -104,6 +106,7 @@ const ManageCar = () => {
     setFormData({
       ...car,
       images: car.images || [""],
+      available: car.available || "Available",
     });
     setEditCarId(car.id);
     setModalOpen(true);
@@ -115,39 +118,45 @@ const ManageCar = () => {
   };
 
   const handlePrev = (id) => {
-    setCarouselIndex(prev => ({
+    setCarouselIndex((prev) => ({
       ...prev,
-      [id]: prev[id] === 0 ? cars.find(car => car.id === id)?.images?.length - 1 : prev[id] - 1,
+      [id]: prev[id] === 0 ? cars.find((car) => car.id === id)?.images?.length - 1 : prev[id] - 1,
     }));
   };
 
   const handleNext = (id) => {
-    setCarouselIndex(prev => ({
+    setCarouselIndex((prev) => ({
       ...prev,
-      [id]: (prev[id] + 1) % (cars.find(car => car.id === id)?.images?.length || 1),
+      [id]: (prev[id] + 1) % (cars.find((car) => car.id === id)?.images?.length || 1),
     }));
   };
 
   const handleThumbClick = (carId, index) => {
-    setCarouselIndex(prev => ({ ...prev, [carId]: index }));
+    setCarouselIndex((prev) => ({ ...prev, [carId]: index }));
   };
 
   return (
     <div className="manage-car-container">
       <h2>Manage Fleet</h2>
-      <button className="add-btn" onClick={() => setModalOpen(true)}>+ Add Car</button>
+      <button className="add-btn" onClick={() => setModalOpen(true)}>
+        + Add Car
+      </button>
 
       <div className="car-list">
         {cars.map((car) => (
           <div key={car.id} className="car-card">
             <div className="carousel-container">
-              <button className="arrow left" onClick={() => handlePrev(car.id)}>&#8249;</button>
+              <button className="arrow left" onClick={() => handlePrev(car.id)}>
+                &#8249;
+              </button>
               <img
                 src={car.images?.[carouselIndex[car.id] || 0]}
                 alt="car"
                 className="carousel-image"
               />
-              <button className="arrow right" onClick={() => handleNext(car.id)}>&#8250;</button>
+              <button className="arrow right" onClick={() => handleNext(car.id)}>
+                &#8250;
+              </button>
             </div>
             <div className="thumbnails">
               {car.images?.map((img, index) => (
@@ -163,6 +172,7 @@ const ManageCar = () => {
             <h4>{car.name}</h4>
             <p>₹{car.price}</p>
             <p>{car.details?.type}</p>
+            <p>Availability: <strong>{car.available}</strong></p>
             <div className="car-actions">
               <button onClick={() => handleEdit(car)}>Edit</button>
               <button onClick={() => handleDelete(car.id)}>Delete</button>
@@ -196,6 +206,18 @@ const ManageCar = () => {
               onChange={handleInputChange}
             />
 
+            <label htmlFor="availability">Availability</label>
+            <select
+              id="availability"
+              name="available"
+              value={formData.available}
+              onChange={handleInputChange}
+              className="availability-dropdown"
+            >
+              <option value="Available">Available</option>
+              <option value="Not Available">Not Available</option>
+            </select>
+
             <label>Image URLs</label>
             {formData.images.map((img, index) => (
               <div key={index} style={{ display: "flex", marginBottom: "0.5rem" }}>
@@ -206,14 +228,15 @@ const ManageCar = () => {
                   onChange={(e) => handleImageChange(index, e.target.value)}
                   style={{ flex: 1 }}
                 />
-                <button type="button" onClick={() => removeImageField(index)} className="remove-img">×</button>
+                <button type="button" onClick={() => removeImageField(index)} className="remove-img">
+                  ×
+                </button>
               </div>
             ))}
             <button type="button" onClick={addImageField} className="add-img-btn">
               + Add Image Field
             </button>
 
-            {/* Car Detail Inputs */}
             {[
               { label: "Kilometer Limit", name: "kilometer", placeholder: "e.g. 300/Day" },
               { label: "Extra Kilometer Rate", name: "extraKm", placeholder: "e.g. ₹5/Km" },

@@ -255,3 +255,27 @@
   position: absolute;
   right: -4rem;
 }
+
+
+/* Fade out unavailable car cards */
+.fleet-card-unavailable {
+  opacity: 0.45;
+  pointer-events: none;
+  transform: none !important;
+}
+
+.fleet-card-unavailable:hover {
+  background-color: var(--light-bg);
+  color: inherit;
+}
+
+/* Disabled "Not Available" button style */
+.not-available-btn {
+  background-color: #9ca3af;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.6rem 1.8rem;
+  font-size: 1.1rem;
+  cursor: not-allowed;
+}

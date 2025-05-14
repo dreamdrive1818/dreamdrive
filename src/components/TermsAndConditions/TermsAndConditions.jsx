@@ -1,98 +1,102 @@
 import React from "react";
-import "./TermsAndConditions.css"; // You can style it separately
+import "./TermsAndConditions.css";
 
 const TermsAndConditions = () => {
   return (
-    <div className="terms-container">
-      <h1>Dream Drive - Terms & Conditions</h1>
+    <div className="terms-wrapper">
+      <div className="terms-header">
+        <h1>Terms & Conditions</h1>
+        <p className="company-subtitle">Dream Drive Pvt. Ltd.</p>
+      </div>
 
-      <section>
-        <h2>1. General Terms</h2>
-        <p>
-          In this Rental Agreement, the First Party refers to Amarjeet Kumar Singh, proprietor of Dream Drive (hereinafter referred to as "the Company"), and the Second Party refers to the Customer renting the vehicle.
-        </p>
-        <ul>
-          <li>These Terms and Conditions regulate the rental and use of the vehicle.</li>
-          <li>The Customer agrees to all terms upon signing this Agreement.</li>
-        </ul>
-      </section>
+      <div className="terms-content">
+        <section>
+          <h2>1. General Terms</h2>
+          <p>
+            This agreement is made between <strong>Subham Keshri</strong> and <strong>Pooja Kumari</strong> (partners of Dream Drive Pvt. Ltd.) and the Customer renting the vehicle.
+          </p>
+        </section>
 
-      <section>
-        <h2>2. Conditions of Vehicle Use</h2>
-        <ul>
-          <li>Only authorized drivers verified by the company may drive the vehicle.</li>
-          <li>Driver must hold a valid driving license acceptable in the High Court of Jharkhand.</li>
-          <li>No driving under intoxication, fatigue, or unfit health condition.</li>
-          <li>Customer is responsible for prudent use; any misuse may lead to termination of the agreement.</li>
-          <li>
-            <strong>Damages:</strong> Up to ₹10,000 borne by customer; large damages handled via insurance (claim fees borne by customer). In drink & drive cases, customer is fully liable.
-          </li>
-          <li>
-            GPS tracking is installed and must not be removed. Tampering will be considered theft.
-          </li>
-        </ul>
-        <h3>2.5 Prohibited Uses</h3>
-        <ul>
-          <li>Overloading passengers or goods</li>
-          <li>Off-road driving, towing, or race participation</li>
-          <li>Carpooling, ride-sharing, or subleasing</li>
-          <li>Transporting animals, illegal goods, or in smoking/drinking condition</li>
-        </ul>
-        <p>
-          The vehicle is allowed only within Jharkhand unless explicitly permitted. Violation of state boundary terms makes the customer fully liable.
-        </p>
-      </section>
+        <section>
+          <h2>2. Definitions & Scope</h2>
+          <ul>
+            <li><strong>Terms & Conditions:</strong> Rules governing use of the rented vehicle.</li>
+            <li><strong>Car Hire Company:</strong> Dream Drive Pvt. Ltd.</li>
+            <li><strong>Car Owner:</strong> Entity providing the vehicle through the company.</li>
+            <li><strong>Vehicle:</strong> The car being rented as per the agreement.</li>
+            <li><strong>Customer:</strong> The individual hiring the vehicle.</li>
+          </ul>
+          <p>Signing the agreement implies full understanding and acceptance of these terms.</p>
+        </section>
 
-      <section>
-        <h2>3. Transfer & Return of Vehicle</h2>
-        <p>Vehicle must be returned in good condition. Disputes valid for 2 days post return (T+2).</p>
-      </section>
+        <section>
+          <h2>3. Vehicle Usage</h2>
+          <ul>
+            <li>Only verified drivers are permitted to operate the vehicle.</li>
+            <li>A valid license recognized by the High Court of Jharkhand is mandatory.</li>
+            <li>No driving under influence, fatigue, or ill-health.</li>
+            <li>Company may terminate the agreement if terms are violated.</li>
+            <li>Minor damages (up to ₹10,000) are the customer’s responsibility.</li>
+            <li>Major incidents involve insurance; loss of usage fees apply.</li>
+            <li>Full liability in cases of drunk driving or total loss.</li>
+            <li>GPS tracking is mandatory; tampering is considered theft.</li>
+          </ul>
 
-      <section>
-        <h2>4. Payment Terms</h2>
-        <p>All rental charges must be paid in full before the vehicle is delivered.</p>
-      </section>
+          <h3>Prohibited Uses</h3>
+          <ul>
+            <li>Overloading passengers or cargo</li>
+            <li>Towing, racing, or off-road driving</li>
+            <li>Subleasing, ride-sharing, or using as taxi</li>
+            <li>Transport of animals, illegal goods, or smoking/drinking inside</li>
+            <li>Traveling outside Jharkhand without written consent</li>
+          </ul>
+        </section>
 
-      <section>
-        <h2>5. Fuel & Mileage</h2>
-        <p>Fuel level must match the level at the time of delivery.</p>
-      </section>
+        <section>
+          <h2>4. Return of Vehicle</h2>
+          <p>The vehicle must be returned in clean and proper condition. Complaints are valid only within <strong>T+2 days</strong> of return.</p>
+        </section>
 
-      <section>
-        <h2>6. Damage & Insurance</h2>
-        <p>
-          Customer bears minor damages. In major accidents or theft, insurance will be used, but the customer must pay settlement fees.
-        </p>
-      </section>
+        <section>
+          <h2>5. Payment Terms</h2>
+          <p>Full rental charges must be cleared before the vehicle is handed over.</p>
+        </section>
 
-      <section>
-        <h2>7. Company Liability</h2>
-        <p>Dream Drive ensures sanitized, well-maintained, and private vehicles.</p>
-      </section>
+        <section>
+          <h2>6. Fuel & Mileage</h2>
+          <p>Return fuel level must match the level at delivery. Extra mileage is chargeable.</p>
+        </section>
 
-      <section>
-        <h2>8. Traffic Fines</h2>
-        <p>All traffic or parking violations are the responsibility of the customer. Disputes valid for T+7 days post return.</p>
-      </section>
+        <section>
+          <h2>7. Damage, Theft & Insurance</h2>
+          <p>Minor damages to be paid in cash. For theft or major damage, insurance applies but all claim processing and delay charges are the customer's responsibility.</p>
+        </section>
 
-      <section>
-        <h2>9. Illegal Activities</h2>
-        <p>Any illegal use of the vehicle will be attributed to the customer during the rental period.</p>
-      </section>
+        <section>
+          <h2>8. Vehicle Condition & Company Responsibility</h2>
+          <p>The Company ensures delivery of sanitized, clean, and privately maintained vehicles.</p>
+        </section>
 
-      <section>
-        <h2>10. Rental Extension</h2>
-        <p>
-          For extensions, a new agreement and advance payment are required. Non-compliance leads to legal action.
-        </p>
-      </section>
+        <section>
+          <h2>9. Traffic Fines</h2>
+          <p>Any traffic or parking fines during the rental period are borne by the customer. Complaints allowed within <strong>T+7 days</strong> of return.</p>
+        </section>
 
-      <section>
-        <h2>11. Jurisdiction & Dispute Resolution</h2>
-        <p>
-          All terms are governed under the jurisdiction of the High Court of Jharkhand (Ranchi). Disputes are first attempted via negotiation, failing which, legal proceedings will follow.
-        </p>
-      </section>
+        <section>
+          <h2>10. Illegal Use</h2>
+          <p>Any unlawful activity involving the vehicle during the rental period is fully attributed to the customer.</p>
+        </section>
+
+        <section>
+          <h2>11. Extensions</h2>
+          <p>Rental extension must be pre-approved and prepaid. Failure results in legal action.</p>
+        </section>
+
+        <section>
+          <h2>12. Legal Jurisdiction</h2>
+          <p>This agreement falls under the jurisdiction of the <strong>High Court of Jharkhand (Ranchi)</strong>. Disputes are settled via negotiation or legal means.</p>
+        </section>
+      </div>
     </div>
   );
 };

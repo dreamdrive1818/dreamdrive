@@ -45,7 +45,7 @@ const Footer = () => {
           <div className="footer-column">
             <h4>Legal</h4>
             <p onClick={() => navigate("/howitworks")}>How it works</p>
-            <p onClick={() => navigate("/faq")}>FAQs</p>
+            <p onClick={() => navigate("/termsandconditions")}>Terms And Conditions</p>
           </div>
           <div className="footer-column">
             <h4>Social Media</h4>

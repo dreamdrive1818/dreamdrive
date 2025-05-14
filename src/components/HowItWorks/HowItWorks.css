@@ -1,7 +1,7 @@
   .how-it-works {
     background: radial-gradient(circle at center, var(--medium-bg), var(--light-bg));
     text-align: center;
-    padding: 4rem 1rem;
+    padding: 1rem 2rem;
     font-family: var(--font-family-main);
     position: relative;
     overflow: hidden;

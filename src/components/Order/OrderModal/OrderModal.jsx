@@ -38,25 +38,19 @@ const handleSendOtp = async () => {
 
   const userId = email;
   const userRef = doc(db, "users", userId);
-  const userData = {
-    uid: userId,
-    fullName,
-    email,
-    phone: "+91" + phone,
-    createdAt: new Date(),
-  };
 
   try {
     const existing = await getDoc(userRef);
 
     if (existing.exists()) {
       toast.info("User already exists. Skipping OTP.");
+      const userData = existing.data();
       setUser(userData);
       createPendingOrder(userData);
       closeModal();
       navigate("/payment");
     } else {
-      setIsChecking(false); 
+      setIsChecking(false);
       setIsSendingOtp(true);
 
       const res = await axios.post("https://dreamdrive-1maq.onrender.com/send-otp", { email });
@@ -64,8 +58,6 @@ const handleSendOtp = async () => {
       if (res.status === 200) {
         toast.success("OTP sent to your email.");
         setOtpSent(true);
-        await setDoc(userRef, userData);
-        setUser(userData);
       } else {
         toast.error(res.data?.message || "Failed to send OTP.");
       }
@@ -81,39 +73,43 @@ const handleSendOtp = async () => {
 
 
 
+
   // ✅ Verify OTP and then save local order
-  const handleVerifyOtp = async () => {
-    if (!otp) return toast.error("Please enter the OTP.");
+const handleVerifyOtp = async () => {
+  if (!otp) return toast.error("Please enter the OTP.");
 
-    try {
-      const res = await axios.post("https://dreamdrive-1maq.onrender.com/verify-otp", {
+  try {
+    const res = await axios.post("https://dreamdrive-1maq.onrender.com/verify-otp", {
+      email,
+      otp,
+    });
+
+    if (res.data.verified) {
+      const userId = email;
+      const userRef = doc(db, "users", userId);
+      const userData = {
+        uid: userId,
+        fullName,
         email,
-        otp,
-      });
+        phone: "+91" + phone,
+        createdAt: new Date(),
+      };
 
-      if (res.data.verified) {
-        const userData = {
-          uid: email,
-          fullName,
-          email,
-          phone: "+91" + phone,
-          createdAt: new Date(),
-        };
-
-        setUser(userData);
-        createPendingOrder(userData);
-        closeModal();
-        navigate("/payment");
-      } else {
-        toast.error(res.data.message || "Invalid OTP.");
-      }
-    } catch (err) {
-      console.error("OTP Verification Error:", err.message);
-      toast.error(
-        err.response?.data?.message || "Failed to verify OTP. Please try again."
-      );
+      await setDoc(userRef, userData); 
+      setUser(userData);
+      createPendingOrder(userData);
+      closeModal();
+      navigate("/payment");
+    } else {
+      toast.error(res.data.message || "Invalid OTP.");
     }
-  };
+  } catch (err) {
+    console.error("OTP Verification Error:", err.message);
+    toast.error(
+      err.response?.data?.message || "Failed to verify OTP. Please try again."
+    );
+  }
+};
 
   return (
     <div className="order-modal-overlay">
