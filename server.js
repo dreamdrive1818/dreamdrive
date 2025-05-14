@@ -141,7 +141,7 @@ const sendProductConfirmationMail = async (user, order) => {
     </div>
 
     <div style="text-align: center;">
-      <div style="font-size: 56px; color: #22c55e;">✔</div>
+      <div style="font-size: 10px; color: #22c55e;">✔</div>
       <h2 style="color: #1e293b; font-size: 24px;">Booking Confirmed!</h2>
       <p style="color: #475569; font-size: 16px;">Your ride has been successfully scheduled.</p>
       <p style="font-weight: bold; color: #1e293b; font-size: 16px;">Ride ID: ${id}</p>
