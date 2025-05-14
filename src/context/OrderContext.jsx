@@ -5,6 +5,7 @@ import {
   addDoc,
   collection,
   Timestamp,
+  setDoc,
   doc,
   updateDoc,
   arrayUnion,
@@ -85,32 +86,39 @@ const submitOrderToFirestore = async (navigate) => {
 
   const customId = `RIDE${Math.floor(100000 + Math.random() * 900000)}`;
 
+  // Only include essential user fields in the order
+  const userInfo = {
+    fullName: order.user.fullName,
+    email: order.user.email,
+    phone: order.user.phone,
+    uid: order.user.uid,
+  };
+
   const orderWithCustomId = {
     ...order,
     id: customId,
+    user: userInfo,
     advancePaid: 1500,
     paymentStatus: "paid",
     createdAt: new Date(),
   };
 
   try {
-    await addDoc(collection(db, "orders",orderWithCustomId.id), orderWithCustomId);
+    await setDoc(doc(db, "orders", orderWithCustomId.id), orderWithCustomId);
+
     setOrder(orderWithCustomId);
 
-    const userRef = doc(db, "users", user.email);
+    const userRef = doc(db, "users", order.user.email);
     await updateDoc(userRef, {
       orders: arrayUnion(orderWithCustomId),
     });
 
-   
     await axios.post("https://dreamdrive-1maq.onrender.com/send-confirmation", {
-      user,
+      user: userInfo,
       order: orderWithCustomId,
     });
 
     toast.success("Advance payment of ₹1500 saved. Order confirmed!");
-
-    
     if (navigate) navigate("/success");
 
   } catch (err) {
@@ -118,6 +126,8 @@ const submitOrderToFirestore = async (navigate) => {
     toast.error("Failed to complete order. Please try again.");
   }
 };
+
+
 
   return (
     <OrderContext.Provider

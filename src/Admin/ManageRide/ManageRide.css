@@ -1,42 +1,51 @@
 .manage-rides {
-  padding: 2rem;
-  max-width: 1100px;
+  padding: 3rem 2rem;
+  max-width: 1280px;
+  margin: auto;
   background-color: #f9fafb;
+  font-family: 'Inter', sans-serif;
 }
 
 .manage-rides h2 {
-  font-size: 2.5rem; /* Reduced slightly from 4rem for balance */
-  margin-bottom: 1.5rem;
-  color: #333;
+  font-size: 2.8rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  border-left: 6px solid #6366f1;
+  padding-left: 1rem;
 }
 
 .manage-rides table {
   width: 100%;
-  border-collapse: collapse;
-  background-color: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border-collapse: separate;
+  border-spacing: 0 12px;
   font-size: 1.1rem;
 }
 
-.manage-rides th,
-.manage-rides td {
-  padding: 1.2rem 1.5rem;
-  text-align: left;
-  border-bottom: 1px solid #e5e7eb;
-  font-size: 1.05rem;
+.manage-rides thead {
+  background-color: #f3f4f6;
 }
 
 .manage-rides th {
-  background-color: #f3f4f6;
-  font-weight: 700;
-  color: #111827;
+  text-align: left;
+  padding: 1.2rem 1.5rem;
+  color: #4b5563;
   font-size: 1.15rem;
+  font-weight: 600;
+  border-bottom: 2px solid #e5e7eb;
 }
 
 .manage-rides td {
+  background-color: #ffffff;
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
   color: #374151;
+  transition: background-color 0.2s ease;
+  font-size: 1.25rem;
+}
+
+.manage-rides tbody tr:hover td {
+  background-color: #f3f4f6;
 }
 
 .manage-rides select {
@@ -44,7 +53,7 @@
   border-radius: 6px;
   border: 1px solid #d1d5db;
   background-color: #fff;
-  font-size: 1rem;
+  font-size: 1.1rem;
   outline: none;
   transition: border 0.3s;
 }
@@ -61,7 +70,7 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.2rem;
   transition: background-color 0.3s;
 }
 
@@ -69,6 +78,7 @@
   background-color: #dc2626;
 }
 
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .manage-rides table,
   .manage-rides thead,
@@ -85,24 +95,36 @@
 
   .manage-rides tr {
     margin-bottom: 1.5rem;
-    border-bottom: 1px solid #e5e7eb;
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1rem;
   }
 
   .manage-rides td {
+    padding: 0.8rem 1rem;
     position: relative;
-    padding-left: 50%;
-    text-align: right;
-    font-size: 1rem;
+    padding-left: 55%;
+    font-size: 1.1rem;
+    border: none;
+    border-bottom: 1px solid #e5e7eb;
   }
 
   .manage-rides td::before {
     position: absolute;
+    top: 0.8rem;
     left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-weight: 700;
+    font-weight: 600;
     color: #6b7280;
+    font-size: 1rem;
     white-space: nowrap;
-    font-size: 0.95rem;
   }
+
+  .manage-rides td:nth-child(1)::before { content: "Ride ID"; }
+  .manage-rides td:nth-child(2)::before { content: "Car"; }
+  .manage-rides td:nth-child(3)::before { content: "User"; }
+  .manage-rides td:nth-child(4)::before { content: "Advance"; }
+  .manage-rides td:nth-child(5)::before { content: "Status"; }
+  .manage-rides td:nth-child(6)::before { content: "Payment"; }
+  .manage-rides td:nth-child(7)::before { content: "Actions"; }
 }

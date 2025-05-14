@@ -6,15 +6,29 @@ const ManageRide = () => {
   const { fetchRides, updateRideStatus, updatePaymentStatus, deleteRide } = useAdminContext();
   const [rides, setRides] = useState([]);
 
+  const loadRides = async () => {
+    const data = await fetchRides();
+    setRides(data);
+  };
+
   useEffect(() => {
-    const loadRides = async () => {
-      const data = await fetchRides();
-      setRides(data);
-    };
     loadRides();
   }, []);
 
-  console.log("Rides-->",rides);
+  const handleStatusChange = async (rideId, newStatus) => {
+    await updateRideStatus(rideId, newStatus);
+    loadRides(); // reload data
+  };
+
+  const handlePaymentChange = async (rideId, newStatus) => {
+    await updatePaymentStatus(rideId, newStatus);
+    loadRides(); // reload data
+  };
+
+  const handleDelete = async (rideId) => {
+    await deleteRide(rideId);
+    loadRides(); // reload data
+  };
 
   return (
     <div className="manage-rides">
@@ -39,12 +53,16 @@ const ManageRide = () => {
               <tr key={ride.id}>
                 <td>{ride.id}</td>
                 <td>{ride.car?.name}</td>
-                <td>{ride.user?.fullName} <br />{ride.user?.email}</td>
+                <td>
+                  Name: {ride.user?.fullName} <br />
+                  Email: {ride.user?.email} <br />
+                  Phone: {ride.user?.phone}
+                </td>
                 <td>₹{ride.advancePaid}</td>
                 <td>
                   <select
                     value={ride.status}
-                    onChange={(e) => updateRideStatus(ride.id, e.target.value)}
+                    onChange={(e) => handleStatusChange(ride.id, e.target.value)}
                   >
                     <option value="pending">Pending</option>
                     <option value="confirmed">Confirmed</option>
@@ -55,14 +73,14 @@ const ManageRide = () => {
                 <td>
                   <select
                     value={ride.paymentStatus}
-                    onChange={(e) => updatePaymentStatus(ride.id, e.target.value)}
+                    onChange={(e) => handlePaymentChange(ride.id, e.target.value)}
                   >
                     <option value="pending">Pending</option>
                     <option value="paid">Paid</option>
                   </select>
                 </td>
                 <td>
-                  <button onClick={() => deleteRide(ride.id)}>Delete</button>
+                  <button onClick={() => handleDelete(ride.id)}>Delete</button>
                 </td>
               </tr>
             ))}

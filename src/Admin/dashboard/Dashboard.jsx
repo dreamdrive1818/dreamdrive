@@ -1,60 +1,88 @@
-import React, { useState, useEffect } from 'react';
-import { db } from '../../firebase/firebaseConfig'; 
-import './Dashboard.css';
-import BlogList from '../blog/BlogList';
+import React, { useEffect, useState } from 'react';
+import { db } from '../../firebase/firebaseConfig';
+import { collection, getDocs, orderBy, query, limit } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import { useAdminContext } from '../../context/AdminContext';
+import './Dashboard.css';
 
 const Dashboard = () => {
-  const [visitCount, setVisitCount] = useState(123); // Placeholder for visit count
-  const [tfnClicks, setTfnClicks] = useState(15); // Placeholder for TFN Clicks
-  const navigate = useNavigate();  
-  const { users, orders, blogs } = useAdminContext();
+  const [users, setUsers] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [latestOrders, setLatestOrders] = useState([]);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const snapshot = await getDocs(collection(db, "users"));
+      const userData = snapshot.docs.map(doc => doc.data());
+      setUsers(userData);
+    };
 
+    const fetchOrders = async () => {
+      const snapshot = await getDocs(collection(db, "orders"));
+      const orderData = snapshot.docs.map(doc => doc.data());
+      setOrders(orderData);
+    };
+
+    const fetchLatestOrders = async () => {
+      const q = query(collection(db, "orders"), orderBy("createdAt", "desc"), limit(5));
+      const snapshot = await getDocs(q);
+      const latest = snapshot.docs.map(doc => doc.data());
+      setLatestOrders(latest);
+    };
+
+    fetchUsers();
+    fetchOrders();
+    fetchLatestOrders();
+  }, []);
 
   return (
     <div className="dashboard-container">
-      {/* Top Section - Stats in a row */}
-      <div className="top-section">
-        <div className="stat-item">
-          <h3>Total Users</h3>
+      <h2 className="dashboard-title">Admin Dashboard</h2>
+
+      <div className="stats-grid">
+        <div className="stat-box">
+          <h4>Total Users</h4>
           <p>{users.length}</p>
         </div>
-        <div className="stat-item">
-          <h3>Total Blogs</h3>
-          <p>{blogs.length}</p>
-        </div>
-        <div className="stat-item">
-          <h3>Total Orders</h3>
+        <div className="stat-box">
+          <h4>Total Rides</h4>
           <p>{orders.length}</p>
         </div>
-        {/* <div className="stat-item">
-          <h3>Total Blogs</h3>
-          <p>{blogs.length}</p>
-        </div> */}
       </div>
 
-      {/* Bottom Section - Latest Blogs and Another Content */}
-      <div className="bottom-section">
-        <div className="left-part">
-          <h3>Latest Blogs</h3>
-          <div className="latest-blogs">
-            <BlogList count={4} />
-          </div>
+      <div className="latest-orders">
+        <div className="latest-orders-header">
+          <h3>Latest Ride</h3>
+          <button onClick={() => navigate("/admin/manage-rides")}>See All Rides</button>
         </div>
-        <div className="right-part">
-          {/* <h3>Admin Notifications</h3>
-          <ul>
-            <li>New user registration</li>
-            <li>Payment pending</li>
-            <li>Blog comments approval needed</li>
-          </ul> */}
-        </div>
-      </div>
 
-      {/* See More Button */}
-      <button className="see-all-btn" onClick={() => navigate('/admin/blog')}>See All Blogs</button>
+        {latestOrders.length === 0 ? (
+          <p>No Ride found.</p>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Ride ID</th>
+                <th>User</th>
+                <th>Car</th>
+                <th>Advance</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {latestOrders.map((order, index) => (
+                <tr key={index}>
+                  <td>{order.id}</td>
+                  <td>{order.user?.fullName}</td>
+                  <td>{order.car?.name}</td>
+                  <td>₹{order.advancePaid}</td>
+                  <td>{order.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 };

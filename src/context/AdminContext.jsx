@@ -9,6 +9,8 @@ import {
   updateDoc,
   doc,
   getDoc,
+  arrayRemove,
+  arrayUnion
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 
@@ -42,6 +44,12 @@ export const AdminProvider = ({ children }) => {
     }
   };
 
+  const AdminLogout = () => {
+  setAdmin(null);
+  localStorage.removeItem("admin");
+  toast.success("Logged out successfully");
+};
+
   // 🚗 Get all cars
   const fetchCars = async () => {
     const snapshot = await getDocs(collection(db, "cars"));
@@ -70,26 +78,142 @@ export const AdminProvider = ({ children }) => {
   };
 
   // 📝 Update Ride Status
-  const updateRideStatus = async (rideId, newStatus) => {
-    await updateDoc(doc(db, "orders", rideId), {
-      status: newStatus,
-    });
-    toast.success("Ride status updated");
+const updateRideStatus = async (rideId, newStatus) => {
+  const rideRef = doc(db, "orders", rideId);
+  const rideSnap = await getDoc(rideRef);
+
+  if (!rideSnap.exists()) {
+    toast.error("Ride not found.");
+    return;
+  }
+
+  const rideData = rideSnap.data();
+  const updatedRide = {
+    ...rideData,
+    status: newStatus,
   };
+
+  const userRef = doc(db, "users", rideData.user.email);
+
+  try {
+    // Step 1: Update order document
+    await updateDoc(rideRef, { status: newStatus });
+
+    // Step 2: Update orders array in user document
+    await updateDoc(userRef, {
+      orders: arrayRemove(rideData),
+    });
+    await updateDoc(userRef, {
+      orders: arrayUnion(updatedRide),
+    });
+
+    toast.success("Ride status updated");
+  } catch (err) {
+    console.error("Ride status update error:", err.message);
+    toast.error("Failed to update ride status");
+  }
+};
+
+
 
   // 🧾 Update Payment Status
-  const updatePaymentStatus = async (rideId, paymentStatus) => {
-    await updateDoc(doc(db, "orders", rideId), {
-      paymentStatus,
-    });
-    toast.success("Payment status updated");
+const updatePaymentStatus = async (rideId, paymentStatus) => {
+  const rideRef = doc(db, "orders", rideId);
+  const rideSnap = await getDoc(rideRef);
+
+  if (!rideSnap.exists()) {
+    toast.error("Ride not found.");
+    return;
+  }
+
+  const rideData = rideSnap.data();
+  const updatedRide = {
+    ...rideData,
+    paymentStatus,
   };
 
+  const userRef = doc(db, "users", rideData.user.email);
+
+  try {
+    // Step 1: Update order document
+    await updateDoc(rideRef, { paymentStatus });
+
+    // Step 2: Update orders array in user document
+    await updateDoc(userRef, {
+      orders: arrayRemove(rideData),
+    });
+    await updateDoc(userRef, {
+      orders: arrayUnion(updatedRide),
+    });
+
+    toast.success("Payment status updated");
+  } catch (err) {
+    console.error("Payment status update error:", err.message);
+    toast.error("Failed to update payment status");
+  }
+};
+
+
   // ❌ Delete Ride
-  const deleteRide = async (rideId) => {
-    await deleteDoc(doc(db, "orders", rideId));
-    toast.success("Ride deleted successfully");
-  };
+const deleteRide = async (rideId) => {
+  try {
+    const rideRef = doc(db, "orders", rideId);
+    const rideSnap = await getDoc(rideRef);
+
+    if (!rideSnap.exists()) {
+      toast.error("Ride not found.");
+      return;
+    }
+
+    const rideData = rideSnap.data();
+    const userEmail = rideData.user?.email;
+
+    if (!userEmail) {
+      toast.error("User email not found in ride data.");
+      return;
+    }
+
+    const userRef = doc(db, "users", userEmail);
+
+    // Step 1: Remove this ride object from user's orders array
+    await updateDoc(userRef, {
+      orders: arrayRemove(rideData),
+    });
+
+    // Step 2: Delete the ride from orders collection
+    await deleteDoc(rideRef);
+
+    toast.success("Ride deleted successfully from orders and user history.");
+  } catch (err) {
+    console.error("Delete Ride Error:", err.message);
+    toast.error("Failed to delete ride.");
+  }
+};
+
+//fetch users
+const fetchUsers = async () => {
+  const snapshot = await getDocs(collection(db, "users"));
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+};
+
+// ❌ Delete a user
+const deleteUser = async (userId) => {
+  await deleteDoc(doc(db, "users", userId));
+  toast.success("User deleted successfully");
+};
+
+
+
+
+
+
+// 📥 Fetch Contact Messages
+const fetchMessages = async () => {
+  const snapshot = await getDocs(collection(db, "contacts"));
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+};
+
+
 
   return (
     <AdminContext.Provider
@@ -97,6 +221,7 @@ export const AdminProvider = ({ children }) => {
         admin,
         setAdmin,
         AdminLogin,
+         AdminLogout,
         fetchCars,
         addCar,
         updateCar,
@@ -105,6 +230,9 @@ export const AdminProvider = ({ children }) => {
         updateRideStatus,
         updatePaymentStatus,
         deleteRide,
+         fetchUsers,    
+         deleteUser,
+           fetchMessages,
       }}
     >
       {children}

@@ -12,6 +12,8 @@ import AdminPrivateRoute from './AdminPrivateRoute';  // Import your AdminPrivat
 import { Navigate } from 'react-router-dom';
 import ManageCar from '../Admin/ManageCar/ManageCar';
 import ManageRide from '../Admin/ManageRide/ManageRide';
+import ManageUser from '../Admin/ManageUser/ManageUser';
+import ManageMessages from '../Admin/ManageMessages/ManageMessages';
 
 const AdminLayout = () => {
   const location = useLocation();
@@ -34,11 +36,11 @@ const AdminLayout = () => {
             <Route path="/admin" element={
               admin ? <Navigate to="/admin/dashboard" replace /> : <Navigate to="/admin/login" replace />
             } />
-            {/* <Route path="/admin/dashboard" element={
+            <Route path="/admin/dashboard" element={
               <AdminPrivateRoute>
                 <Dashboard />
               </AdminPrivateRoute>
-            } /> */}
+            } />
 
             <Route path="/admin/blog" element={
               <AdminPrivateRoute>
@@ -68,6 +70,20 @@ const AdminLayout = () => {
                 <ManageRide />
               </AdminPrivateRoute>
             } />
+
+            <Route path="/admin/manage-users" element={
+              <AdminPrivateRoute>
+                <ManageUser />
+              </AdminPrivateRoute>
+            } />
+
+            
+            <Route path="/admin/manage-contacts" element={
+              <AdminPrivateRoute>
+                <ManageMessages />
+              </AdminPrivateRoute>
+            } />
+
             {/* <Route path="/admin/media" element={
               <AdminPrivateRoute>
                 <MediaUploader />
