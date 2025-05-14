@@ -42,12 +42,27 @@ app.post('/send-otp', async (req, res) => {
       },
     });
 
-    await transport.sendMail({
-      from: `DreamDrive <${process.env.GMAIL_USER}>`,
-      to: email,
-      subject: "Your OTP Code",
-      html: `<h2>Your OTP is: ${otp}</h2>`,
-    });
+   await transport.sendMail({
+  from: `DreamDrive <${process.env.GMAIL_USER}>`,
+  to: email,
+  subject: "🔐 Verify Your Email - DreamDrive OTP",
+  html: `
+    <div style="max-width: 600px; margin: auto; font-family: Arial, sans-serif; background-color: #ffffff; border: 1px solid #e2e8f0; padding: 30px; border-radius: 10px;">
+      <div style="text-align: center;">
+        <img src="https://res.cloudinary.com/dcf3mojai/image/upload/v1745574199/dream_drive-removebg-preview_x7duqr.png" alt="DreamDrive Logo" style="max-width: 150px; margin-bottom: 20px;" />
+        <h2 style="color: #1e293b; font-size: 24px;">Email Verification</h2>
+        <p style="color: #475569; font-size: 16px;">Use the OTP below to verify your email address.</p>
+        <div style="margin: 30px 0;">
+          <span style="display: inline-block; padding: 16px 30px; font-size: 28px; font-weight: bold; letter-spacing: 4px; color: #2563eb; background-color: #f3f4f6; border-radius: 8px;">
+            ${otp}
+          </span>
+        </div>
+        <p style="color: #64748b; font-size: 14px;">This OTP is valid for <strong>5 minutes</strong>. Please do not share it with anyone.</p>
+        <p style="color: #9ca3af; font-size: 12px; margin-top: 40px;">If you didn't request this email, you can safely ignore it.</p>
+      </div>
+    </div>
+  `
+});
 
    
       await redisClient.setEx(email, 300, otp);
