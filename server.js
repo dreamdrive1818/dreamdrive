@@ -136,7 +136,7 @@ const sendProductConfirmationMail = async (user, order) => {
   const htmlContent = `
   <div style="max-width: 600px; margin: auto; font-family: Arial, sans-serif; padding: 30px; border: 1px solid #e5e7eb; border-radius: 12px; background-color: #ffffff;">
     
-    <div style="text-align: center; margin-bottom: 20px;">
+    <div style="text-align: center;">
       <img src="https://res.cloudinary.com/dcf3mojai/image/upload/v1745574199/dream_drive-removebg-preview_x7duqr.png" alt="Dream Drive Logo" style="max-width: 180px; margin-bottom: 10px;" />
     </div>
 
