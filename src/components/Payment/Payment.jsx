@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Payment.css";
 import { toast } from "react-toastify";
 import { useOrderContext } from "../../context/OrderContext";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Payment = () => {
   const { order, submitOrderToFirestore } = useOrderContext();
   const navigate = useNavigate();
+  const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
     if (!order || !order.car) {
@@ -15,8 +16,10 @@ const Payment = () => {
     }
   }, []);
 
-  const handlePayment = () => {
-    submitOrderToFirestore(navigate);
+  const handlePayment = async () => {
+    setProcessing(true);
+    await submitOrderToFirestore(navigate);
+    setProcessing(false);
   };
 
   return (
@@ -36,8 +39,12 @@ const Payment = () => {
             <li>✔ Flexible Pickup Options</li>
           </ul>
 
-          <button className="pay-now-btn" onClick={handlePayment}>
-            Pay ₹1500 & Confirm Booking
+          <button
+            className="pay-now-btn"
+            onClick={handlePayment}
+            disabled={processing}
+          >
+            {processing ? "Processing..." : "Pay ₹1500 & Confirm Booking"}
           </button>
 
           <p className="payment-disclaimer">

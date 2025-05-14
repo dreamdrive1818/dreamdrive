@@ -94,7 +94,7 @@ const submitOrderToFirestore = async (navigate) => {
   };
 
   try {
-    await addDoc(collection(db, "orders"), orderWithCustomId);
+    await addDoc(collection(db, "orders",orderWithCustomId.id), orderWithCustomId);
     setOrder(orderWithCustomId);
 
     const userRef = doc(db, "users", user.email);

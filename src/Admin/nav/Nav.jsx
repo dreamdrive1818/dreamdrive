@@ -21,7 +21,7 @@ const Nav = () => {
     { name: "Dashboard", path: "/admin/dashboard", icon: faHome },
     { name: "Cars", path: "/admin/manage-cars", icon: faCar},
     { name: "Users", path: "/admin/manage-user", icon: faPeopleGroup },
-    { name: "Orders", path: "/admin/manage-orders", icon: faReorder },
+    { name: "Rides", path: "/admin/manage-rides", icon: faReorder },
     { name: "SEO", path: "/admin/seo", icon: faSort },
     // { name: "Blogs", path: "/admin/blog", icon: faFileAlt },
     // { name: "Media", path: "/admin/media", icon: faImage },

@@ -11,6 +11,7 @@ import AdminLogin from '../Admin/Signin/AdminLogin';
 import AdminPrivateRoute from './AdminPrivateRoute';  // Import your AdminPrivateRoute
 import { Navigate } from 'react-router-dom';
 import ManageCar from '../Admin/ManageCar/ManageCar';
+import ManageRide from '../Admin/ManageRide/ManageRide';
 
 const AdminLayout = () => {
   const location = useLocation();
@@ -23,7 +24,9 @@ const AdminLayout = () => {
       
       <div style={{ display: 'flex',width:"100%", height: location.pathname === '/admin/login' ? 'calc(100vh - 5px)':'calc(100vh - 60px)' }}> {/* Adjust height */}
         {/* Left Side: Navigation */}
-        {location.pathname !== "/admin/login" && <Nav style={{ flex: 0.2, backgroundColor: '#2c3e50', padding: '20px', height: '100%' }} />}
+        {location.pathname !== "/admin/login" &&<div style={{ width: '250px', flexShrink: 0 }}>
+  <Nav />
+</div>}
         
         {/* Right Side: Content */}
         <div style={{  flex:1, overflowY: 'auto' }}>
@@ -57,6 +60,12 @@ const AdminLayout = () => {
              <Route path="/admin/manage-cars" element={
               <AdminPrivateRoute>
                 <ManageCar />
+              </AdminPrivateRoute>
+            } />
+
+            <Route path="/admin/manage-rides" element={
+              <AdminPrivateRoute>
+                <ManageRide />
               </AdminPrivateRoute>
             } />
             {/* <Route path="/admin/media" element={
