@@ -133,38 +133,42 @@ const sendProductConfirmationMail = async (user, order) => {
   const { car, id: id, advancePaid, paymentStatus, createdAt } = order;
   const formattedDate = new Date(createdAt).toLocaleString("en-IN");
 
-  const htmlContent = `
-  <div style="max-width: 600px; margin: auto; font-family: Arial, sans-serif; padding: 30px; border: 1px solid #e5e7eb; border-radius: 12px; background-color: #ffffff;">
+const htmlContent = `
+  <div style="max-width: 600px; margin: auto; font-family: Arial, sans-serif; padding: 30px 20px; border: 1px solid #e5e7eb; border-radius: 12px; background-color: #ffffff; box-sizing: border-box;">
     
     <div style="text-align: center;">
-      <img src="https://res.cloudinary.com/dcf3mojai/image/upload/v1745574199/dream_drive-removebg-preview_x7duqr.png" alt="Dream Drive Logo" style="max-width: 180px; margin-bottom: 10px;" />
+      <img src="https://res.cloudinary.com/dcf3mojai/image/upload/v1745574199/dream_drive-removebg-preview_x7duqr.png" alt="Dream Drive Logo" style="max-width: 160px; height: auto; margin-bottom: 10px;" />
     </div>
 
     <div style="text-align: center;">
-      <div style="font-size: 16px; color: #22c55e;">✔</div>
-      <h2 style="color: #1e293b; font-size: 24px;">Booking Confirmed!</h2>
-      <p style="color: #475569; font-size: 16px;">Your ride has been successfully scheduled.</p>
+      <div style="font-size: 24px; color: #22c55e;">✔</div>
+      <h2 style="color: #1e293b; font-size: 22px; margin: 10px 0;">Booking Confirmed!</h2>
+      <p style="color: #475569; font-size: 16px; margin: 5px 0;">Your ride has been successfully scheduled.</p>
       <p style="font-weight: bold; color: #1e293b; font-size: 16px;">Ride ID: ${id}</p>
     </div>
 
-    <table style="width: 100%; margin-top: 35px; font-size: 15px;">
+    <table style="width: 100%; margin-top: 30px; font-size: 14px; border-spacing: 0;" cellpadding="0" cellspacing="0">
       <tr>
-        <td style="vertical-align: top; padding: 12px;">
-          <h4 style="color: #0f172a; margin-bottom: 8px;">🚗 Car Details</h4>
+        <td style="padding: 12px; vertical-align: top; width: 100%; box-sizing: border-box;">
+          <h4 style="color: #0f172a; margin-bottom: 8px; font-size: 16px;">🚗 Car Details</h4>
           <p><strong>Name:</strong> ${car.name}</p>
           <p><strong>Type:</strong> ${car.details.type}</p>
           <p><strong>Seats:</strong> ${car.details.seats}</p>
           <p><strong>Fuel:</strong> ${car.details.fuel}</p>
           <p><strong>Transmission:</strong> ${car.details.mt === "YES" ? "Manual" : "Automatic"}</p>
         </td>
-        <td style="vertical-align: top; padding: 12px;">
-          <h4 style="color: #0f172a; margin-bottom: 8px;">👤 User Info</h4>
+      </tr>
+      <tr>
+        <td style="padding: 12px; vertical-align: top; width: 100%; box-sizing: border-box;">
+          <h4 style="color: #0f172a; margin-bottom: 8px; font-size: 16px;">👤 User Info</h4>
           <p><strong>Name:</strong> ${user.fullName}</p>
           <p><strong>Email:</strong> ${user.email}</p>
           <p><strong>Phone:</strong> ${user.phone}</p>
         </td>
-        <td style="vertical-align: top; padding: 12px;">
-          <h4 style="color: #0f172a; margin-bottom: 8px;">💳 Payment Summary</h4>
+      </tr>
+      <tr>
+        <td style="padding: 12px; vertical-align: top; width: 100%; box-sizing: border-box;">
+          <h4 style="color: #0f172a; margin-bottom: 8px; font-size: 16px;">💳 Payment Summary</h4>
           <p><strong>Advance Paid:</strong> ₹${advancePaid}</p>
           <p><strong>Status:</strong> ${paymentStatus}</p>
           <p><strong>Date:</strong> ${formattedDate}</p>
@@ -172,19 +176,20 @@ const sendProductConfirmationMail = async (user, order) => {
       </tr>
     </table>
 
-    <p style="margin-top: 30px; color: #475569; font-size: 14px; text-align: center;">
+    <p style="margin-top: 30px; color: #475569; font-size: 14px; text-align: center; line-height: 1.6;">
       A confirmation email has been sent. For any questions, feel free to chat with our support team via the live chat option.
     </p>
 
     <div style="text-align: center; margin-top: 35px;">
       <a href="https://forms.zohopublic.in/dreamdrive1818gm1/form/CONSENTFORMFORCARHIRE/formperma/XcyUB9S6UcHoPngvocFg76vVhZcn4lJco34EPSjBy_o" 
-         style="background-color: #2563eb; color: white; padding: 14px 28px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 15px;">
+         style="background-color: #2563eb; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 15px; display: inline-block;">
         Sign Consent Form to Proceed
       </a>
     </div>
 
   </div>
 `;
+
 
   const mailOptions = {
     from: `DreamDrive <${process.env.GMAIL_USER}>`,
