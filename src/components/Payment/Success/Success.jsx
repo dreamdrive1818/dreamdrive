@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Success.css";
 import { useOrderContext } from "../../../context/OrderContext";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -8,6 +8,7 @@ import {
   FaUserAlt,
   FaMoneyBillWave,
   FaArrowRight,
+  FaWhatsapp,
 } from "react-icons/fa";
 
 const Success = () => {
@@ -15,8 +16,10 @@ const Success = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const previousPath = useRef(location.pathname);
+  const [showPopup, setShowPopup] = useState(false);
+  const [counter, setCounter] = useState(5);
 
-  // Detect navigation AWAY from /success
+  // Clear order on navigation away
   useEffect(() => {
     const handleClear = () => {
       if (previousPath.current === "/success" && location.pathname !== "/success") {
@@ -24,9 +27,27 @@ const Success = () => {
       }
       previousPath.current = location.pathname;
     };
-
     handleClear();
   }, [location.pathname, clearOrder]);
+
+  // WhatsApp popup logic
+  useEffect(() => {
+    const timer = setTimeout(() => setShowPopup(true), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Auto redirect after countdown
+  useEffect(() => {
+    if (showPopup && counter > 0) {
+      const countdown = setInterval(() => {
+        setCounter((prev) => prev - 1);
+      }, 1000);
+
+      return () => clearInterval(countdown);
+    } else if (counter === 0) {
+      window.open("https://wa.me/919876543210?text=Hi, I have confirmed a ride. Need some assistance.", "_blank");
+    }
+  }, [showPopup, counter]);
 
   if (!order || !user) {
     return (
@@ -50,8 +71,8 @@ const Success = () => {
           <h2>Booking Confirmed!</h2>
           <p>Your ride has been successfully scheduled.</p>
           <div className="order-id-box">
-  <p><strong>Ride ID:</strong> {order.id}</p>
-</div>
+            <p><strong>Ride ID:</strong> {order.id}</p>
+          </div>
         </div>
 
         <div className="success-grid">
@@ -93,6 +114,22 @@ const Success = () => {
           Go to Home <FaArrowRight />
         </button>
       </div>
+
+      {showPopup && (
+        <div className="wa-popup">
+          <FaWhatsapp className="wa-popup-icon" />
+          <h3>For Further Assistance</h3>
+          <p>We're redirecting you to WhatsApp in <strong>{counter}</strong> seconds...</p>
+          <a
+            href="https://wa.me/919876543210?text=Hi, I have confirmed a ride. Need some assistance."
+            className="wa-popup-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Go Now
+          </a>
+        </div>
+      )}
     </div>
   );
 };
