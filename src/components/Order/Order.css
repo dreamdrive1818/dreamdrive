@@ -240,5 +240,9 @@
     .order-specs li strong {
       margin-bottom: 4px;
     }
+
+    .order-book-btn{
+      font-size: 1.4rem;
+    }
   }
   

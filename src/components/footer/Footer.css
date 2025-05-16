@@ -130,13 +130,14 @@
     .footer {
       padding: 3rem 2rem;
     }
+
   
     .footer-left h2 {
-      font-size: 24px;
+      font-size: 2.8rem;
     }
   
     .footer-left p {
-      font-size: 13px;
+      font-size: 1.4rem;
     }
   
     .footer-column h4 {
@@ -148,7 +149,7 @@
     }
   
     .newsletter input {
-      font-size: 13px;
+      font-size: 1.25rem;
       padding: 10px 16px;
     }
   
@@ -166,14 +167,23 @@
   }
   
   @media (max-width: 480px) {
+
+    .footer-left{
+      margin-bottom: 10px;
+    }
+
     .footer-right {
       flex-direction: column;
       gap: 2rem;
       align-items: flex-start;
     }
+
+     .footer-right p{
+      font-size: 1.4rem;
+     }
   
     .footer-column h4 {
-      font-size: 1.1rem;
+      font-size: 1.6rem;
     }
   
     .scroll-up {

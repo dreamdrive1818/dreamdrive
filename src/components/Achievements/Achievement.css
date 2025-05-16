@@ -62,8 +62,14 @@
   }
 
   .achievements-heading {
-    font-size: 3.2rem;
+    font-size: 4rem;
   }
+
+     .achievements-subtitle {
+    text-align: center;
+    font-size: 1.25rem;
+  }
+
 }
 
 @media (max-width: 768px) {
@@ -78,12 +84,13 @@
   }
 
   .achievements-heading {
-    font-size: 2.8rem;
+    font-size: 4rem;
     text-align: center;
   }
 
   .achievements-subtitle {
     text-align: center;
+    font-size: 1.25rem;
   }
 
   .achievements-right {
@@ -97,7 +104,7 @@
   }
 
   .achievements-heading {
-    font-size: 2.4rem;
+    font-size: 3.5rem;
   }
 
   .achievement-card .icon {
@@ -107,4 +114,10 @@
   .achievement-card p {
     font-size: 1.2rem;
   }
+
+    .achievements-subtitle {
+    text-align: center;
+    font-size: 1.25rem;
+  }
+
 }

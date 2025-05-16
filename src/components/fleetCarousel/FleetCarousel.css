@@ -303,5 +303,9 @@
   margin: 0.6rem 0;
   color: #ccc;
 }
+
+.fleet-container h2 {
+  font-size: 4rem;
+}
  
 }

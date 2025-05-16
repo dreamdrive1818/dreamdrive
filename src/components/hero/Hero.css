@@ -303,11 +303,11 @@
 /* Extra Small Devices (max width: 480px) */
 @media (max-width: 480px) {
   .hero-left h1 {
-    font-size: 2.4rem;
+    font-size: 4rem;
   }
 
   .hero-left p {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
 
   .btn-started {
@@ -315,15 +315,20 @@
   }
 
   .hero-actions button {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     padding: 0.5rem 1rem;
+    margin-top: 1.5rem;
   }
 
   .hero-right p {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
   }
 
   .learn-more {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
   }
+
+    .hero-socials{
+      margin-top: 1rem;
+    }
 }

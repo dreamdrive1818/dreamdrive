@@ -1,7 +1,7 @@
   .how-it-works {
     background: radial-gradient(circle at center, var(--medium-bg), var(--light-bg));
     text-align: center;
-    padding: 1rem 2rem;
+    padding: 6rem 2rem;
     font-family: var(--font-family-main);
     position: relative;
     overflow: hidden;
@@ -9,14 +9,14 @@
   
   .sub-heading {
     text-transform: uppercase;
-    font-size: 0.9rem;
+    font-size: 1.25rem;
     letter-spacing: 1px;
-    color: var(--text-dark);
+    color: var(--dark-bg);
     margin-bottom: 0.5rem;
   }
   
   .main-heading {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 3rem;
     color: var(--text-dark);
@@ -56,7 +56,7 @@
     transform: translateX(-50%);
     width: 18px;
     height: 18px;
-    background-color: #555;
+    background-color: #595959c0;
     border-radius: 50%;
     z-index: 3;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
@@ -146,6 +146,12 @@
       flex-direction: column !important;
       text-align: center !important;
     }
+
+    .step-circle{
+      width: 10px;
+      height: 10px;
+     background-color: #2e2e2ed6;
+    }
   
     .step-block:nth-child(even) .step-content,
     .step-block:nth-child(odd) .step-content {
@@ -156,5 +162,13 @@
       font-size: 4rem;
       top: 60%;
     }
+
+      .sub-heading{
+        font-size: 1.25rem;
+      }
+
+      .main-heading{
+        font-size: 4rem;
+      }
   }
   
