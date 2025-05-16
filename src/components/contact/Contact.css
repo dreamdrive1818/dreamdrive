@@ -113,6 +113,15 @@
     flex-direction: column;
   }
 
+  
+.contact-info-box h2{
+  font-size: 2.8rem;
+}
+
+.contact-info-box p{
+  font-size: 1.4rem;
+}
+
   .name-fields {
     flex-direction: column;
   }
