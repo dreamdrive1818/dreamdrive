@@ -180,7 +180,7 @@ const FleetCarousel = () => {
           )}
         </div>
       </div>
-      <HowItWorks />
+     {location.pathname === "/cars" && <HowItWorks />}
     </>
   );
 };
