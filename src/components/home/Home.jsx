@@ -5,6 +5,7 @@ import WhyChoose from '../whychooseus/WhyChooseUs'
 import HowItWorks from '../HowItWorks/HowItWorks'
 import Achievements from '../Achievements/Achievements'
 import DreamCarBanner from '../DreamCarBanner/DreamCarBanner'
+import Contact from '../contact/Contact'
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
       <HowItWorks />
       <Achievements />
       {/* <DreamCarBanner /> */}
+      <Contact />
     </div>
   )
 }
