@@ -171,7 +171,9 @@ const htmlContent = `
           <h4 style="color: #0f172a; margin-bottom: 8px; font-size: 16px;">💳 Payment Summary</h4>
           <p><strong>Advance Paid:</strong> ₹${advancePaid}</p>
           <p><strong>Status:</strong> ${paymentStatus}</p>
-          <p><strong>Date:</strong> ${formattedDate}</p>
+           <p><strong>Status:</strong> ${paymentStatus}</p>
+            <p><strong>Booking Date:</strong> ${user.bookingDate || "Not Provided"}</p>
+    <p><strong>Booking Time:</strong> ${user.bookingTime || "Not Provided"}</p>
         </td>
       </tr>
     </table>
