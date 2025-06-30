@@ -170,12 +170,12 @@ const htmlContent = `
       </tr>
       <tr>
         <td style="padding: 12px; vertical-align: top; width: 100%; box-sizing: border-box;">
-          <h4 style="color: #0f172a; margin-bottom: 8px; font-size: 16px;">💳 Payment Summary</h4>
+          <h4 style="color: #0f172a; margin-bottom: 8px; font-size: 16px;">💳 Payment Summary and Booking Details</h4>
           <p><strong>Advance Paid:</strong> ₹${advancePaid}</p>
           <p><strong>Status:</strong> ${paymentStatus}</p>
-           <p><strong>Status:</strong> ${paymentStatus}</p>
             <p><strong>Booking Date:</strong> ${user.bookingDate || "Not Provided"}</p>
     <p><strong>Booking Time:</strong> ${user.bookingTime || "Not Provided"}</p>
+      <p><strong>Status:</strong> ${paymentStatus}</p>
         </td>
       </tr>
     </table>
@@ -184,7 +184,7 @@ const htmlContent = `
       A confirmation email has been sent. For any questions, feel free to chat with our support team via the live chat option.
     </p>
 
-   <div style="text-align: center; margin-top: 35px;">
+ <div style="text-align: center; margin-top: 35px;">
   <a href="https://forms.zohopublic.in/dreamdrive1818gm1/form/CONSENTFORMFORCARHIRE/formperma/XcyUB9S6UcHoPngvocFg76vVhZcn4lJco34EPSjBy_o" 
      style="background-color: #2563eb; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 15px; display: inline-block; margin-right: 12px;">
     Sign Consent Form
@@ -194,6 +194,10 @@ const htmlContent = `
     Track Your Ride
   </a>
 </div>
+
+<p style="margin-top: 30px; color: #475569; font-size: 14px; text-align: center; line-height: 1.6;">
+  Please note that your ride booking will be considered fully confirmed only upon receipt of the complete payment and submission of the signed consent form. Should you have any questions, feel free to contact our support team.
+</p>
 
 
   </div>
