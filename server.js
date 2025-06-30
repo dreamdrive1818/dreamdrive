@@ -142,8 +142,10 @@ const htmlContent = `
 
     <div style="text-align: center;">
       <div style="font-size: 24px; color: #22c55e;">✔</div>
-      <h2 style="color: #1e293b; font-size: 22px; margin: 10px 0;">Booking Confirmed!</h2>
-      <p style="color: #475569; font-size: 16px; margin: 5px 0;">Your ride has been successfully scheduled.</p>
+     <h2 style="color: #eab308; font-size: 22px; margin: 10px 0;">Booking Partially Confirmed</h2>
+<p style="color: #475569; font-size: 16px; margin: 5px 0;">
+  We have received your booking details. Your ride is reserved but pending <strong>payment</strong> and <strong>signing of the consent form</strong>.
+</p>
       <p style="font-weight: bold; color: #1e293b; font-size: 16px;">Ride ID: ${id}</p>
     </div>
 
@@ -182,12 +184,17 @@ const htmlContent = `
       A confirmation email has been sent. For any questions, feel free to chat with our support team via the live chat option.
     </p>
 
-    <div style="text-align: center; margin-top: 35px;">
-      <a href="https://forms.zohopublic.in/dreamdrive1818gm1/form/CONSENTFORMFORCARHIRE/formperma/XcyUB9S6UcHoPngvocFg76vVhZcn4lJco34EPSjBy_o" 
-         style="background-color: #2563eb; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 15px; display: inline-block;">
-        Sign Consent Form to Proceed
-      </a>
-    </div>
+   <div style="text-align: center; margin-top: 35px;">
+  <a href="https://forms.zohopublic.in/dreamdrive1818gm1/form/CONSENTFORMFORCARHIRE/formperma/XcyUB9S6UcHoPngvocFg76vVhZcn4lJco34EPSjBy_o" 
+     style="background-color: #2563eb; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 15px; display: inline-block; margin-right: 12px;">
+    Sign Consent Form
+  </a>
+  <a href="https://dream-drive.co.in/order-tracking"
+     style="background-color: #16a34a; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 15px; display: inline-block;">
+    Track Your Ride
+  </a>
+</div>
+
 
   </div>
 `;
