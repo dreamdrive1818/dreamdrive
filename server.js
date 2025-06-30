@@ -130,7 +130,7 @@ const sendProductConfirmationMail = async (user, order) => {
     },
   });
 
-  const { car, id: id, advancePaid, paymentStatus, createdAt } = order;
+  const { car, id: id, advancePaid, paymentStatus, createdAt, bookingDate, bookingTime,rentalType } = order;
   const formattedDate = new Date(createdAt).toLocaleString("en-IN");
 
 const htmlContent = `
@@ -162,10 +162,13 @@ const htmlContent = `
       </tr>
       <tr>
         <td style="padding: 12px; vertical-align: top; width: 100%; box-sizing: border-box;">
-          <h4 style="color: #0f172a; margin-bottom: 8px; font-size: 16px;">👤 User Info</h4>
+          <h4 style="color: #0f172a; margin-bottom: 8px; font-size: 16px;">👤 User & Booking Info</h4>
           <p><strong>Name:</strong> ${user.fullName}</p>
           <p><strong>Email:</strong> ${user.email}</p>
           <p><strong>Phone:</strong> ${user.phone}</p>
+            <p><strong>Booking Date:</strong> ${bookingDate || "Not Provided"}</p>
+    <p><strong>Booking Time:</strong> ${bookingTime || "Not Provided"}</p>
+      <p><strong>Rental Type:</strong> ${rentalType === "self-drive" ? "Self-Drive" : "With Driver"}</p>
         </td>
       </tr>
       <tr>
@@ -173,9 +176,7 @@ const htmlContent = `
           <h4 style="color: #0f172a; margin-bottom: 8px; font-size: 16px;">💳 Payment Summary and Booking Details</h4>
           <p><strong>Advance Paid:</strong> ₹${advancePaid}</p>
           <p><strong>Status:</strong> ${paymentStatus}</p>
-            <p><strong>Booking Date:</strong> ${user.bookingDate || "Not Provided"}</p>
-    <p><strong>Booking Time:</strong> ${user.bookingTime || "Not Provided"}</p>
-      <p><strong>Status:</strong> ${paymentStatus}</p>
+          <p><strong>Date of Request:</strong> ${formattedDate}</p>
         </td>
       </tr>
     </table>
