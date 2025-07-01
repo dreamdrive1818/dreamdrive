@@ -130,10 +130,36 @@ const sendProductConfirmationMail = async (user, order) => {
     },
   });
 
-  const { car, id: id, advancePaid, paymentStatus, createdAt, bookingDate, bookingTime,rentalType } = order;
+  const {
+    car,
+    id,
+    advancePaid,
+    paymentStatus,
+    createdAt,
+    bookingDate,
+    bookingTime,
+    rentalType,
+  } = order;
+
   const formattedDate = new Date(createdAt).toLocaleString("en-IN");
 
-const htmlContent = `
+  const categoryBlock = user.bookingCategory
+    ? `<p><strong>Category:</strong> ${user.bookingCategory.charAt(0).toUpperCase() + user.bookingCategory.slice(1)}</p>`
+    : "";
+
+  const tripTypeBlock =
+    user.bookingCategory === "intercity" && user.tripType
+      ? `<p><strong>Trip Type:</strong> ${user.tripType
+          .replace("-", " ")
+          .replace(/^\w/, (c) => c.toUpperCase())}</p>`
+      : "";
+
+  const pickupBlock =
+    rentalType === "self-drive" && user.pickupLocation
+      ? `<p><strong>Pickup Location:</strong> ${user.pickupLocation}</p>`
+      : "";
+
+  const htmlContent = `
   <div style="max-width: 600px; margin: auto; font-family: Arial, sans-serif; padding: 30px 20px; border: 1px solid #e5e7eb; border-radius: 12px; background-color: #ffffff; box-sizing: border-box;">
     
     <div style="text-align: center;">
@@ -142,37 +168,44 @@ const htmlContent = `
 
     <div style="text-align: center;">
       <div style="font-size: 24px; color: #22c55e;">✔</div>
-     <h2 style="color: #eab308; font-size: 22px; margin: 10px 0;">Booking Partially Confirmed</h2>
-<p style="color: #475569; font-size: 16px; margin: 5px 0;">
-  We have received your booking details. Your ride is reserved but pending <strong>payment</strong> and <strong>signing of the consent form</strong>.
-</p>
+      <h2 style="color: #eab308; font-size: 22px; margin: 10px 0;">Booking Partially Confirmed</h2>
+      <p style="color: #475569; font-size: 16px; margin: 5px 0;">
+        We have received your booking details. Your ride is reserved but pending <strong>payment</strong> and <strong>signing of the consent form</strong>.
+      </p>
       <p style="font-weight: bold; color: #1e293b; font-size: 16px;">Ride ID: ${id}</p>
     </div>
 
     <table style="width: 100%; margin-top: 30px; font-size: 14px; border-spacing: 0;" cellpadding="0" cellspacing="0">
       <tr>
-        <td style="padding: 12px; vertical-align: top; width: 100%; box-sizing: border-box;">
+        <td style="padding: 12px; vertical-align: top;">
           <h4 style="color: #0f172a; margin-bottom: 8px; font-size: 16px;">🚗 Car Details</h4>
           <p><strong>Name:</strong> ${car.name}</p>
           <p><strong>Type:</strong> ${car.details.type}</p>
           <p><strong>Seats:</strong> ${car.details.seats}</p>
           <p><strong>Fuel:</strong> ${car.details.fuel}</p>
-          <p><strong>Transmission:</strong> ${car.details.mt === "YES" ? "Manual" : "Automatic"}</p>
+          <p><strong>Transmission:</strong> ${
+            car.details.mt === "YES" ? "Manual" : "Automatic"
+          }</p>
         </td>
       </tr>
       <tr>
-        <td style="padding: 12px; vertical-align: top; width: 100%; box-sizing: border-box;">
+        <td style="padding: 12px; vertical-align: top;">
           <h4 style="color: #0f172a; margin-bottom: 8px; font-size: 16px;">👤 User & Booking Info</h4>
           <p><strong>Name:</strong> ${user.fullName}</p>
           <p><strong>Email:</strong> ${user.email}</p>
           <p><strong>Phone:</strong> ${user.phone}</p>
-            <p><strong>Booking Date:</strong> ${bookingDate || "Not Provided"}</p>
-    <p><strong>Booking Time:</strong> ${bookingTime || "Not Provided"}</p>
-      <p><strong>Rental Type:</strong> ${rentalType === "self-drive" ? "Self-Drive" : "With Driver"}</p>
+          <p><strong>Booking Date:</strong> ${bookingDate || "Not Provided"}</p>
+          <p><strong>Booking Time:</strong> ${bookingTime || "Not Provided"}</p>
+          <p><strong>Rental Type:</strong> ${
+            rentalType === "self-drive" ? "Self-Drive" : "With Driver"
+          }</p>
+          ${categoryBlock}
+          ${tripTypeBlock}
+          ${pickupBlock}
         </td>
       </tr>
       <tr>
-        <td style="padding: 12px; vertical-align: top; width: 100%; box-sizing: border-box;">
+        <td style="padding: 12px; vertical-align: top;">
           <h4 style="color: #0f172a; margin-bottom: 8px; font-size: 16px;">💳 Payment Summary and Booking Details</h4>
           <p><strong>Advance Paid:</strong> ₹${advancePaid}</p>
           <p><strong>Status:</strong> ${paymentStatus}</p>
@@ -185,25 +218,23 @@ const htmlContent = `
       A confirmation email has been sent. For any questions, feel free to chat with our support team via the live chat option.
     </p>
 
- <div style="text-align: center; margin-top: 35px;">
-  <a href="https://forms.zohopublic.in/dreamdrive1818gm1/form/CONSENTFORMFORCARHIRE/formperma/XcyUB9S6UcHoPngvocFg76vVhZcn4lJco34EPSjBy_o" 
-     style="background-color: #2563eb; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 15px; display: inline-block; margin-right: 12px;">
-    Sign Consent Form
-  </a>
-  <a href="https://dream-drive.co.in/order-tracking"
-     style="background-color: #16a34a; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 15px; display: inline-block;">
-    Track Your Ride
-  </a>
-</div>
+    <div style="text-align: center; margin-top: 35px;">
+      <a href="https://forms.zohopublic.in/dreamdrive1818gm1/form/CONSENTFORMFORCARHIRE/formperma/XcyUB9S6UcHoPngvocFg76vVhZcn4lJco34EPSjBy_o" 
+         style="background-color: #2563eb; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 15px; display: inline-block; margin-right: 12px;">
+        Sign Consent Form
+      </a>
+      <a href="https://dream-drive.co.in/order-tracking"
+         style="background-color: #16a34a; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 15px; display: inline-block;">
+        Track Your Ride
+      </a>
+    </div>
 
-<p style="margin-top: 30px; color: #475569; font-size: 14px; text-align: center; line-height: 1.6;">
-  Please note that your ride booking will be considered fully confirmed only upon receipt of the complete payment and submission of the signed consent form. Should you have any questions, feel free to contact our support team.
-</p>
-
+    <p style="margin-top: 30px; color: #475569; font-size: 14px; text-align: center; line-height: 1.6;">
+      Please note that your ride booking will be considered fully confirmed only upon receipt of the complete payment and submission of the signed consent form. Should you have any questions, feel free to contact our support team.
+    </p>
 
   </div>
-`;
-
+  `;
 
   const mailOptions = {
     from: `DreamDrive <${process.env.GMAIL_USER}>`,
@@ -214,6 +245,7 @@ const htmlContent = `
 
   await transport.sendMail(mailOptions);
 };
+
 
 
 app.listen(5000, () => {
