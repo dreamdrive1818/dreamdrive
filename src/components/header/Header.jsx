@@ -63,10 +63,9 @@ useEffect(() => {
     <nav className="nav-links">
       <p onClick={() => handleRoute("/cars")}>Cars</p>
        <p onClick={() => handleRoute("/order-tracking")}>Track Your Order</p>
-        <p onClick={() => handleRoute("/testimonial")}>Testimonial</p>
+        <p onClick={() => handleRoute("/testimonials")}>Testimonials</p>
         <p onClick={() => handleRoute("/howitworks")}>How It Works</p>
       <p onClick={() => handleRoute("/blogs")}>Blogs</p>
-      <p onClick={() => handleRoute("/about")}>About Us</p>
     </nav>
 
     {/* Right Actions */}

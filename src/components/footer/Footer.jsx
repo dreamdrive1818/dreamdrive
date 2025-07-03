@@ -40,6 +40,7 @@ const Footer = () => {
             <h4>Quick Link</h4>
             <p onClick={() => navigate("/about")}>Who we are</p>
             <p onClick={() => navigate("/cars")}>Pick a car</p>
+              <p onClick={() => navigate("/testimonials")}>Testimonials</p>
             <p onClick={() => navigate("/contact")}>Contact Us</p>
           </div>
           <div className="footer-column">

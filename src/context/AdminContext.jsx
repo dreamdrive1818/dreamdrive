@@ -416,6 +416,25 @@ const fetchMessages = async () => {
   };
 
 
+  // fetch all testimonials
+const fetchTestimonials = async () => {
+  const snapshot = await getDocs(collection(db, "testimonials"));
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+};
+
+// approve testimonial
+const approveTestimonial = async (id) => {
+  const ref = doc(db, "testimonials", id);
+  await updateDoc(ref, { status: "approved" });
+};
+
+// delete testimonial
+const deleteTestimonial = async (id) => {
+  const ref = doc(db, "testimonials", id);
+  await deleteDoc(ref);
+};
+
+
   return (
     <AdminContext.Provider
     value={{
@@ -445,7 +464,10 @@ const fetchMessages = async () => {
            updateCategory,
            addCategory,
            updateRentalType,
-           updateBookingDateTime
+           updateBookingDateTime,
+           fetchTestimonials,
+           approveTestimonial,
+           deleteTestimonial
             
           //  updateCommentApproval
       }}

@@ -14,6 +14,7 @@ import ManageCar from '../Admin/ManageCar/ManageCar';
 import ManageRide from '../Admin/ManageRide/ManageRide';
 import ManageUser from '../Admin/ManageUser/ManageUser';
 import ManageMessages from '../Admin/ManageMessages/ManageMessages';
+import ManageTestimonials from '../Admin/ManageTestimonials/ManageTestimonials';
 
 const AdminLayout = () => {
   const location = useLocation();
@@ -82,6 +83,12 @@ const AdminLayout = () => {
             <Route path="/admin/manage-contacts" element={
               <AdminPrivateRoute>
                 <ManageMessages />
+              </AdminPrivateRoute>
+            } />
+
+            <Route path="/admin/manage-testimonials" element={
+              <AdminPrivateRoute>
+                <ManageTestimonials />
               </AdminPrivateRoute>
             } />
 
