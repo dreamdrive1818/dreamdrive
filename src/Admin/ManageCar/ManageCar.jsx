@@ -14,7 +14,12 @@ const ManageCar = () => {
     name: "",
     price: "",
     available: "Available",
+    displayOrder: 1,
     images: [""],
+    twelveHrWeekday: "",
+    twentyFourHrWeekday: "",
+    twentyFourHrWeekend: "",
+    securityDeposit: "",
     details: {
       kilometer: "",
       extraKm: "",
@@ -29,9 +34,13 @@ const ManageCar = () => {
 
   const loadCars = async () => {
     const carList = await fetchCars();
-    setCars(carList);
+    const sorted = carList
+      .filter(car => car.displayOrder !== undefined)
+      .sort((a, b) => a.displayOrder - b.displayOrder);
+
+    setCars(sorted);
     const indexMap = {};
-    carList.forEach((car) => (indexMap[car.id] = 0));
+    sorted.forEach((car) => (indexMap[car.id] = 0));
     setCarouselIndex(indexMap);
   };
 
@@ -47,7 +56,10 @@ const ManageCar = () => {
         details: { ...prev.details, [name]: value },
       }));
     } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({
+        ...prev,
+        [name]: name === "displayOrder" ? parseInt(value) : value,
+      }));
     }
   };
 
@@ -87,7 +99,12 @@ const ManageCar = () => {
       name: "",
       price: "",
       available: "Available",
+      displayOrder: 1,
       images: [""],
+      twelveHrWeekday: "",
+      twentyFourHrWeekday: "",
+      twentyFourHrWeekend: "",
+      securityDeposit: "",
       details: {
         kilometer: "",
         extraKm: "",
@@ -107,6 +124,10 @@ const ManageCar = () => {
       ...car,
       images: car.images || [""],
       available: car.available || "Available",
+      twelveHrWeekday: car.twelveHrWeekday || "",
+      twentyFourHrWeekday: car.twentyFourHrWeekday || "",
+      twentyFourHrWeekend: car.twentyFourHrWeekend || "",
+      securityDeposit: car.securityDeposit || "",
     });
     setEditCarId(car.id);
     setModalOpen(true);
@@ -138,25 +159,19 @@ const ManageCar = () => {
   return (
     <div className="manage-car-container">
       <h2>Manage Fleet</h2>
-      <button className="add-btn" onClick={() => setModalOpen(true)}>
-        + Add Car
-      </button>
+      <button className="add-btn" onClick={() => setModalOpen(true)}>+ Add Car</button>
 
       <div className="car-list">
         {cars.map((car) => (
           <div key={car.id} className="car-card">
             <div className="carousel-container">
-              <button className="arrow left" onClick={() => handlePrev(car.id)}>
-                &#8249;
-              </button>
+              <button className="arrow left" onClick={() => handlePrev(car.id)}>&#8249;</button>
               <img
                 src={car.images?.[carouselIndex[car.id] || 0]}
                 alt="car"
                 className="carousel-image"
               />
-              <button className="arrow right" onClick={() => handleNext(car.id)}>
-                &#8250;
-              </button>
+              <button className="arrow right" onClick={() => handleNext(car.id)}>&#8250;</button>
             </div>
             <div className="thumbnails">
               {car.images?.map((img, index) => (
@@ -170,9 +185,14 @@ const ManageCar = () => {
               ))}
             </div>
             <h4>{car.name}</h4>
-            <p>₹{car.price}</p>
+            <p>Starting Price : ₹{car.price}</p>
             <p>{car.details?.type}</p>
+            <p>Display Order: {car.displayOrder}</p>
             <p>Availability: <strong>{car.available}</strong></p>
+            <p>12 Hr Weekday: ₹{car.twelveHrWeekday}</p>
+            <p>24 Hr Weekday: ₹{car.twentyFourHrWeekday}</p>
+            <p>24 Hr Weekend: ₹{car.twentyFourHrWeekend}</p>
+            <p>Security Deposit: ₹{car.securityDeposit}</p>
             <div className="car-actions">
               <button onClick={() => handleEdit(car)}>Edit</button>
               <button onClick={() => handleDelete(car.id)}>Delete</button>
@@ -206,6 +226,56 @@ const ManageCar = () => {
               onChange={handleInputChange}
             />
 
+            <label htmlFor="twelveHrWeekday">12 Hr Weekday Price (₹)</label>
+            <input
+              id="twelveHrWeekday"
+              type="text"
+              name="twelveHrWeekday"
+              placeholder="Enter 12 Hr Weekday Price"
+              value={formData.twelveHrWeekday}
+              onChange={handleInputChange}
+            />
+
+            <label htmlFor="twentyFourHrWeekday">24 Hr Weekday Price (₹)</label>
+            <input
+              id="twentyFourHrWeekday"
+              type="text"
+              name="twentyFourHrWeekday"
+              placeholder="Enter 24 Hr Weekday Price"
+              value={formData.twentyFourHrWeekday}
+              onChange={handleInputChange}
+            />
+
+            <label htmlFor="twentyFourHrWeekend">24 Hr Weekend Price (₹)</label>
+            <input
+              id="twentyFourHrWeekend"
+              type="text"
+              name="twentyFourHrWeekend"
+              placeholder="Enter 24 Hr Weekend Price"
+              value={formData.twentyFourHrWeekend}
+              onChange={handleInputChange}
+            />
+
+            <label htmlFor="securityDeposit">Security Deposit (₹)</label>
+            <input
+              id="securityDeposit"
+              type="text"
+              name="securityDeposit"
+              placeholder="Enter Security Deposit"
+              value={formData.securityDeposit}
+              onChange={handleInputChange}
+            />
+
+            <label htmlFor="displayOrder">Display Position</label>
+            <input
+              id="displayOrder"
+              type="number"
+              name="displayOrder"
+              placeholder="e.g. 1"
+              value={formData.displayOrder}
+              onChange={handleInputChange}
+            />
+
             <label htmlFor="availability">Availability</label>
             <select
               id="availability"
@@ -228,37 +298,28 @@ const ManageCar = () => {
                   onChange={(e) => handleImageChange(index, e.target.value)}
                   style={{ flex: 1 }}
                 />
-                <button type="button" onClick={() => removeImageField(index)} className="remove-img">
-                  ×
-                </button>
+                <button type="button" onClick={() => removeImageField(index)} className="remove-img">×</button>
               </div>
             ))}
             <button type="button" onClick={addImageField} className="add-img-btn">
               + Add Image Field
             </button>
 
-            {[
-              { label: "Kilometer Limit", name: "kilometer", placeholder: "e.g. 300/Day" },
-              { label: "Extra Kilometer Rate", name: "extraKm", placeholder: "e.g. ₹5/Km" },
-              { label: "Extra Hour Rate", name: "extraHr", placeholder: "e.g. ₹100/Hr" },
-              { label: "Car Type", name: "type", placeholder: "e.g. SUV, Sedan" },
-              { label: "Seats", name: "seats", type: "number", placeholder: "e.g. 5" },
-              { label: "Luggage Capacity", name: "luggage", type: "number", placeholder: "e.g. 3" },
-              { label: "Fuel Type", name: "fuel", placeholder: "e.g. Petrol, Diesel" },
-              { label: "Manual Transmission", name: "mt", placeholder: "YES / NO" },
-            ].map(({ label, name, type = "text", placeholder }) => (
-              <div key={name}>
-                <label htmlFor={name}>{label}</label>
-                <input
-                  id={name}
-                  type={type}
-                  name={name}
-                  placeholder={placeholder}
-                  value={formData.details[name]}
-                  onChange={handleInputChange}
-                />
-              </div>
-            ))}
+            {["kilometer", "extraKm", "extraHr", "type", "seats", "luggage", "fuel", "mt"].map(
+              (key) => (
+                <div key={key}>
+                  <label htmlFor={key}>{key[0].toUpperCase() + key.slice(1)}</label>
+                  <input
+                    id={key}
+                    type="text"
+                    name={key}
+                    placeholder={`Enter ${key}`}
+                    value={formData.details[key]}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              )
+            )}
 
             <div className="modal-actions">
               <button onClick={handleSubmit}>{editCarId ? "Update" : "Add"}</button>

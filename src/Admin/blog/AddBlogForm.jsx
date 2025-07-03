@@ -1,20 +1,12 @@
-import React, { useState } from 'react';
-import { db } from '../../firebase/firebaseConfig';
-import { collection, addDoc } from 'firebase/firestore';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-
-import { useEditor, EditorContent } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import Underline from '@tiptap/extension-underline';
-import TextStyle from '@tiptap/extension-text-style';
-import Color from '@tiptap/extension-color';
-import TextAlign from '@tiptap/extension-text-align';
-
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import './AddBlogForm.css';
-import './TiptapEditor.css';
+import { useAdminContext } from '../../context/AdminContext';
 
-const AddBlogForm = ({ onClose }) => {
+const AddBlogForm = ({ onClose, onSuccess }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState(null);
@@ -22,34 +14,31 @@ const AddBlogForm = ({ onClose }) => {
   const [category, setCategory] = useState('');
   const [date, setDate] = useState('');
   const [author, setAuthor] = useState('');
-  const [link, setLink] = useState('');
   const [imageLink, setImageLink] = useState('');
   const [seoTitle, setSeoTitle] = useState('');
   const [seoDescription, setSeoDescription] = useState('');
   const [seoKeywords, setSeoKeywords] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
-  const categories = ['Antivirus', 'Printer', 'Windows OS'];
+  const { fetchCategories, addBlog } = useAdminContext();
 
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Underline,
-      TextStyle,
-      Color,
-      TextAlign.configure({ types: ['heading', 'paragraph'] }),
-    ],
-    content: '',
-    onUpdate: ({ editor }) => {
-      setContent(editor.getHTML());
-    },
-  });
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const data = await fetchCategories();
+        setCategories(data);
+      } catch (err) {
+        console.error('Failed to load categories:', err);
+        toast.error('Failed to load categories');
+      }
+    };
+    loadCategories();
+  }, [fetchCategories]);
 
   const formatTitleForURL = (title) => {
-    return title
-      .toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w\-]+/g, '');
+    return title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '');
   };
 
   const handleImageChange = (e) => {
@@ -60,12 +49,17 @@ const AddBlogForm = ({ onClose }) => {
         setImageBase64(reader.result);
       };
       reader.readAsDataURL(file);
+      setImage(file);
     }
-    setImage(file);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!title.trim()) {
+      toast.error('Please enter a blog title');
+      return;
+    }
 
     if (!imageBase64 && !imageLink) {
       toast.error('Please upload an image or provide an image URL');
@@ -77,27 +71,33 @@ const AddBlogForm = ({ onClose }) => {
       return;
     }
 
+    setIsSubmitting(true);
+
     const formattedTitle = formatTitleForURL(title);
 
+    const blogData = {
+      title,
+      content,
+      imageBase64,
+      imageLink,
+      category,
+      createdAt: new Date(),
+      formattedDate: new Date(date).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }),
+      author,
+      urlSlug: formattedTitle,
+      seoTitle,
+      seoDescription,
+      seoKeywords: seoKeywords.split(',').map(k => k.trim()).filter(k => k),
+    };
+
     try {
-      const blogRef = collection(db, '_blogs');
-      await addDoc(blogRef, {
-        title,
-        content,
-        imageBase64,
-        imageLink,
-        category,
-        createdAt: new Date(),
-        formattedDate: date,
-        author,
-        urlSlug: formattedTitle,
-        seoTitle,
-        seoDescription,
-        seoKeywords: seoKeywords.split(',').map(k => k.trim()).join(', '),
-      });
-
+      await addBlog(blogData);
       toast.success('Blog added successfully!');
-
+      // Reset form
       setTitle('');
       setContent('');
       setImage(null);
@@ -105,20 +105,22 @@ const AddBlogForm = ({ onClose }) => {
       setCategory('');
       setDate('');
       setAuthor('');
-      setLink('');
       setImageLink('');
       setSeoTitle('');
       setSeoDescription('');
       setSeoKeywords('');
-      editor?.commands.setContent('');
+      onClose();
+      if (onSuccess) onSuccess();
     } catch (err) {
       toast.error('Error uploading blog: ' + err.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <div className="addblog">
-      <div className="close" onClick={onClose}>X</div>
+      <button className="close" onClick={onClose} aria-label="Close form">X</button>
       <div className="addblog-form">
         <h2>Add a Blog</h2>
         <form onSubmit={handleSubmit} className="blog-form">
@@ -136,21 +138,33 @@ const AddBlogForm = ({ onClose }) => {
 
           <div className="form-group">
             <label htmlFor="content">Content</label>
-            {editor && (
-              <div className="tiptap-toolbar">
-                <button type="button" onClick={() => editor.chain().focus().toggleBold().run()} className={editor.isActive('bold') ? 'active' : ''}>Bold</button>
-                <button type="button" onClick={() => editor.chain().focus().toggleItalic().run()} className={editor.isActive('italic') ? 'active' : ''}>Italic</button>
-                <button type="button" onClick={() => editor.chain().focus().toggleUnderline().run()} className={editor.isActive('underline') ? 'active' : ''}>Underline</button>
-                <button type="button" onClick={() => editor.chain().focus().setParagraph().run()} className={editor.isActive('paragraph') ? 'active' : ''}>P</button>
-                <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={editor.isActive('heading', { level: 1 }) ? 'active' : ''}>H1</button>
-                <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={editor.isActive('heading', { level: 2 }) ? 'active' : ''}>H2</button>
-                <button type="button" onClick={() => editor.chain().focus().setTextAlign('left').run()}>Left</button>
-                <button type="button" onClick={() => editor.chain().focus().setTextAlign('center').run()}>Center</button>
-                <button type="button" onClick={() => editor.chain().focus().setTextAlign('right').run()}>Right</button>
-                <input type="color" onInput={(e) => editor.chain().focus().setColor(e.target.value).run()} title="Text Color" />
-              </div>
-            )}
-            <EditorContent editor={editor} className="tiptap" />
+            <ReactQuill
+              value={content}
+              onChange={setContent}
+              theme="snow"
+              modules={{
+                toolbar: [
+                  [{ header: [1, 2, 3, false] }],
+                  ['bold', 'italic', 'underline', 'strike'],
+                  [{ color: [] }, { background: [] }],
+                  [{ align: [] }],
+                  ['blockquote', 'code-block'],
+                  [{ list: 'ordered' }, { list: 'bullet' }],
+                  ['link', 'image', 'video'],
+                  ['clean']
+                ]
+              }}
+              formats={[
+                'header',
+                'bold', 'italic', 'underline', 'strike',
+                'color', 'background',
+                'align',
+                'blockquote', 'code-block',
+                'list', 'bullet',
+                'link', 'image', 'video'
+              ]}
+              style={{ minHeight: '200px', marginBottom: '1rem' }}
+            />
           </div>
 
           <div className="form-group">
@@ -161,15 +175,15 @@ const AddBlogForm = ({ onClose }) => {
               onChange={(e) => setCategory(e.target.value)}
               required
             >
-              <option value="">Select a category</option>
-              {categories.map((cat, index) => (
-                <option key={index} value={cat}>{cat}</option>
+              <option value="">Select a Category</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.name}>{cat.name}</option>
               ))}
             </select>
           </div>
 
           <div className="form-group">
-            <label htmlFor="image">Blog Image</label>
+            <label htmlFor="image">Upload Image</label>
             <input
               type="file"
               id="image"
@@ -179,15 +193,23 @@ const AddBlogForm = ({ onClose }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="imageLink">Image URL (optional)</label>
+            <label htmlFor="imageLink">Or Image URL</label>
             <input
               type="url"
               id="imageLink"
               value={imageLink}
               onChange={(e) => setImageLink(e.target.value)}
-              placeholder="Enter an image URL"
+              placeholder="Enter image URL"
             />
           </div>
+
+          {(imageBase64 || imageLink) && (
+            <img
+              src={imageBase64 || imageLink}
+              alt="Preview"
+              className="image-preview"
+            />
+          )}
 
           <div className="form-group">
             <label htmlFor="date">Date</label>
@@ -201,7 +223,7 @@ const AddBlogForm = ({ onClose }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="author">Author Name</label>
+            <label htmlFor="author">Author</label>
             <input
               type="text"
               id="author"
@@ -212,7 +234,8 @@ const AddBlogForm = ({ onClose }) => {
             />
           </div>
 
-          <h3>For SEO ↓</h3>
+          <h3>SEO Settings</h3>
+
           <div className="form-group">
             <label htmlFor="seoTitle">SEO Title</label>
             <input
@@ -220,7 +243,7 @@ const AddBlogForm = ({ onClose }) => {
               id="seoTitle"
               value={seoTitle}
               onChange={(e) => setSeoTitle(e.target.value)}
-              placeholder="Enter SEO Title"
+              placeholder="SEO title"
             />
           </div>
 
@@ -231,23 +254,24 @@ const AddBlogForm = ({ onClose }) => {
               id="seoDescription"
               value={seoDescription}
               onChange={(e) => setSeoDescription(e.target.value)}
-              placeholder="Enter SEO Description"
+              placeholder="SEO description"
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="seoKeywords">SEO Keywords (comma separated)</label>
+            <label htmlFor="seoKeywords">SEO Keywords</label>
             <input
               type="text"
               id="seoKeywords"
               value={seoKeywords}
               onChange={(e) => setSeoKeywords(e.target.value)}
-              placeholder="Enter SEO Keywords"
+              placeholder="e.g. antivirus, windows, printer"
             />
           </div>
 
-          {imageBase64 && <img src={imageBase64} alt="Blog preview" className="image-preview" />}
-          <button type="submit" className="submit-btn">Add Blog</button>
+          <button type="submit" className="submit-btn" disabled={isSubmitting}>
+            {isSubmitting ? 'Submitting...' : 'Add Blog'}
+          </button>
         </form>
       </div>
     </div>

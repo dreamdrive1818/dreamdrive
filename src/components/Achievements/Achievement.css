@@ -4,6 +4,7 @@
   padding: 0rem 16rem;
   flex-wrap: wrap;
   gap: 4rem;
+  background-color: var(--light-bg);
 }
 
 .achievements-left {
@@ -14,7 +15,7 @@
 
 .achievements-subtitle {
   font-size: 2rem;
-  color: #777;
+  color: var(--text-dark);
   margin-bottom: 10px;
   letter-spacing: 1px;
 }
@@ -22,7 +23,7 @@
 .achievements-heading {
   font-size: 4rem;
   font-weight: bold;
-  color: #1e1e1e;
+  color: var(--text-dark);
   line-height: 1.3;
 }
 
@@ -42,7 +43,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  color: #222;
+  color: var(--text-dark);
 }
 
 .achievement-card .icon {

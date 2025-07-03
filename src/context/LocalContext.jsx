@@ -27,7 +27,7 @@ const handleNavigation = () =>{
   useEffect(() => {
     const fetchTFN = async () => {
       try {
-        const docRef = doc(db, "siteNumbers", "hcvatron.com");
+        const docRef = doc(db, "siteNumbers", "dream-drive.co");
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -39,7 +39,7 @@ const handleNavigation = () =>{
           });
         } else {
           console.log("No such document!");
-          setCurrentTFN({ intlFormat: "", localFormat: "" });
+          setCurrentTFN({ intlFormat: "919942027772", localFormat: "+91 (994) 202-7772" });
         }
       } catch (error) {
         console.error("Error fetching TFN: ", error);

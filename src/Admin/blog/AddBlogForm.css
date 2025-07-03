@@ -15,12 +15,14 @@
   background: #ffffff;
   padding: 2rem;
   width: 800px;
-  height: 750px;
+  max-height: 90vh; /* Adjusts for all screen heights */
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   position: relative;
-  overflow-y: scroll;
+  overflow-y: auto; /* Enables scroll if content overflows */
+  scroll-behavior: smooth;
 }
+
 
 .close {
   position: absolute;
@@ -81,8 +83,9 @@
 
 /* Text Editor (Quill) */
 .ql-container {
-  height: 150px !important;
+  height: 280px !important;
   border-radius: 6px;
+  overflow: hidden;
 }
 
 /* Image Preview */

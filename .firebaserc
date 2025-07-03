@@ -3,6 +3,17 @@
     "default": "dreamdrive-e3fca",
     " deploy": "dreamdrive-307ed"
   },
-  "targets": {},
+  "targets": {
+    "dreamdrive-307ed": {
+      "hosting": {
+        "dark": [
+          "dreamdrive-307ed-dark"
+        ],
+        "light": [
+          "dreamdrive-307ed-light"
+        ]
+      }
+    }
+  },
   "etags": {}
 }

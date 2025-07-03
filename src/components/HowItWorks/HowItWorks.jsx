@@ -10,6 +10,7 @@ import {
   faIndianRupeeSign,
 } from "@fortawesome/free-solid-svg-icons";
 import BookNowBanner from "../Booknow/BookNowBanner";
+import AnimateOnScroll from "../../assets/Animation/AnimateOnScroll";
 
 const steps = [
   {
@@ -45,9 +46,11 @@ const HowItWorks = () => {
   return (
     <>
     <section className="how-it-works">
+      <AnimateOnScroll className="delay-2">
       <h4 className="sub-heading">HOW IT WORKS</h4>
       <h2 className="main-heading">Simple Steps to Get the Car</h2>
-      <div className="steps-container">
+      </AnimateOnScroll>
+      <AnimateOnScroll className="steps-container delay-3">
         <div className="vertical-line"></div>
         {steps.map((step, index) => (
           <div key={index} className={`step-block ${step.highlight ? "active" : ""}`}>
@@ -63,7 +66,7 @@ const HowItWorks = () => {
             </div>
           </div>
         ))}
-      </div>
+      </AnimateOnScroll>
     </section>
     <BookNowBanner />
     </>

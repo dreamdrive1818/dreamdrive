@@ -14,6 +14,12 @@ import AdminLayout from './AdminLayout';
 import Payment from '../components/Payment/Payment';
 import { ClipLoader } from "react-spinners";
 import Success from '../components/Payment/Success/Success';
+import AllBlogs from '../components/blogs/AllBlogs';
+import Blogspage from '../components/blogs/Blogspage';
+import StatusTracking from '../components/statusTracking/StatusTracking';
+import WhatsAppPopup from '../components/WhatsAppPopup/WhatsAppPopup';
+import ContactPopup from '../components/ContactPopup/ContactPopup';
+import Testimonial from '../components/Testimonial/Testimonial';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -62,7 +68,11 @@ const AppRoute = () => {
              <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cars" element={<FleetCarousel />} />
+        <Route path="/blogs" element={<AllBlogs />} />
+        <Route path="/testimonial" element={<Testimonial />} />
+        <Route path="/blogs/:slug" element={<Blogspage />} />
         <Route path="/order" element={<Order />} />
+        <Route path="/order-tracking" element={<StatusTracking />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/about" element={<About />} />
         <Route path="/success" element={<Success />} />
@@ -75,10 +85,10 @@ const AppRoute = () => {
         )}
       </main>
       {isAdminPage && <AdminLayout />}
-     
+       {!isAdminPage  && <ContactPopup />}
      {!isAdminPage  && <DreamCarBanner />}
       {!isAdminPage  && <Footer />}
-
+      {!isAdminPage  && <WhatsAppPopup />}
        
     </>
   );

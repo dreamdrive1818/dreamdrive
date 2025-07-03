@@ -36,6 +36,7 @@ const AdminLayout = () => {
             <Route path="/admin" element={
               admin ? <Navigate to="/admin/dashboard" replace /> : <Navigate to="/admin/login" replace />
             } />
+
             <Route path="/admin/dashboard" element={
               <AdminPrivateRoute>
                 <Dashboard />
@@ -114,7 +115,9 @@ const AdminLayout = () => {
               </AdminPrivateRoute>
             } /> */}
 
-            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/login" element={
+  admin ? <Navigate to="/admin/dashboard" replace /> : <AdminLogin />
+} />
           </Routes>
         </div>
       </div>

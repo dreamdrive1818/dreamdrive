@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./Order.css";
-import HowItWorks from "../HowItWorks/HowItWorks";
 import OrderModal from "./OrderModal/OrderModal";
 import { useOrderContext } from "../../context/OrderContext";
 
@@ -10,9 +9,7 @@ const Order = () => {
   const [showModal, setShowModal] = useState(false);
   const [carouselIndex, setCarouselIndex] = useState(0);
 
-  if (!car) {
-    return <div className="order-error">No car selected.</div>;
-  }
+  if (!car) return <div className="order-error">No car selected.</div>;
 
   const handlePrev = () => {
     setCarouselIndex((prev) =>
@@ -21,69 +18,100 @@ const Order = () => {
   };
 
   const handleNext = () => {
-    setCarouselIndex((prev) =>
-      (prev + 1) % (car.images?.length || 1)
-    );
-  };
-
-  const handleThumbClick = (index) => {
-    setCarouselIndex(index);
+    setCarouselIndex((prev) => (prev + 1) % (car.images?.length || 1));
   };
 
   return (
     <>
-      <div className="order-container">
-        <h2 className="order-heading">Review Your Selection</h2>
-        <div className="order-card">
-          <div className="order-img">
-            <div className="carousel-container">
-              <button className="arrow left" onClick={handlePrev}>
-                &#8249;
+      <section className="order-section">
+        <div className="order-header">
+          <h1>Review Your Booking</h1>
+          <p>Carefully review your selection before proceeding.</p>
+        </div>
+
+        <div className="order-body">
+          <div className="order-image-panel">
+            <div className="carousel-wrapper">
+              <button className="nav-btn left" onClick={handlePrev}>
+                &#10094;
               </button>
               <img
                 src={car.images?.[carouselIndex] || car.image}
                 alt="Selected Car"
-                className="carousel-image"
+                className="carousel-main"
               />
-              <button className="arrow right" onClick={handleNext}>
-                &#8250;
+              <button className="nav-btn right" onClick={handleNext}>
+                &#10095;
               </button>
             </div>
-            <div className="thumbnails">
-              {car.images?.map((img, index) => (
+            <div className="thumbnail-strip">
+              {car.images?.map((img, i) => (
                 <img
-                  key={index}
+                  key={i}
                   src={img}
                   alt="thumb"
-                  className={`thumb ${carouselIndex === index ? "active" : ""}`}
-                  onClick={() => handleThumbClick(index)}
+                  onClick={() => setCarouselIndex(i)}
+                  className={`thumb ${i === carouselIndex ? "active" : ""}`}
                 />
               ))}
             </div>
           </div>
 
-          <div className="order-details">
-            <h3>{car.name}</h3>
-            <ul className="order-specs">
-              <li><strong>Type:</strong> {car.details.type}</li>
-              <li><strong>Price:</strong> {car.price}</li>
-              <li><strong>Seats:</strong> {car.details.seats}</li>
-              <li><strong>Luggage:</strong> {car.details.luggage} bags</li>
-              <li><strong>Fuel:</strong> {car.details.fuel}</li>
-              <li><strong>Transmission:</strong> {car.details.mt === "YES" ? "Manual" : "Automatic"}</li>
-              <li><strong>Free Kilometer Limit:</strong> {car.details.kilometer}</li>
-              <li><strong>Extra Km Charges:</strong> ₹{car.details.extraKm}</li>
-              <li><strong>Extra Hour Charges:</strong> ₹{car.details.extraHr}</li>
-            </ul>
+          <div className="order-info-panel">
+            <h2 className="car-title">{car.name}</h2>
 
-            <button className="order-book-btn" onClick={() => setShowModal(true)}>
-              Proceed to Booking
+            <div className="car-specs">
+              {[
+                ["Type", car.details.type],
+                ["Seats", car.details.seats],
+                ["Luggage", `${car.details.luggage} Bags`],
+                ["Fuel", car.details.fuel],
+                ["Transmission", car.details.mt === "YES" ? "Manual" : "Automatic"],
+                // ["Free KM", car.details.kilometer],
+                // ["Extra KM", `₹${car.details.extraKm}`],
+                // ["Extra Hour", `₹${car.details.extraHr}`],
+              ].map(([label, value], index) => (
+                <div key={index} className="spec-item">
+                  <span className="label">{label}</span>
+                  <span className="value">{value}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="price-details">
+              <h3>Rental Charges</h3>
+              <div className="price-grid">
+                <div className="price-box">
+                  <div className="price-label">12 Hr (Weekday)</div>
+                  <div className="price-value">₹{car.twelveHrWeekday}</div>
+                </div>
+                <div className="price-box">
+                  <div className="price-label">24 Hr (Weekday)</div>
+                  <div className="price-value">₹{car.twentyFourHrWeekday}</div>
+                </div>
+                <div className="price-box">
+                  <div className="price-label">24 Hr (Weekend)</div>
+                  <div className="price-value">₹{car.twentyFourHrWeekend}</div>
+                </div>
+                <div className="price-box">
+                  <div className="price-label">Security Deposit</div>
+                  <div className="price-value">₹{car.securityDeposit}</div>
+                </div>
+                <div className="price-box">
+                  <div className="price-label">Extra Hour</div>
+                  <div className="price-value">₹{car.details.extraHr}</div>
+                </div>
+              </div>
+            </div>
+
+            <button className="confirm-btn" onClick={() => setShowModal(true)}>
+              Confirm & Proceed
             </button>
           </div>
         </div>
-      </div>
+      </section>
+
       {showModal && <OrderModal closeModal={() => setShowModal(false)} />}
-      {/* <HowItWorks /> */}
     </>
   );
 };

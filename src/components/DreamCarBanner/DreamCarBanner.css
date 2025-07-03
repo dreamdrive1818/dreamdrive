@@ -30,7 +30,7 @@
 
 .banner-btn {
   background-color: var(--primary-color);
-  color: #fff;
+  color: var(--text-light);
   padding: 12px 24px;
   font-size: 16px;
   border: none;

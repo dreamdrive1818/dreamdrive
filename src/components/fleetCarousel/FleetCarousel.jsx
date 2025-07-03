@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./FleetCarousel.css";
 import { useAdminContext } from "../../context/AdminContext";
 import { useOrderContext } from "../../context/OrderContext";
@@ -13,6 +13,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { ClipLoader } from "react-spinners";
 import HowItWorks from "../HowItWorks/HowItWorks";
+import AnimateOnScroll from "../../assets/Animation/AnimateOnScroll";
+import { motion } from "framer-motion";
 
 const FleetCarousel = () => {
   const { fetchCars } = useAdminContext();
@@ -21,32 +23,59 @@ const FleetCarousel = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [isHovering, setIsHovering] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
   const itemsPerPage = 3;
   const navigate = useNavigate();
   const location = useLocation();
   const isCarsPage = location.pathname === "/cars";
+  const intervalRef = useRef(null);
+
   const totalPages = Math.ceil(cars.length / itemsPerPage);
 
   useEffect(() => {
     const loadCars = async () => {
       const carData = await fetchCars();
-      setCars(carData);
+      const sortedCars = [...carData].sort(
+        (a, b) => (a.displayOrder ?? 9999) - (b.displayOrder ?? 9999)
+      );
+      setCars(sortedCars);
       setLoading(false);
     };
     loadCars();
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentPage((prev) => (prev + 1) % totalPages);
-    }, 15000);
-    return () => clearInterval(interval);
-  }, [totalPages]);
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  const paginatedCars = cars.slice(
-    currentPage * itemsPerPage,
-    currentPage * itemsPerPage + itemsPerPage
-  );
+  const startAutoSlide = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      if (!isHovering) {
+        setCurrentPage((prev) => (prev + 1) % totalPages);
+      }
+    }, 6000);
+  };
+
+  useEffect(() => {
+    if (totalPages > 1) {
+      startAutoSlide();
+      return () => {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+      };
+    }
+  }, [totalPages, isHovering]);
+
+  const paginatedCars = isMobile
+    ? cars
+    : cars.slice(
+        currentPage * itemsPerPage,
+        currentPage * itemsPerPage + itemsPerPage
+      );
 
   const handleRent = (car) => {
     handleOrder(car);
@@ -55,7 +84,13 @@ const FleetCarousel = () => {
 
   return (
     <>
-      <div className="fleet-container" style={{ paddingTop: isCarsPage ? "2rem" : "8rem" }}>
+      <motion.div
+        className="fleet-container"
+        style={{ paddingTop: isCarsPage ? "2rem" : "8rem" }}
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         <div className="fleet-div">
           <h4>THE CARS</h4>
           <h2>Our Impressive Fleet</h2>
@@ -67,26 +102,39 @@ const FleetCarousel = () => {
             </div>
           ) : (
             <>
-              <div className="fleet-carousel-wrapper">
-                <button
-                  className="carousel-arrow left"
-                  onClick={() =>
-                    setCurrentPage((prev) => (prev === 0 ? totalPages - 1 : prev - 1))
-                  }
-                >
-                  &#8249;
-                </button>
+              <AnimateOnScroll className="fleet-carousel-wrapper">
+                {!isMobile && (
+                  <button
+                    className="carousel-arrow left"
+                    onClick={() => {
+                      setCurrentPage((prev) => (prev === 0 ? totalPages - 1 : prev - 1));
+                      startAutoSlide();
+                    }}
+                  >
+                    &#8249;
+                  </button>
+                )}
 
                 <div className="fleet-cards">
                   {paginatedCars.map((car, index) => {
                     const absoluteIndex = currentPage * itemsPerPage + index;
                     const isAvailable = car.available === "Available";
+
                     return (
-                      <div
+                      <motion.div
                         key={car.id}
                         className={`fleet-card ${!isAvailable ? "fleet-card-unavailable" : ""}`}
-                        onMouseEnter={() => setHoveredIndex(absoluteIndex)}
-                        onMouseLeave={() => setHoveredIndex(null)}
+                        onMouseEnter={() => {
+                          setHoveredIndex(absoluteIndex);
+                          setIsHovering(true);
+                        }}
+                        onMouseLeave={() => {
+                          setHoveredIndex(null);
+                          setIsHovering(false);
+                        }}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: index * 0.2, duration: 0.6 }}
                       >
                         <div className="fleet-card-top">
                           <img src={car.images?.[0]} alt={car.name} />
@@ -109,7 +157,6 @@ const FleetCarousel = () => {
                             )}
                           </div>
                         </div>
-
                         <div
                           className={`car-hover-info ${
                             hoveredIndex === absoluteIndex ? "car-hover-info-show" : ""
@@ -117,12 +164,12 @@ const FleetCarousel = () => {
                         >
                           <div className="hover-top">
                             <div>
-                              <strong>{car.details?.kilometer}</strong>
-                              <p>Kilometer</p>
+                              <strong>₹{car.twelveHrWeekday}</strong>
+                              <p>12 Hr (Weekday)</p>
                             </div>
                             <div>
-                              <strong>{car.details?.extraKm}</strong>
-                              <p>Extra Km</p>
+                              <strong>₹{car.twentyFourHrWeekday}</strong>
+                              <p>24 Hr (Weekday)</p>
                             </div>
                             <div>
                               <strong>{car.details?.extraHr}</strong>
@@ -152,35 +199,46 @@ const FleetCarousel = () => {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </motion.div>
                     );
                   })}
                 </div>
 
-                <button
-                  className="carousel-arrow right"
-                  onClick={() => setCurrentPage((prev) => (prev + 1) % totalPages)}
-                >
-                  &#8250;
-                </button>
-              </div>
-
-              <div className="carousel-dots">
-                {Array.from({ length: totalPages }).map((_, i) => (
+                {!isMobile && (
                   <button
-                    key={i}
-                    className={i === currentPage ? "active" : ""}
-                    onClick={() => setCurrentPage(i)}
+                    className="carousel-arrow right"
+                    onClick={() => {
+                      setCurrentPage((prev) => (prev + 1) % totalPages);
+                      startAutoSlide();
+                    }}
                   >
-                    {`0${i + 1}`}
+                    &#8250;
                   </button>
-                ))}
-              </div>
+                )}
+              </AnimateOnScroll>
+
+              {!isMobile && (
+                <div className="carousel-dots">
+                  {Array.from({ length: totalPages }).map((_, i) => (
+                    <button
+                      key={i}
+                      className={i === currentPage ? "active" : ""}
+                      onClick={() => {
+                        setCurrentPage(i);
+                        startAutoSlide();
+                      }}
+                    >
+                      {`0${i + 1}`}
+                    </button>
+                  ))}
+                </div>
+              )}
             </>
           )}
         </div>
-      </div>
-     {location.pathname === "/cars" && <HowItWorks />}
+      </motion.div>
+
+      {location.pathname === "/cars" && <HowItWorks />}
     </>
   );
 };

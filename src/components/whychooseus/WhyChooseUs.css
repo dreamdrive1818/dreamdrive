@@ -4,24 +4,26 @@
   padding: 4rem 18rem;
   flex-wrap: wrap;
   gap: 3rem;
+  background-color: var(--light-bg);
 }
 
 .why-left {
   flex: 1 1 300px;
   gap: 5rem;
+  opacity: 0;
 }
 
 .why-left h2 {
   font-size: 5rem;
   font-weight: bold;
-  color: #111;
+  color: var(--text-dark);
   margin-bottom: 5rem;
   line-height: 1.3;
 }
 
 .why-left p {
-  font-size: 1.4rem;
-  color: #555;
+  font-size: 1.6rem;
+  color: var(--text-dark);
   line-height: 1.6;
   max-width: 400px;
 }
@@ -43,7 +45,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0;
 }
+
 
 .why-right::after {
   content: "";
@@ -66,7 +70,7 @@
 }
 
 .car-img {
-  width: 100%;
+  width: 95%;
   max-width: 1000px;
   z-index: 1;
   animation: float 4s infinite;
@@ -90,20 +94,20 @@
   background: rgba(255, 255, 255, 0.557);
   padding: 1.6rem 1.2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.249);
   font-size: 0.9rem;
   max-width: 120px;
   z-index: 2;
 }
 
 .tag h4 {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   font-weight: 600;
   margin-bottom: 0.3rem;
 }
 
 .tag p {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
 }
 
 .easy-booking {
@@ -112,12 +116,12 @@
 }
 
 .quality-variety {
-  top: 10%;
+  top: 5%;
   right: 18%;
 }
 
 .affordable-rates {
-  bottom: 22%;
+  bottom: 16%;
   right: 15%;
 }
 

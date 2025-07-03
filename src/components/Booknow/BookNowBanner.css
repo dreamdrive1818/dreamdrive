@@ -5,7 +5,7 @@
   background-attachment: fixed; /* Parallax Effect */
   padding: 100px 20px;
   text-align: center;
-  color: white;
+  color: var(--text-light);
   overflow: hidden;
 }
 

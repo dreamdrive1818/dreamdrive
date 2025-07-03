@@ -2,16 +2,17 @@
   padding: 3rem 2rem;
   max-width: 1280px;
   margin: auto;
-  font-family: 'Inter', sans-serif;
-  color: #1f2937;
+  font-family: var(--font-family-main);
+  color: var(--text-light);
+  background-color: var(--dark-bg);
 }
 
 .manage-messages h2 {
   font-size: 2.8rem;
   margin-bottom: 2rem;
   font-weight: 700;
-  color: #111827;
-  border-left: 6px solid #6366f1;
+  color: var(--text-light);
+  border-left: 6px solid var(--primary-color);
   padding-left: 1rem;
 }
 
@@ -22,29 +23,29 @@
 }
 
 .manage-messages thead {
-  background-color: #f9fafb;
+  background-color: var(--dark-bg);
 }
 
 .manage-messages th {
   text-align: left;
   padding: 1rem 1.5rem;
-  font-size: 1.1rem;
-  color: #4b5563;
+  font-size: 1.4rem;
+  color: var(--text-light);
   font-weight: 600;
-  border-bottom: 2px solid #e5e7eb;
+  border-bottom: 2px solid var(--accent-color);
 }
 
 .manage-messages td {
   padding: 1.1rem 1.5rem;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  font-size: 1.1rem;
-  color: #374151;
+  background-color: var(--dark-bg);
+  border-bottom: 1px solid var(--medium-bg);
+  font-size: 1.4rem;
+  color: var(--text-light);
   transition: background-color 0.2s ease;
 }
 
 .manage-messages tbody tr:hover td {
-  background-color: #f3f4f6;
+  background-color: var(--dark-light-bg);
 }
 
 .manage-messages td:nth-child(4) {
@@ -53,8 +54,8 @@
 }
 
 .manage-messages p {
-  font-size: 1.2rem;
-  color: #6b7280;
+  font-size: 1.4rem;
+  color: var(--text-light);
   text-align: center;
 }
 
@@ -75,8 +76,8 @@
 
   .manage-messages tr {
     margin-bottom: 1.5rem;
-    background-color: #fff;
-    border: 1px solid #e5e7eb;
+    background-color: var(--light-bg);
+    border: 1px solid var(--medium-bg);
     border-radius: 8px;
     padding: 1rem;
   }
@@ -85,9 +86,9 @@
     padding: 0.7rem 1rem;
     position: relative;
     padding-left: 55%;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     border: none;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--medium-bg);
   }
 
   .manage-messages td::before {
@@ -95,7 +96,7 @@
     top: 0.7rem;
     left: 1rem;
     font-weight: 600;
-    color: #6b7280;
+    color: var(--text-light);
     font-size: 1.05rem;
     white-space: nowrap;
   }

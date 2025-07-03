@@ -4,16 +4,22 @@ import './assets/style.css'
 import { LocalProvider } from './context/LocalContext';
 import { AdminProvider } from './context/AdminContext';
 import { OrderProvider } from './context/OrderContext';
+import { BlogProvider } from './context/BlogContext';
+import { TestimonialProvider } from './context/TestimonialContext';
 
 function App() {
   return (
-    <div>
+    <div className=''>
       <AdminProvider>
+        <BlogProvider >
       <LocalProvider >
       <OrderProvider >
-      <Container />
+        <TestimonialProvider>
+      <Container  />
+      </TestimonialProvider>
       </OrderProvider>
       </LocalProvider>
+      </BlogProvider>
       </AdminProvider>
     </div>
   );

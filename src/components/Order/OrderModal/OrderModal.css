@@ -52,7 +52,7 @@
   color: #333;
 }
 
-.order-modal input {
+.order-modal input,.order-modal select {
   display: block;
   width: 100%;
   padding: 0.8rem;
@@ -99,6 +99,52 @@
   background: #0f766e; /* Slightly darker shade */
 }
 
+.booking-category {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.booking-category button {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--primary-color);
+  background: white;
+  color: var(--primary-color);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.booking-category button.active,
+.booking-category button:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.trip-type {
+  display: flex;
+  gap: 2rem;
+  margin: 1rem 0;
+}
+
+.trip-type label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.order-modal select {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+
 .terms-check {
   display: flex;
   align-items: center;
@@ -120,4 +166,37 @@
   color: var(--primary-color);
   text-decoration: underline;
   font-weight: 500;
+}
+
+.rental-type-selector {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.rental-type-selector input {
+  margin-right: 8px;
+}
+
+
+@media (max-width: 600px) {
+  .order-modal {
+    width: 95%;
+    padding: 2rem 1rem;
+  }
+
+  .order-modal h3 {
+    font-size: 2rem;
+  }
+
+  .order-modal p {
+    font-size: 1.1rem;
+  }
+
+  .rental-type-selector {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
 }

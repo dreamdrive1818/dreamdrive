@@ -10,13 +10,17 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { useLocalContext } from "../../context/LocalContext";
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
 const Header = () => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const cartItemCount = 2; 
   const [isScrolled, setIsScrolled] = useState(false);
-  const { handleNavigation} = useLocalContext();
+  const { handleNavigation, webinfo} = useLocalContext();
+
+  const phoneNumber = webinfo.phonecall;
+
 
 useEffect(() => {
   const handleScroll = () => {
@@ -57,10 +61,12 @@ useEffect(() => {
 
     {/* Center Navigation (Desktop Only) */}
     <nav className="nav-links">
-      <p onClick={() => handleRoute("/howitworks")}>How It Works</p>
       <p onClick={() => handleRoute("/cars")}>Cars</p>
+       <p onClick={() => handleRoute("/order-tracking")}>Track Your Order</p>
+        <p onClick={() => handleRoute("/testimonial")}>Testimonial</p>
+        <p onClick={() => handleRoute("/howitworks")}>How It Works</p>
+      <p onClick={() => handleRoute("/blogs")}>Blogs</p>
       <p onClick={() => handleRoute("/about")}>About Us</p>
-      <p onClick={() => handleRoute("/contact")}>Contact us</p>
     </nav>
 
     {/* Right Actions */}
@@ -69,9 +75,19 @@ useEffect(() => {
         Contact
       </button>
       <span>|</span>
-      <button className="signup-btn" onClick={handleNavigation}>
-        Book Now
-      </button>
+     <button className="signup-btn">
+  <a
+    href={`https://wa.me/${phoneNumber}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat on WhatsApp"
+    className="whatsapp-button"
+  >
+    <FontAwesomeIcon icon={faWhatsapp} className="whatsapp-icon" />
+    <span>Chat on WhatsApp</span>
+  </a>
+</button>
+
     </div>
   </div>
 
@@ -85,9 +101,10 @@ useEffect(() => {
       </button>
       <div className="mobile-modern-links">
       <p onClick={() => handleRoute("/howitworks")}>How It Works</p>
+      
       <p onClick={() => handleRoute("/cars")}>Cars</p>
+       <p onClick={() => handleRoute("/order-tracking")}>Track Your Order</p>
       <p onClick={() => handleRoute("/about")}>About Us</p>
-      <p onClick={() => handleRoute("/contact")}>Contact us</p>
         <p onClick={() => handleRoute("/booking-form")}>Book Now</p>
       </div>
     </div>

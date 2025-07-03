@@ -4,14 +4,16 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAdminContext } from '../../context/AdminContext';
-import { useEditor, EditorContent } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import './BlogEditForm.css';
-import './TiptapEditor.css';
+
+const slugify = (str) =>
+  str.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
 
 const BlogEditForm = () => {
   const navigate = useNavigate();
-  const { selectedBlog } = useAdminContext();
+  const { selectedBlog, fetchCategories, updateBlog } = useAdminContext();
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -21,21 +23,22 @@ const BlogEditForm = () => {
   const [author, setAuthor] = useState('');
   const [date, setDate] = useState('');
   const [urlSlug, setUrlSlug] = useState('');
-
   const [seoTitle, setSeoTitle] = useState('');
   const [seoDescription, setSeoDescription] = useState('');
   const [seoKeywords, setSeoKeywords] = useState('');
+  const [categories, setCategories] = useState([]);
 
-  const categories = ['Antivirus', 'Printer', 'Windows OS'];
-
-  // Setup the Tiptap editor
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content: '',
-    onUpdate: ({ editor }) => {
-      setContent(editor.getHTML());
-    },
-  });
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const data = await fetchCategories();
+        setCategories(data);
+      } catch (err) {
+        console.error('Failed to load categories:', err);
+      }
+    };
+    loadCategories();
+  }, [fetchCategories]);
 
   useEffect(() => {
     if (selectedBlog) {
@@ -50,15 +53,13 @@ const BlogEditForm = () => {
       setSeoTitle(selectedBlog.seoTitle || '');
       setSeoDescription(selectedBlog.seoDescription || '');
       setSeoKeywords(selectedBlog.seoKeywords || '');
-      editor?.commands.setContent(selectedBlog.content || '');
     }
-  }, [selectedBlog, editor]);
+  }, [selectedBlog]);
 
   const handleTitleChange = (e) => {
     const newTitle = e.target.value;
     setTitle(newTitle);
-    const slug = newTitle.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
-    setUrlSlug(slug);
+    setUrlSlug(slugify(newTitle));
   };
 
   const handleImageChange = (e) => {
@@ -74,28 +75,29 @@ const BlogEditForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!title || !content || !category || !author || !date || !urlSlug) {
       toast.error('All fields are required!');
       return;
     }
 
     try {
-      const blogRef = doc(db, '_blogs', selectedBlog.id);
-      await updateDoc(blogRef, {
-        title,
-        content,
-        category,
-        imageBase64,
-        imageLink,
-        author,
-        date,
-        urlSlug,
-        updatedAt: new Date(),
-        seoTitle,
-        seoDescription,
-        seoKeywords,
-      });
+   await updateBlog(
+  selectedBlog.id,
+  {
+    title,
+    content,
+    category,
+    imageBase64,
+    imageLink,
+    author,
+    date,
+    urlSlug,
+    seoTitle,
+    seoDescription,
+    seoKeywords,
+  },
+  category
+);
 
       toast.success('Blog updated successfully!');
       navigate('/admin/blog');
@@ -128,7 +130,29 @@ const BlogEditForm = () => {
 
           <div className="form-group">
             <label htmlFor="content">Content</label>
-            <EditorContent editor={editor} className="tiptap" />
+            <ReactQuill
+              theme="snow"
+              value={content}
+              onChange={setContent}
+              modules={{
+                toolbar: [
+                  [{ header: [1, 2, 3, false] }],
+                  ['bold', 'italic', 'underline', 'strike'],
+                  [{ color: [] }, { background: [] }],
+                  [{ align: [] }],
+                  ['blockquote', 'code-block'],
+                  [{ list: 'ordered' }, { list: 'bullet' }],
+                  ['link', 'image', 'video'],
+                  ['clean']
+                ]
+              }}
+              formats={[
+                'header', 'bold', 'italic', 'underline', 'strike',
+                'color', 'background', 'align', 'blockquote', 'code-block',
+                'list', 'bullet', 'link', 'image', 'video'
+              ]}
+              style={{ minHeight: '200px' }}
+            />
           </div>
 
           <div className="form-group">
@@ -140,8 +164,8 @@ const BlogEditForm = () => {
               required
             >
               <option value="">Select a category</option>
-              {categories.map((cat, index) => (
-                <option key={index} value={cat}>{cat}</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>{cat.name}</option>
               ))}
             </select>
           </div>
@@ -190,9 +214,11 @@ const BlogEditForm = () => {
             />
           </div>
 
-          {imageBase64 && <img src={imageBase64} alt="Blog preview" className="image-preview" />}
+          {imageBase64 && <img src={imageBase64} alt="Preview" className="image-preview" />}
+          {!imageBase64 && imageLink && <img src={imageLink} alt="Preview" className="image-preview" />}
 
           <h3>SEO Fields ↓</h3>
+
           <div className="form-group">
             <label htmlFor="seoTitle">SEO Title</label>
             <input

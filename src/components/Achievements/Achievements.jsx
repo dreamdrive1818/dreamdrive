@@ -12,6 +12,7 @@ import {
   faMedal,
   faCarOn,
 } from "@fortawesome/free-solid-svg-icons";
+import AnimateOnScroll from "../../assets/Animation/AnimateOnScroll";
 
 const achievements = [
   { icon: faThumbsUp, title: "Customer Choice Award" },
@@ -27,20 +28,20 @@ const achievements = [
 const Achievements = () => {
   return (
     <section className="achievements">
-      <div className="achievements-left">
+      <AnimateOnScroll className="achievements-left delay-2">
         <p className="achievements-subtitle">ACHIEVEMENTS</p>
         <h2 className="achievements-heading">
           Let’s See Our <br /> Celebrate Milestones
         </h2>
-      </div>
-      <div className="achievements-right">
+      </AnimateOnScroll>
+      <AnimateOnScroll className="achievements-right delay-2">
         {achievements.map((item, index) => (
           <div className="achievement-card" key={index}>
             <FontAwesomeIcon icon={item.icon} className="icon" />
             <p>{item.title}</p>
           </div>
         ))}
-      </div>
+      </AnimateOnScroll>
     </section>
   );
 };
