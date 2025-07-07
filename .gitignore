@@ -15,7 +15,7 @@ Thumbs.db
 
 # Credentials
 credentials.json
-config/*.json
+dreamdrive-307ed-serviceAccountKey.json
 
 
 # Optional build/output
