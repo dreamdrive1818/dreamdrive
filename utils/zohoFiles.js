@@ -2,7 +2,7 @@ const axios = require("axios");
 const { getZohoAccessToken } = require("./zohoAuth");
 
 const FORM_LINK_NAME = "CONSENTFORMFORCARHIRE";
-const ZOHO_API_DOMAIN = "https://forms.zoho.in";
+const ZOHO_API_DOMAIN = "https://www.zohoapis.in";
 
 const fetchAttachmentsFromZoho = async (recordId) => {
   try {

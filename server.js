@@ -6,6 +6,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
+
 // connect routes
 const emailRoutes = require("./routes/emailRoutes");
 app.use("/api", emailRoutes);
