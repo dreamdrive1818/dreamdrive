@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server.js",
-    "git": "git add -A && git commit -m \"2-updated zoho service webhook & zoho api files save to cloudinary\" && git push -u -f origin server"
+    "git": "git add -A && git commit -m \"updated zoho service webhook / no cloudinary file uploads\" && git push -u -f origin server"
   },
   "keywords": [],
   "author": "",
