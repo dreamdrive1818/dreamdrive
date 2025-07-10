@@ -27,7 +27,7 @@ const handleWebhook = async (req, res) => {
     console.log("📩 Webhook received:", data);
 
     const docId = data.email || `entry_${Date.now()}`;
-    const folderName = `${data.fname || "user"}_${data.lname || "unknown"}`.replace(/\s+/g, "_");
+    // const folderName = `${data.fname || "user"}_${data.lname || "unknown"}`.replace(/\s+/g, "_");
 
     // 1. Get recordId from email (since webhook does not include it)
     // const recordId = await getRecordIdFromEmail(data.email);
