@@ -21,5 +21,5 @@ app.use("/api", zohoAutomationRoutes);
 
 
 app.listen(5000, () => {
-  console.log(`Server running on port http://localhost:5000`);
+  console.log(`Server running`);
 });
