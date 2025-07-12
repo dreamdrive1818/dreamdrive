@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server.js",
-    "git": "git add -A && git commit -m \"updated 3\" && git push -u -f origin server",
+    "git": "git add -A && git commit -m \"updated 4\" && git push -u -f origin server",
     "start": "node server.js"
   },
   "keywords": [],
@@ -37,9 +37,5 @@
   "bugs": {
     "url": "https://github.com/dreamdrive1818/dreamdrive/issues"
   },
-  "homepage": "https://github.com/dreamdrive1818/dreamdrive#readme",
-  "optionalDependencies": {
-    "chrome-aws-lambda": "^10.1.0",
-    "puppeteer-core": "^10.1.0"
-  }
+  "homepage": "https://github.com/dreamdrive1818/dreamdrive#readme"
 }

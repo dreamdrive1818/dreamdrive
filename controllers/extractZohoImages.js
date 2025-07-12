@@ -1,43 +1,32 @@
-const chromium = require("chrome-aws-lambda");
-const puppeteer = require("puppeteer-core");
+const puppeteer = require("puppeteer"); // Full puppeteer
 const fs = require("fs-extra");
 const path = require("path");
 const os = require("os");
 
 const ZOHO_USERNAME = process.env.ZOHO_USERNAME;
 const ZOHO_PASSWORD = process.env.ZOHO_PASSWORD;
-const ZOHO_URL =
-  "https://forms.zoho.in/dreamdrive1818gm1/report/CONSENTFORMFORCARHIRE_Report/records/web";
-
-const isRender = !!process.env.RENDER; // Set this env var to true on Render
+const ZOHO_URL = "https://forms.zoho.in/dreamdrive1818gm1/report/CONSENTFORMFORCARHIRE_Report/records/web";
 
 exports.extractZohoImages = async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ error: "Email is required" });
 
   const safeEmailFolder = email.replace(/[^a-zA-Z0-9]/g, "_");
-
-  // ✅ Dynamic download directory based on env
-  const downloadDir = isRender
-    ? path.join(os.tmpdir(), `zoho_images_${safeEmailFolder}`)
-    : path.join(__dirname, `../zoho_images/${safeEmailFolder}`);
-
+  const downloadDir = path.join(os.tmpdir(), `zoho_images_${safeEmailFolder}`);
   fs.ensureDirSync(downloadDir);
+
   console.log("📂 Download Dir:", downloadDir);
 
   let browser;
   try {
-    const browser = await puppeteer.launch({
-  args: chromium.args,
-  executablePath: await chromium.executablePath,
-  headless: chromium.headless,
-  defaultViewport: { width: 1280, height: 800 },
-});
-
+    browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      defaultViewport: { width: 1280, height: 800 },
+    });
 
     const page = await browser.newPage();
 
-    // Allow downloads
     const client = await page.target().createCDPSession();
     await client.send("Page.setDownloadBehavior", {
       behavior: "allow",
@@ -50,36 +39,33 @@ exports.extractZohoImages = async (req, res) => {
     });
     await page.type("#login_id", ZOHO_USERNAME);
     await page.keyboard.press("Enter");
-
     await page.waitForSelector("#password", { visible: true });
     await page.type("#password", ZOHO_PASSWORD);
     await page.waitForTimeout(400);
     await page.keyboard.press("Enter");
 
-    // 2️⃣ Navigate to report
+    // 2️⃣ Navigate to Zoho Report
     await page.waitForTimeout(1500);
     await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
 
-    // 3️⃣ Apply filter
+    // 3️⃣ Filter by email
     await page.click("#filterIcon");
     await page.waitForTimeout(200);
     await page.click('[elname="Email"]');
     await page.waitForSelector('[id^="select2-Email-select-"]');
     await page.click('[id^="select2-Email-select-"]');
     await page.select('select[elname="Email"]', "EQUALS");
-
-    await page.waitForSelector("#Email_val", { visible: true });
     await page.type("#Email_val", email);
     await page.click("#searchBtn");
 
-    // 4️⃣ Wait for records and click
+    // 4️⃣ Click matching record
     await page.waitForSelector('[rec_owner="dreamdrive1818@gmail.com"]', {
       visible: true,
     });
     await page.click('[rec_owner="dreamdrive1818@gmail.com"]');
     await page.waitForTimeout(600);
 
-    // 5️⃣ Wait for summary and extract links
+    // 5️⃣ Wait for image links
     await page.waitForFunction(() => {
       const el = document.querySelector("#recordSumContainerId");
       return el && el.offsetParent !== null;
@@ -87,40 +73,30 @@ exports.extractZohoImages = async (req, res) => {
 
     const downloadLinks = await page.$$eval('a[elname="download"]', (links) =>
       links
-        .filter((a) =>
-          a.href.startsWith("https://download.zoho.in/webdownload")
-        )
+        .filter((a) => a.href.startsWith("https://download.zoho.in/webdownload"))
         .map((a) => a.href)
     );
 
     if (!downloadLinks.length) {
-      return res
-        .status(404)
-        .json({ message: "❌ No download links found in record." });
+      return res.status(404).json({ message: "❌ No download links found" });
     }
 
-    for (let i = 0; i < downloadLinks.length; i++) {
-      await page.evaluate((href) => {
-        const el = Array.from(
-          document.querySelectorAll('a[elname="download"]')
-        ).find((a) => a.href === href);
+    for (const href of downloadLinks) {
+      await page.evaluate((h) => {
+        const el = [...document.querySelectorAll('a[elname="download"]')].find((a) => a.href === h);
         if (el) el.click();
-      }, downloadLinks[i]);
-      console.log(`✅ Clicked download link ${i + 1}`);
+      }, href);
       await page.waitForTimeout(1000);
     }
 
-    return res.status(200).json({
+    res.status(200).json({
       message: "✅ Images downloading...",
       files: downloadLinks.length,
       savedTo: downloadDir,
     });
   } catch (error) {
     console.error("❌ Error during extraction:", error);
-    return res.status(500).json({
-      message: "Failed to extract images",
-      error: error.message,
-    });
+    res.status(500).json({ message: "Failed to extract images", error: error.message });
   } finally {
     if (browser) await browser.close();
   }
