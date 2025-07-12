@@ -9,13 +9,17 @@ app.use(express.json());
 
 
 // connect routes
-const emailRoutes = require("./routes/emailRoutes");
-app.use("/api", emailRoutes);
+// const emailRoutes = require("./routes/emailRoutes");
+// app.use("/api", emailRoutes);
 
-const webhookRoutes = require("./routes/webhookRoutes");
-app.use("/api", webhookRoutes);
+// const webhookRoutes = require("./routes/webhookRoutes");
+// app.use("/api", webhookRoutes);
+
+const zohoAutomationRoutes = require("./routes/zohoAutomationRoutes");
+app.use("/api", zohoAutomationRoutes);
+
 
 
 app.listen(5000, () => {
-  console.log("Server running on port 5000");
+  console.log(`Server running on port http://localhost:5000`);
 });
