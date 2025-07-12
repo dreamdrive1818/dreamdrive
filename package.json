@@ -28,6 +28,7 @@
     "pdf-lib": "^1.17.1",
     "pdf-parse": "^1.1.1",
     "pdfjs-dist": "^2.14.305",
+    "puppeteer": "^24.12.1",
     "redis": "^5.0.1"
   },
   "repository": {
