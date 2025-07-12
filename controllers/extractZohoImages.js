@@ -27,20 +27,13 @@ exports.extractZohoImages = async (req, res) => {
 
   let browser;
   try {
-    const executablePath = await chromium.executablePath;
-    browser = await puppeteer.launch(
-      isRender
-        ? {
-            args: chromium.args,
-  executablePath: executablePath || "/usr/bin/chromium-browser", // fallback for local if needed
+    const browser = await puppeteer.launch({
+  args: chromium.args,
+  executablePath: await chromium.executablePath,
   headless: chromium.headless,
   defaultViewport: { width: 1280, height: 800 },
-          }
-        : {
-            headless: false,
-            defaultViewport: { width: 1280, height: 800 },
-          }
-    );
+});
+
 
     const page = await browser.newPage();
 
