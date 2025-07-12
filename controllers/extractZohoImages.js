@@ -1,4 +1,5 @@
-const puppeteer = require("puppeteer");
+const chromium = require("chrome-aws-lambda");
+const puppeteer = require("puppeteer-core");
 const fs = require("fs-extra");
 const path = require("path");
   const os = require("os");
@@ -18,8 +19,8 @@ exports.extractZohoImages = async (req, res) => {
 
 
 const safeEmailFolder = email.replace(/[^a-zA-Z0-9]/g, "_");
-const downloadsPath = path.join(os.homedir(), "Downloads/Zoho_images");
-const downloadDir = path.join(downloadsPath, `zoho_images-${safeEmailFolder}`);
+// const downloadsPath = path.join(os.homedir(), "Downloads/Zoho_images");
+const downloadDir = path.join(os.tmpdir(), `zoho_images_${safeEmailFolder}`);
 
 fs.ensureDirSync(downloadDir);
 
@@ -27,13 +28,11 @@ fs.ensureDirSync(downloadDir);
   console.log("Download Dir:", downloadDir);
 
   const browser = await puppeteer.launch({
-    headless: false, // keep as false due to rendering issues in headless
-    args: ['--window-size=1280,800', '--no-sandbox', '--disable-setuid-sandbox'],
-    defaultViewport: {
-      width: 1280,
-      height: 800,
-    },
-  });
+  args: chromium.args,
+  defaultViewport: chromium.defaultViewport,
+  executablePath: await chromium.executablePath,
+  headless: chromium.headless,
+});
 
   const page = await browser.newPage();
 
