@@ -24,7 +24,7 @@ const uploadToCloudinary = async (fileUrl, folder, fileName) => {
 const handleWebhook = async (req, res) => {
   try {
     const data = req.body;
-    console.log("📩 Webhook received:", data);
+    console.log("📩 Webhook received:", data.fname);
 
     const docId = data.email || `entry_${Date.now()}`;
     // const folderName = `${data.fname || "user"}_${data.lname || "unknown"}`.replace(/\s+/g, "_");
