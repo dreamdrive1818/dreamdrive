@@ -109,12 +109,12 @@ async function loginToZoho(page) {
   await page.type("#login_id", ZOHO_USERNAME);
   await page.keyboard.press("Enter");
   console.log("✅ Username entered:", ZOHO_USERNAME);
-  await new Promise(r => setTimeout(r, 400));
+  await new Promise(r => setTimeout(r, 2000));
 
   console.log("✍️ Waiting for password input...");
   await page.waitForSelector("#password", { visible: true });
   await page.type("#password", ZOHO_PASSWORD);
-  await page.keyboard.press("Enter");
+    await new Promise(r => setTimeout(r, 1000));
   console.log("✅ Password entered");
 
   try {
