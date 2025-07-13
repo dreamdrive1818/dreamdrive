@@ -24,7 +24,7 @@ exports.extractZohoImages = async (req, res) => {
   let browser;
   try {
     browser = await puppeteer.launch({
-      headless: "new",
+      headless: false,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     console.log("🚀 Browser launched");
