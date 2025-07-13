@@ -138,10 +138,13 @@ async function navigateToReportPage(page) {
 
     await page.goto("https://forms.zoho.in/", { waitUntil: "networkidle2" });
     await new Promise(r => setTimeout(r, 600));
+    currentUrl = page.url();
+     console.log("current page loaded:", currentUrl);
 
     await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
     await new Promise(r => setTimeout(r, 2000));
     currentUrl = page.url();
+    console.log("current page loaded 2:", currentUrl);
  
   
   console.log("✅ Report page loaded:", currentUrl);
