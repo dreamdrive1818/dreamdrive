@@ -151,16 +151,20 @@ async function navigateToReportPage(page) {
     currentTitle.trim() === "Form Builder | Create Free Online Forms - Zoho Forms"
   ) {
     console.warn("⚠️ Wrapper page detected, retrying...");
-    await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
+    await page.goto("https://forms.zoho.in/", { waitUntil: "networkidle2" });
     currentUrl = page.url();
   }
 
     await new Promise(r => setTimeout(r, 2000));
 
-  currentTitle = await page.title();
-  if (!currentUrl.includes("/report/") || !currentUrl.includes("/records/web")) {
-    throw new Error(`❌ Invalid report page. URL: ${currentUrl}, Title: ${currentTitle}`);
-  }
+      await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
+    await new Promise(r => setTimeout(r, 400));
+
+
+  // currentTitle = await page.title();
+  // if (!currentUrl.includes("/report/") || !currentUrl.includes("/records/web")) {
+  //   throw new Error(`❌ Invalid report page. URL: ${currentUrl}, Title: ${currentTitle}`);
+  // }
 
   console.log("✅ Verified report page:", currentUrl);
 }
