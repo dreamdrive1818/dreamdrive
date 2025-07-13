@@ -84,7 +84,7 @@ async function loginToZoho(page) {
 
   await page.type("#login_id", ZOHO_USERNAME);
   await page.keyboard.press("Enter");
-
+   await new Promise(r => setTimeout(r, 400));
   await page.waitForSelector("#password", { visible: true });
   await page.type("#password", ZOHO_PASSWORD);
   await page.keyboard.press("Enter");
