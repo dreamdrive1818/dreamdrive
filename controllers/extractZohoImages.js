@@ -133,13 +133,9 @@ async function navigateToReportPage(page) {
   await new Promise(r => setTimeout(r, 500));
 
   let currentUrl = page.url();
-  let retries = 0;
 
-  while (
-    currentUrl.includes("https://www.zoho.com/forms/?serviceurl=") &&
-    retries < 3
-  ) {
-    console.log("⚠️ Detected wrapper page:", currentUrl);
+
+    console.log("Current URL:", currentUrl);
 
     // Click the "Access Zoho Forms" button if present
     const buttonExists = await page.$('a.act-btn.cta-btn[href="https://forms.zoho.in"]');
@@ -149,24 +145,9 @@ async function navigateToReportPage(page) {
       await page.waitForNavigation({ waitUntil: "networkidle2" });
     }
 
-    // Retry final URL
-    const urlParams = new URL(currentUrl).searchParams;
-    const serviceUrl = urlParams.get("serviceurl");
-
-    if (serviceUrl) {
-      const actualUrl = `https://forms.zoho.in${decodeURIComponent(serviceUrl)}`;
-      console.log("🔁 Forcing redirect to actual URL:", actualUrl);
-      await page.goto(actualUrl, { waitUntil: "networkidle2" });
-    }
-
-    currentUrl = page.url();
-    retries++;
-    await new Promise(r => setTimeout(r, 500));
-  }
-
-  if (!currentUrl.includes("/report/") || !currentUrl.includes("/records/web")) {
-    throw new Error(`❌ Invalid report page loaded: ${currentUrl}`);
-  }
+      await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
+      await new Promise(r => setTimeout(r, 500));
+  
 
   console.log("✅ Report page loaded:", currentUrl);
 }
