@@ -81,17 +81,21 @@ async function spoofBrowser(page) {
 // Zoho login logic
 async function loginToZoho(page) {
   await page.goto("https://accounts.zoho.in/signin?servicename=ZohoForms", { waitUntil: "networkidle2" });
+  console.log("Navigated to -->",page.url());
 
   await page.type("#login_id", ZOHO_USERNAME);
   await page.keyboard.press("Enter");
+  console.log("Entered Email",ZOHO_USERNAME);
    await new Promise(r => setTimeout(r, 400));
   await page.waitForSelector("#password", { visible: true });
   await page.type("#password", ZOHO_PASSWORD);
+  console.log("🔑 Password entered");
   await page.keyboard.press("Enter");
 
   try {
     await page.waitForSelector("#nextbtn", { visible: true, timeout: 5000 });
     await page.click("#nextbtn");
+      console.log("Next Button CLicked");
     await new Promise(r => setTimeout(r, 1500));
   } catch (e) {
     console.warn("⚠️ #nextbtn not found or skipped");
