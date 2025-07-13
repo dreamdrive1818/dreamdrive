@@ -47,7 +47,7 @@ exports.extractZohoImages = async (req, res) => {
 
     await page.type("#login_id", ZOHO_USERNAME);
      await new Promise(r => setTimeout(r, 400));
-    console.log("🔐 Username entered");
+    console.log("🔐 Username entered",ZOHO_USERNAME);
     await page.keyboard.press("Enter");
      
     await page.waitForSelector("#password", { visible: true });
@@ -62,12 +62,13 @@ exports.extractZohoImages = async (req, res) => {
     // 2️⃣ Go to Report
     await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
     console.log("📊 Navigated to Zoho Report URL");
-    await new Promise(r => setTimeout(r, 400));
-    // 3️⃣ Apply Email Filter
-    await page.waitForSelector("#searchIcon", { visible: true, timeout: 10000 });
-    await page.click("#searchIcon");
-    console.log("🔍 Filter icon clicked");
 
+  await page.waitForSelector("body", { visible: true });
+await new Promise(r => setTimeout(r, 2000)); 
+
+await page.waitForSelector("#searchIcon", { visible: true, timeout: 20000 });
+await page.click("#searchIcon");
+console.log("🔍 Filter icon clicked");
     await new Promise(r => setTimeout(r, 400));
 
     await page.click('[elname="Email"]');
