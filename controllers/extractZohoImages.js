@@ -155,6 +155,8 @@ async function navigateToReportPage(page) {
     currentUrl = page.url();
   }
 
+    await new Promise(r => setTimeout(r, 2000));
+
   currentTitle = await page.title();
   if (!currentUrl.includes("/report/") || !currentUrl.includes("/records/web")) {
     throw new Error(`❌ Invalid report page. URL: ${currentUrl}, Title: ${currentTitle}`);
