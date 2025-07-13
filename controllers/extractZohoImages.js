@@ -66,7 +66,7 @@ exports.extractZohoImages = async (req, res) => {
 
 //3 ️⃣ Click on search button
 await page.waitForSelector('body', { visible: true });
-await page.waitForTimeout(2000); // extra wait just in case
+    await new Promise(r => setTimeout(r, 2000));
 
 const searchIconTriggered = await page.evaluate(() => {
   const el = document.querySelector('#searchIcon');
