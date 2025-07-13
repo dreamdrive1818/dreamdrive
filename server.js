@@ -9,11 +9,11 @@ app.use(express.json());
 
 
 // connect routes
-const emailRoutes = require("./routes/emailRoutes");
-app.use("/api", emailRoutes);
+// const emailRoutes = require("./routes/emailRoutes");
+// app.use("/api", emailRoutes);
 
-const webhookRoutes = require("./routes/webhookRoutes");
-app.use("/api", webhookRoutes);
+// const webhookRoutes = require("./routes/webhookRoutes");
+// app.use("/api", webhookRoutes);
 
 const zohoAutomationRoutes = require("./routes/zohoAutomationRoutes");
 app.use("/api", zohoAutomationRoutes);
