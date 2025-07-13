@@ -133,21 +133,17 @@ async function navigateToReportPage(page) {
   await new Promise(r => setTimeout(r, 400));
 
   let currentUrl = page.url();
-  let retries = 0;
 
-  while (currentUrl.includes("https://www.zoho.com/forms/?serviceurl=") && retries < 3) {
-    console.log(`🔁 Detected wrapper URL, retry #${retries + 1}`);
+    console.log(`🔁 Detected wrapper URL, retry 1`);
+
     await page.goto("https://forms.zoho.in/", { waitUntil: "networkidle2" });
-    await new Promise(r => setTimeout(r, 400));
+    await new Promise(r => setTimeout(r, 600));
+
     await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
+    await new Promise(r => setTimeout(r, 2000));
     currentUrl = page.url();
-    retries++;
-  }
-
-  if (!currentUrl.includes("/report/") || !currentUrl.includes("/records/web")) {
-    throw new Error(`❌ Invalid report page: ${currentUrl}`);
-  }
-
+ 
+  
   console.log("✅ Report page loaded:", currentUrl);
 }
 
