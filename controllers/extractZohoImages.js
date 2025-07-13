@@ -144,21 +144,22 @@ async function navigateToReportPage(page) {
     await new Promise(r => setTimeout(r, 400));
 
   let currentUrl = page.url();
-  let currentTitle = await page.title();
 
-  if (
-    currentUrl.includes("https://www.zoho.com/forms/?serviceurl=") &&
-    currentTitle.trim() === "Form Builder | Create Free Online Forms - Zoho Forms"
-  ) {
     console.warn("⚠️ Wrapper page detected, retrying...");
     await page.goto("https://forms.zoho.in/", { waitUntil: "networkidle2" });
+    await new Promise(r => setTimeout(r, 400));
     currentUrl = page.url();
-  }
+    console.log("retried",currentUrl);
 
+ 
     await new Promise(r => setTimeout(r, 2000));
 
+     console.log("redirecting to ZOHO URL");
       await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
-    await new Promise(r => setTimeout(r, 400));
+    await new Promise(r => setTimeout(r, 1000));
+
+     currentUrl = page.url();
+    console.log("retried 2",currentUrl);
 
 
   // currentTitle = await page.title();
