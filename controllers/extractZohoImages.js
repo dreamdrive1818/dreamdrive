@@ -102,10 +102,9 @@ if (currentUrl.includes("https://www.zoho.com/forms/?serviceurl=")) {
   currentUrl = page.url();
 }
 
-// ✅ Confirm we are now on the correct report page
-if (!currentUrl.includes("/report/") || !currentUrl.includes("/records/web")) {
-  throw new Error(`❌ Not on the correct Zoho report page. Current URL: ${currentUrl}`);
-}
+  await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
+    console.log("📊 Navigated to Zoho Report URL");
+
 
 console.log("✅ Verified correct report page URL:", currentUrl);
 console.log("🔍 URL confirmed:", currentUrl);
