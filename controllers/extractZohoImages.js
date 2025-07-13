@@ -67,15 +67,22 @@ exports.extractZohoImages = async (req, res) => {
   await page.waitForSelector("body", { visible: true });
 await new Promise(r => setTimeout(r, 2000)); 
 
-const screenshotPath = path.join(os.tmpdir(), "render_debug_before_searchIcon.png");
-await page.screenshot({ path: screenshotPath, fullPage: true });
-console.log("🖼 Screenshot before waiting for #searchIcon:", screenshotPath);
 
+const clicked = await page.evaluate(() => {
+  const btn = document.querySelector("#searchIcon");
+  if (btn) {
+    btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    btn.click();
+    return true;
+  }
+  return false;
+});
 
-await page.waitForSelector("#searchIcon", { visible: true, timeout: 20000 });
-await page.click("#searchIcon");
-console.log("🔍 Filter icon clicked");
-    await new Promise(r => setTimeout(r, 400));
+if (clicked) {
+  console.log("✅ Clicked #searchIcon using JavaScript");
+} else {
+  throw new Error("❌ #searchIcon not found in DOM (even with JS fallback)");
+}
 
     await page.click('[elname="Email"]');
     console.log("📨 Email filter selected");
