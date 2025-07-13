@@ -94,12 +94,20 @@ console.log("✅ Login URL verified:", loginUrl);
     console.log("📊 Navigated to Zoho Report URL");
 
     
-// ✅ Confirm we’re on the correct report page
-const currentUrl = page.url();
+// ✅ Check if redirected to wrapper page
+let currentUrl = page.url();
+if (currentUrl.includes("https://www.zoho.com/forms/?serviceurl=")) {
+  console.warn("⚠️ Redirected to wrapper URL, navigating back to ZOHO_URL");
+  await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
+  currentUrl = page.url();
+}
+
+// ✅ Confirm we are now on the correct report page
 if (!currentUrl.includes("/report/") || !currentUrl.includes("/records/web")) {
   throw new Error(`❌ Not on the correct Zoho report page. Current URL: ${currentUrl}`);
 }
 
+console.log("✅ Verified correct report page URL:", currentUrl);
 console.log("🔍 URL confirmed:", currentUrl);
 
 // start previous
