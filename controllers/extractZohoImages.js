@@ -24,12 +24,36 @@ exports.extractZohoImages = async (req, res) => {
   let browser;
   try {
     browser = await puppeteer.launch({
-      headless: "new",
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
-    console.log("🚀 Browser launched");
+  headless: 'new', // Or true
+  args: [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-dev-shm-usage',
+    '--disable-blink-features=AutomationControlled',
+    '--window-size=1280,800'
+  ],
+  defaultViewport: {
+    width: 1280,
+    height: 800
+  }
+});
 
-    const page = await browser.newPage();
+const page = await browser.newPage();
+
+// Spoof browser fingerprint
+await page.setUserAgent(
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+);
+
+await page.setJavaScriptEnabled(true);
+
+// Remove puppeteer detection
+await page.evaluateOnNewDocument(() => {
+  Object.defineProperty(navigator, 'webdriver', {
+    get: () => false,
+  });
+});
+
     console.log("🆕 New page created");
 
     const client = await page.target().createCDPSession();
