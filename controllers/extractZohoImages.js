@@ -24,7 +24,7 @@ exports.extractZohoImages = async (req, res) => {
   let browser;
   try {
     browser = await puppeteer.launch({
-      headless: false,
+      headless: "new",
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     console.log("🚀 Browser launched");
@@ -68,22 +68,23 @@ exports.extractZohoImages = async (req, res) => {
 await new Promise(r => setTimeout(r, 2000)); 
 
 
-const clicked = await page.evaluate(() => {
-  const btn = document.querySelector("#searchIcon");
-  if (btn) {
-    btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    btn.click();
+//3 ️⃣ Click on search button
+const result = await page.evaluate(() => {
+  const el = document.querySelector('#searchIcon');
+  if (el && typeof ZFReportLive !== 'undefined') {
+    ZFReportLive.showSearch(el);
     return true;
   }
   return false;
 });
 
-if (clicked) {
-  console.log("✅ Clicked #searchIcon using JavaScript");
+if (result) {
+  console.log("✅ Triggered ZFReportLive.showSearch manually");
 } else {
-  throw new Error("❌ #searchIcon not found in DOM (even with JS fallback)");
+  throw new Error("❌ Could not trigger ZFReportLive or find #searchIcon");
 }
 
+// 4 Search for Report
     await page.click('[elname="Email"]');
     console.log("📨 Email filter selected");
 
