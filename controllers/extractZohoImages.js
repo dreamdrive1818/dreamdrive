@@ -1,5 +1,4 @@
-const chromium = require("chrome-aws-lambda");
-const puppeteer = require("puppeteer-core");
+const puppeteer = require('puppeteer-core');
 const fs = require("fs-extra");
 const path = require("path");
 const os = require("os");
@@ -18,15 +17,12 @@ exports.extractZohoImages = async (req, res) => {
   fs.ensureDirSync(downloadDir);
   console.log("📂 Download Dir:", downloadDir);
 
-  let browser;
   try {
-    browser = await puppeteer.launch({
-      args: chromium.args,
-      executablePath: (await chromium.executablePath) || '/usr/bin/google-chrome',
-      headless: chromium.headless,
-      defaultViewport: { width: 1280, height: 800 },
-    });
-
+   const browser = await puppeteer.launch({
+  headless: 'new',
+  executablePath: '/opt/render/project/.cache/puppeteer/chrome/linux-138.0.7204.94/chrome-linux64/chrome',
+  args: ['--no-sandbox', '--disable-setuid-sandbox'],
+});
     const page = await browser.newPage();
 
     const client = await page.target().createCDPSession();
