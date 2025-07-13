@@ -128,27 +128,49 @@ async function loginToZoho(page) {
 }
 
 async function navigateToReportPage(page) {
-  console.log("📥 Navigating to report page...");
+  console.log("📥 Navigating to initial Zoho report URL...");
   await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
-  await new Promise(r => setTimeout(r, 400));
+  await new Promise(r => setTimeout(r, 500));
 
   let currentUrl = page.url();
+  let retries = 0;
 
-    console.log(`🔁 Detected wrapper URL, retry 1`);
+  while (
+    currentUrl.includes("https://www.zoho.com/forms/?serviceurl=") &&
+    retries < 3
+  ) {
+    console.log("⚠️ Detected wrapper page:", currentUrl);
 
-    await page.goto("https://forms.zoho.in/", { waitUntil: "networkidle2" });
-    await new Promise(r => setTimeout(r, 600));
+    // Click the "Access Zoho Forms" button if present
+    const buttonExists = await page.$('a.act-btn.cta-btn[href="https://forms.zoho.in"]');
+    if (buttonExists) {
+      console.log("➡️ Clicking 'Access Zoho Forms' button...");
+      await page.click('a.act-btn.cta-btn[href="https://forms.zoho.in"]');
+      await page.waitForNavigation({ waitUntil: "networkidle2" });
+    }
+
+    // Retry final URL
+    const urlParams = new URL(currentUrl).searchParams;
+    const serviceUrl = urlParams.get("serviceurl");
+
+    if (serviceUrl) {
+      const actualUrl = `https://forms.zoho.in${decodeURIComponent(serviceUrl)}`;
+      console.log("🔁 Forcing redirect to actual URL:", actualUrl);
+      await page.goto(actualUrl, { waitUntil: "networkidle2" });
+    }
+
     currentUrl = page.url();
-     console.log("current page loaded:", currentUrl);
+    retries++;
+    await new Promise(r => setTimeout(r, 500));
+  }
 
-    await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
-    await new Promise(r => setTimeout(r, 2000));
-    currentUrl = page.url();
-    console.log("current page loaded 2:", currentUrl);
- 
-  
+  if (!currentUrl.includes("/report/") || !currentUrl.includes("/records/web")) {
+    throw new Error(`❌ Invalid report page loaded: ${currentUrl}`);
+  }
+
   console.log("✅ Report page loaded:", currentUrl);
 }
+
 
 async function clickEmailRow(page, email) {
   console.log("🔍 Searching for email row:", email);
