@@ -5,8 +5,12 @@ const os = require("os");
 
 const ZOHO_USERNAME = process.env.ZOHO_USERNAME;
 const ZOHO_PASSWORD = process.env.ZOHO_PASSWORD;
+// const ZOHO_URL =
+//   "https://forms.zoho.in/dreamdrive1818gm1/report/CONSENTFORMFORCARHIRE_Report/records/web";
+
 const ZOHO_URL =
-  "https://forms.zoho.in/dreamdrive1818gm1/report/CONSENTFORMFORCARHIRE_Report/records/web";
+  "https://forms.zoho.in/tufmachine1/report/DEMOFORM_Report/records/web";
+
 
 exports.extractZohoImages = async (req, res) => {
   const { email } = req.body;
@@ -60,8 +64,8 @@ exports.extractZohoImages = async (req, res) => {
     console.log("📊 Navigated to Zoho Report URL");
     await new Promise(r => setTimeout(r, 400));
     // 3️⃣ Apply Email Filter
-    await page.waitForSelector("#filterIcon", { visible: true, timeout: 10000 });
-    await page.click("#filterIcon");
+    await page.waitForSelector("#searchIcon", { visible: true, timeout: 10000 });
+    await page.click("#searchIcon");
     console.log("🔍 Filter icon clicked");
 
     await new Promise(r => setTimeout(r, 400));
@@ -93,8 +97,8 @@ console.log("❌ Closed search list");
   await new Promise(r => setTimeout(r, 1000));
 
     // 4️⃣ Open Record
-   await page.waitForSelector('[rec_owner="dreamdrive1818@gmail.com"]', { visible: true });
-const recordButton = await page.$('[rec_owner="dreamdrive1818@gmail.com"]');
+   await page.waitForSelector('[rec_owner="huntersgaming825@gmail.com"]', { visible: true });
+const recordButton = await page.$('[rec_owner="huntersgaming825@gmail.com"]');
 if (!recordButton) throw new Error("❌ Record button not found after filtering");
 await recordButton.click();
 await new Promise(r => setTimeout(r, 200));
