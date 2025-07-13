@@ -20,7 +20,7 @@ exports.extractZohoImages = async (req, res) => {
   let browser;
   try {
     browser = await puppeteer.launch({
-      headless: 'new',
+      headless: "new",
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     console.log("🚀 Browser launched");
@@ -42,9 +42,10 @@ exports.extractZohoImages = async (req, res) => {
     console.log("🌐 Navigated to Zoho login page");
 
     await page.type("#login_id", ZOHO_USERNAME);
+     await new Promise(r => setTimeout(r, 400));
     console.log("🔐 Username entered");
     await page.keyboard.press("Enter");
-
+     
     await page.waitForSelector("#password", { visible: true });
     await page.type("#password", ZOHO_PASSWORD);
     console.log("🔐 Password entered");
@@ -57,7 +58,7 @@ exports.extractZohoImages = async (req, res) => {
     // 2️⃣ Go to Report
     await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
     console.log("📊 Navigated to Zoho Report URL");
-
+    await new Promise(r => setTimeout(r, 400));
     // 3️⃣ Apply Email Filter
     await page.waitForSelector("#filterIcon", { visible: true, timeout: 10000 });
     await page.click("#filterIcon");
@@ -81,19 +82,39 @@ exports.extractZohoImages = async (req, res) => {
 
     await page.click("#searchBtn");
     console.log("🔎 Search button clicked");
+        await new Promise(r => setTimeout(r, 1000));
+
+        // Wait for the element to appear
+await page.waitForSelector('.rPorts-SearchList-Close', { visible: true });
+
+// Click it
+await page.click('.rPorts-SearchList-Close');
+console.log("❌ Closed search list");
+  await new Promise(r => setTimeout(r, 1000));
 
     // 4️⃣ Open Record
-    await page.waitForSelector('[rec_owner="dreamdrive1818@gmail.com"]', { visible: true });
-    await page.click('[rec_owner="dreamdrive1818@gmail.com"]');
-    await new Promise(r => setTimeout(r, 400));
-    console.log("📄 Record clicked");
+   await page.waitForSelector('[rec_owner="dreamdrive1818@gmail.com"]', { visible: true });
+const recordButton = await page.$('[rec_owner="dreamdrive1818@gmail.com"]');
+if (!recordButton) throw new Error("❌ Record button not found after filtering");
+await recordButton.click();
+await new Promise(r => setTimeout(r, 200));
+await recordButton.click();
+
+
+const debugScreenshotPath = path.join(os.tmpdir(), "after_record_click.png");
+fs.ensureDirSync(path.dirname(debugScreenshotPath)); // make sure dir exists
+await page.screenshot({ path: debugScreenshotPath, fullPage: true });
+console.log("🖼 Screenshot saved to:", debugScreenshotPath);
+console.log("🖼 Screenshot taken after record click");
+
 
     // 5️⃣ Wait for Summary and Download Links
     await page.waitForFunction(() => {
-      const el = document.querySelector("#recordSumContainerId");
-      return el && el.offsetParent !== null;
-    }, { timeout: 10000 });
-    console.log("📋 Record summary loaded");
+  const el = document.querySelector("#recordSumContainerId");
+  return el && el.offsetParent !== null;
+}, { timeout: 20000 }); // wait up to 20s
+console.log("📋 Record summary loaded");
+
 
     const downloadLinks = await page.$$eval('a[elname="download"]', (links) =>
       links
