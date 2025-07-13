@@ -63,26 +63,45 @@ exports.extractZohoImages = async (req, res) => {
     await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
     console.log("📊 Navigated to Zoho Report URL");
 
-    
-  await page.waitForSelector("body", { visible: true });
-await new Promise(r => setTimeout(r, 2000)); 
-
 
 //3 ️⃣ Click on search button
-const result = await page.evaluate(() => {
+await page.waitForSelector('body', { visible: true });
+await page.waitForTimeout(2000); // extra wait just in case
+
+const searchIconTriggered = await page.evaluate(() => {
   const el = document.querySelector('#searchIcon');
-  if (el && typeof ZFReportLive !== 'undefined') {
-    ZFReportLive.showSearch(el);
-    return true;
+  const zfAvailable = typeof window.ZFReportLive !== 'undefined';
+
+  if (!el) {
+    console.log("❌ searchIcon not found");
+    return 'no-icon';
   }
-  return false;
+
+  if (!zfAvailable) {
+    console.log("❌ ZFReportLive not available");
+    return 'no-zf';
+  }
+
+  try {
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    ZFReportLive.showSearch(el);
+    return 'clicked';
+  } catch (e) {
+    console.error("⚠️ Error triggering click", e);
+    return 'error';
+  }
 });
 
-if (result) {
-  console.log("✅ Triggered ZFReportLive.showSearch manually");
+if (searchIconTriggered === 'clicked') {
+  console.log("✅ Successfully triggered ZFReportLive.showSearch");
+} else if (searchIconTriggered === 'no-icon') {
+  throw new Error("❌ #searchIcon not found in DOM");
+} else if (searchIconTriggered === 'no-zf') {
+  throw new Error("❌ ZFReportLive is not loaded yet on the page");
 } else {
-  throw new Error("❌ Could not trigger ZFReportLive or find #searchIcon");
+  throw new Error("❌ Unknown error while triggering ZFReportLive");
 }
+
 
 // 4 Search for Report
     await page.click('[elname="Email"]');
