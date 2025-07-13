@@ -42,17 +42,19 @@ exports.extractZohoImages = async (req, res) => {
     await page.keyboard.press("Enter");
 
     await page.waitForSelector("#password", { visible: true });
-    await page.type("#password", ZOHO_PASSWORD);
-    await page.waitForTimeout(400);
-    await page.keyboard.press("Enter");
+   await page.type("#password", ZOHO_PASSWORD);
+await new Promise(r => setTimeout(r, 400));
+await page.keyboard.press("Enter");
 
-    // 2️⃣ Go to Zoho Report Page
-    await page.waitForTimeout(1500);
+await new Promise(r => setTimeout(r, 1500));
+
     await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
 
     // 3️⃣ Apply Email Filter
     await page.click("#filterIcon");
-    await page.waitForTimeout(300);
+
+    await new Promise((r) => setTimeout(r, 400));
+
     await page.click('[elname="Email"]');
     await page.waitForSelector('[id^="select2-Email-select-"]');
     await page.click('[id^="select2-Email-select-"]');
@@ -64,7 +66,8 @@ exports.extractZohoImages = async (req, res) => {
     // 4️⃣ Open Record
     await page.waitForSelector('[rec_owner="dreamdrive1818@gmail.com"]', { visible: true });
     await page.click('[rec_owner="dreamdrive1818@gmail.com"]');
-    await page.waitForTimeout(500);
+ await new Promise((r) => setTimeout(r, 400));
+
 
     // 5️⃣ Wait for Summary and Get Download Links
     await page.waitForFunction(() => {
@@ -88,7 +91,7 @@ exports.extractZohoImages = async (req, res) => {
         if (el) el.click();
       }, href);
       console.log(`✅ Download clicked: ${href}`);
-      await page.waitForTimeout(1000); // wait 1s between clicks
+      await new Promise((r) => setTimeout(r, 1000));
     }
 
     res.status(200).json({
