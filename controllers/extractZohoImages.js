@@ -69,6 +69,12 @@ await page.evaluateOnNewDocument(() => {
     });
     console.log("🌐 Navigated to Zoho login page");
 
+    const loginUrl = page.url();
+if (!loginUrl.includes("accounts.zoho.in")) {
+  throw new Error(`❌ Unexpected login page URL: ${loginUrl}`);
+}
+console.log("✅ Login URL verified:", loginUrl);
+
     await page.type("#login_id", ZOHO_USERNAME);
      await new Promise(r => setTimeout(r, 400));
     console.log("🔐 Username entered",ZOHO_USERNAME);
