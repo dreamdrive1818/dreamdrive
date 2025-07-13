@@ -6,9 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server.js",
-    "git": "git add -A && git commit -m \"updated 5\" && git push -u -f origin server",
-    "start": "node server.js",
-    "postinstall": "npx puppeteer-core@21 browsers install chrome"
+    "git": "git add -A && git commit -m \"updated 6\" && git push -u -f origin server",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -30,7 +29,7 @@
     "pdf-lib": "^1.17.1",
     "pdf-parse": "^1.1.1",
     "pdfjs-dist": "^2.14.305",
-    "puppeteer-core": "^21.11.0",
+    "puppeteer-core": "^10.4.0",
     "redis": "^5.0.1"
   },
   "repository": {
