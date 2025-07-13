@@ -87,6 +87,15 @@ await page.evaluateOnNewDocument(() => {
     await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
     console.log("📊 Navigated to Zoho Report URL");
 
+    
+// ✅ Confirm we’re on the correct report page
+const currentUrl = page.url();
+if (!currentUrl.includes("/report/") || !currentUrl.includes("/records/web")) {
+  throw new Error(`❌ Not on the correct Zoho report page. Current URL: ${currentUrl}`);
+}
+
+console.log("🔍 URL confirmed:", currentUrl);
+
 // start previous
 //3 ️⃣ Click on search button
 // await page.waitForSelector('body', { visible: true });
