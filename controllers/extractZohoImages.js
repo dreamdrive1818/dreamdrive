@@ -24,7 +24,7 @@ exports.extractZohoImages = async (req, res) => {
   let browser;
   try {
     browser = await puppeteer.launch({
-  headless: 'new', // Or true
+  headless: false, // Or true
   args: [
     '--no-sandbox',
     '--disable-setuid-sandbox',
@@ -87,80 +87,106 @@ await page.evaluateOnNewDocument(() => {
     await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
     console.log("📊 Navigated to Zoho Report URL");
 
-
+// start previous
 //3 ️⃣ Click on search button
-await page.waitForSelector('body', { visible: true });
-    await new Promise(r => setTimeout(r, 2000));
+// await page.waitForSelector('body', { visible: true });
+//     await new Promise(r => setTimeout(r, 2000));
 
-const searchIconTriggered = await page.evaluate(() => {
-  const el = document.querySelector('#searchIcon');
-  const zfAvailable = typeof window.ZFReportLive !== 'undefined';
+// const searchIconTriggered = await page.evaluate(() => {
+//   const el = document.querySelector('#searchIcon');
+//   const zfAvailable = typeof window.ZFReportLive !== 'undefined';
 
-  if (!el) {
-    console.log("❌ searchIcon not found");
-    return 'no-icon';
+//   if (!el) {
+//     console.log("❌ searchIcon not found");
+//     return 'no-icon';
+//   }
+
+//   if (!zfAvailable) {
+//     console.log("❌ ZFReportLive not available");
+//     return 'no-zf';
+//   }
+
+//   try {
+//     el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+//     ZFReportLive.showSearch(el);
+//     return 'clicked';
+//   } catch (e) {
+//     console.error("⚠️ Error triggering click", e);
+//     return 'error';
+//   }
+// });
+
+// if (searchIconTriggered === 'clicked') {
+//   console.log("✅ Successfully triggered ZFReportLive.showSearch");
+// } else if (searchIconTriggered === 'no-icon') {
+//   throw new Error("❌ #searchIcon not found in DOM");
+// } else if (searchIconTriggered === 'no-zf') {
+//   throw new Error("❌ ZFReportLive is not loaded yet on the page");
+// } else {
+//   throw new Error("❌ Unknown error while triggering ZFReportLive");
+// }
+
+
+//     await page.click('[elname="Email"]');
+//     console.log("📨 Email filter selected");
+
+//     await page.waitForSelector('[id^="select2-Email-select-"]');
+//     await page.click('[id^="select2-Email-select-"]');
+//     console.log("📥 Filter condition dropdown clicked");
+
+//     await page.select('select[elname="Email"]', "EQUALS");
+//     console.log("✅ 'EQUALS' condition selected");
+
+//     await page.waitForSelector("#Email_val", { visible: true });
+//     await page.type("#Email_val", email);
+//     console.log(`📧 Entered email value: ${email}`);
+
+//     await page.click("#searchBtn");
+//     console.log("🔎 Search button clicked");
+//         await new Promise(r => setTimeout(r, 1000));
+
+
+// await page.waitForSelector('.rPorts-SearchList-Close', { visible: true });
+
+// await page.click('.rPorts-SearchList-Close');
+// console.log("❌ Closed search list");
+//   await new Promise(r => setTimeout(r, 1000));
+
+//    await page.waitForSelector('[rec_owner="huntersgaming825@gmail.com"]', { visible: true });
+// const recordButton = await page.$('[rec_owner="huntersgaming825@gmail.com"]');
+// if (!recordButton) throw new Error("❌ Record button not found after filtering");
+// await recordButton.click();
+// await new Promise(r => setTimeout(r, 200));
+// await recordButton.click();
+// end previous
+
+
+// 4 new logic
+// ✅ Search for specific email and click its parent td
+await page.waitForSelector('td[elem_linkname="Email_td"] a', { timeout: 15000 });
+console.log("📬 Email <td> elements loaded");
+
+const emailFound = await page.evaluate((targetEmail) => {
+  const anchors = Array.from(document.querySelectorAll('td[elem_linkname="Email_td"] a'));
+  const match = anchors.find(a => a.textContent.trim() === targetEmail);
+
+  if (match) {
+    const td = match.closest('td');
+    if (td) {
+      td.click(); // or td.closest('tr').click()
+      return true;
+    }
   }
+  return false;
+}, email);
 
-  if (!zfAvailable) {
-    console.log("❌ ZFReportLive not available");
-    return 'no-zf';
-  }
-
-  try {
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    ZFReportLive.showSearch(el);
-    return 'clicked';
-  } catch (e) {
-    console.error("⚠️ Error triggering click", e);
-    return 'error';
-  }
-});
-
-if (searchIconTriggered === 'clicked') {
-  console.log("✅ Successfully triggered ZFReportLive.showSearch");
-} else if (searchIconTriggered === 'no-icon') {
-  throw new Error("❌ #searchIcon not found in DOM");
-} else if (searchIconTriggered === 'no-zf') {
-  throw new Error("❌ ZFReportLive is not loaded yet on the page");
-} else {
-  throw new Error("❌ Unknown error while triggering ZFReportLive");
+if (!emailFound) {
+  throw new Error(`❌ Could not find or click row for email: ${email}`);
 }
 
-
-// 4 Search for Report
-    await page.click('[elname="Email"]');
-    console.log("📨 Email filter selected");
-
-    await page.waitForSelector('[id^="select2-Email-select-"]');
-    await page.click('[id^="select2-Email-select-"]');
-    console.log("📥 Filter condition dropdown clicked");
-
-    await page.select('select[elname="Email"]', "EQUALS");
-    console.log("✅ 'EQUALS' condition selected");
-
-    await page.waitForSelector("#Email_val", { visible: true });
-    await page.type("#Email_val", email);
-    console.log(`📧 Entered email value: ${email}`);
-
-    await page.click("#searchBtn");
-    console.log("🔎 Search button clicked");
-        await new Promise(r => setTimeout(r, 1000));
-
-        // Wait for the element to appear
-await page.waitForSelector('.rPorts-SearchList-Close', { visible: true });
-
-// Click it
-await page.click('.rPorts-SearchList-Close');
-console.log("❌ Closed search list");
-  await new Promise(r => setTimeout(r, 1000));
-
-    // 4️⃣ Open Record
-   await page.waitForSelector('[rec_owner="huntersgaming825@gmail.com"]', { visible: true });
-const recordButton = await page.$('[rec_owner="huntersgaming825@gmail.com"]');
-if (!recordButton) throw new Error("❌ Record button not found after filtering");
-await recordButton.click();
-await new Promise(r => setTimeout(r, 200));
-await recordButton.click();
+console.log(`✅ Clicked on email <td> for: ${email}`);
+await new Promise(r => setTimeout(r, 1500));
+// end new logic 
 
 
 const debugScreenshotPath = path.join(os.tmpdir(), "after_record_click.png");
@@ -176,6 +202,7 @@ console.log("🖼 Screenshot taken after record click");
   return el && el.offsetParent !== null;
 }, { timeout: 20000 }); // wait up to 20s
 console.log("📋 Record summary loaded");
+
 
 
     const downloadLinks = await page.$$eval('a[elname="download"]', (links) =>
