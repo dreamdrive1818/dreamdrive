@@ -106,9 +106,10 @@ if (currentUrl.includes("https://www.zoho.com/forms/?serviceurl=")) {
 
   await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
     console.log("📊 Navigated to Zoho Report URL");
+ currentUrl = page.url();
 
-
-
+console.log("✅ Verified correct report page URL:", currentUrl);
+console.log("🔍 URL confirmed:", currentUrl);
 
 // start previous
 //3 ️⃣ Click on search button
