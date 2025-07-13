@@ -63,8 +63,14 @@ exports.extractZohoImages = async (req, res) => {
     await page.goto(ZOHO_URL, { waitUntil: "networkidle2" });
     console.log("📊 Navigated to Zoho Report URL");
 
+    
   await page.waitForSelector("body", { visible: true });
 await new Promise(r => setTimeout(r, 2000)); 
+
+const screenshotPath = path.join(os.tmpdir(), "render_debug_before_searchIcon.png");
+await page.screenshot({ path: screenshotPath, fullPage: true });
+console.log("🖼 Screenshot before waiting for #searchIcon:", screenshotPath);
+
 
 await page.waitForSelector("#searchIcon", { visible: true, timeout: 20000 });
 await page.click("#searchIcon");
