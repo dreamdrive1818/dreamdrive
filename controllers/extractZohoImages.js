@@ -87,6 +87,8 @@ console.log("✅ Login URL verified:", loginUrl);
     await page.keyboard.press("Enter");
     console.log("🔓 Logged in");
 
+    let loggedUrl = page.url();
+    console.log("✅ Login URL verified:", loggedUrl);
     await new Promise(r => setTimeout(r, 1500));
 
     // 2️⃣ Go to Report
@@ -106,8 +108,7 @@ if (currentUrl.includes("https://www.zoho.com/forms/?serviceurl=")) {
     console.log("📊 Navigated to Zoho Report URL");
 
 
-console.log("✅ Verified correct report page URL:", currentUrl);
-console.log("🔍 URL confirmed:", currentUrl);
+
 
 // start previous
 //3 ️⃣ Click on search button
