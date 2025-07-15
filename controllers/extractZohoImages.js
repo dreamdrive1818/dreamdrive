@@ -123,6 +123,7 @@ async function loginToZoho(page) {
 
 await page.keyboard.press("Enter");
   await new Promise(r => setTimeout(r, 1000));
+    console.log("✅ Entered");
 
 
   // Try clicking the login button manually
@@ -143,6 +144,7 @@ await page.keyboard.press("Enter");
   }
 
   await page.waitForTimeout(2000);
+    await new Promise(r => setTimeout(r, 1000));
 }
 
 async function navigateToReportPage(page) {
