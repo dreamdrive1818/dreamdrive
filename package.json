@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server.js",
-    "git": "git add -A && git commit -m \"updated 18 - Handled Report page error /more optimized version /removed memory eating code/logic / added comments\" && git push -u -f origin server",
+    "git": "git add -A && git commit -m \"updated 19 - Updated Link for better propagation/Handled Report page error /more optimized version \" && git push -u -f origin server",
     "start": "node server.js",
     "postinstall": "npx puppeteer browsers install chrome"
   },

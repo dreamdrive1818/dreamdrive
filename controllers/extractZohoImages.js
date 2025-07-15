@@ -102,14 +102,14 @@ async function spoofBrowser(page) {
 
 async function loginToZoho(page) {
   console.log("🌐 Opening Zoho login page...");
-  await page.goto("https://accounts.zoho.in/signin?servicename=ZohoForms", { waitUntil: "networkidle2" });
+  await page.goto("https://accounts.zoho.in/signin?servicename=ZohoForms&signupurl=https://www.zoho.com/forms/signup.html&serviceurl=https://forms.zoho.in", { waitUntil: "networkidle2" });
   console.log("🔑 Login page URL:", page.url());
 
   console.log("✍️ Typing username...");
   await page.type("#login_id", ZOHO_USERNAME);
   await page.keyboard.press("Enter");
   console.log("✅ Username entered:", ZOHO_USERNAME);
-  await new Promise(r => setTimeout(r, 2000));
+  await new Promise(r => setTimeout(r, 1000));
 
   console.log("✍️ Waiting for password input...");
   await page.waitForSelector("#password", { visible: true });
