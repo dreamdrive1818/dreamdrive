@@ -143,7 +143,6 @@ await page.keyboard.press("Enter");
     console.warn("⚠️ No redirect after login — may already be authenticated or blocked");
   }
 
-  await page.waitForTimeout(2000);
     await new Promise(r => setTimeout(r, 1000));
 }
 
