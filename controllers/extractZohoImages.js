@@ -121,19 +121,18 @@ async function loginToZoho(page) {
   console.log("✅ Password entered");
   await new Promise(r => setTimeout(r, 1000));
 
-  await page.keyboard.press("Enter");
 await page.keyboard.press("Enter");
   await new Promise(r => setTimeout(r, 1000));
 
 
   // Try clicking the login button manually
-  const loginButton = await page.$("#nextbtn");
-  if (loginButton) {
-    console.log("➡️ Clicking #nextbtn...");
-    await loginButton.click();
-  } else {
-    console.log("Next Button Not found");
-  }
+  // const loginButton = await page.$("#nextbtn");
+  // if (loginButton) {
+  //   console.log("➡️ Clicking #nextbtn...");
+  //   await loginButton.click();
+  // } else {
+  //   console.log("Next Button Not found");
+  // }
 
   // Wait for successful redirect (Zoho sometimes takes time)
   try {
