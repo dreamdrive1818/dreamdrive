@@ -123,7 +123,7 @@ async function loginToZoho(page) {
 
   await page.keyboard.press("Enter");
 await page.keyboard.press("Enter");
-await page.waitForTimeout(1000);
+  await new Promise(r => setTimeout(r, 1000));
 
 
   // Try clicking the login button manually
