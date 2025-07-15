@@ -102,31 +102,48 @@ async function spoofBrowser(page) {
 
 async function loginToZoho(page) {
   console.log("🌐 Opening Zoho login page...");
-  await page.goto("https://accounts.zoho.in/signin?servicename=ZohoForms&signupurl=https://www.zoho.com/forms/signup.html&serviceurl=https://forms.zoho.in", { waitUntil: "networkidle2" });
+  await page.goto("https://accounts.zoho.in/signin?servicename=ZohoForms&signupurl=https://www.zoho.com/forms/signup.html&serviceurl=https://forms.zoho.in", {
+    waitUntil: "networkidle2",
+  });
   console.log("🔑 Login page URL:", page.url());
 
+  // Enter username
   console.log("✍️ Typing username...");
   await page.type("#login_id", ZOHO_USERNAME);
   await page.keyboard.press("Enter");
   console.log("✅ Username entered:", ZOHO_USERNAME);
+  await new Promise(r => setTimeout(r, 500));
+
+  // Wait and enter password
+  console.log("✍️ Waiting for password input...");
+  await page.waitForSelector("#password", { visible: true, timeout: 10000 });
+  await page.type("#password", ZOHO_PASSWORD);
+  console.log("✅ Password entered");
   await new Promise(r => setTimeout(r, 1000));
 
-  console.log("✍️ Waiting for password input...");
-  await page.waitForSelector("#password", { visible: true });
-  await page.type("#password", ZOHO_PASSWORD);
-    await new Promise(r => setTimeout(r, 1000));
-  console.log("✅ Password entered");
+  await page.keyboard.press("Enter");
+await page.keyboard.press("Enter");
+await page.waitForTimeout(1000);
 
-  try {
-    await page.waitForSelector("#nextbtn", { visible: true, timeout: 5000 });
-    await page.click("#nextbtn");
-    console.log("➡️ Clicked #nextbtn");
-    await new Promise(r => setTimeout(r, 1500));
-    console.log("Current URL After Login:", page.url());
-        await new Promise(r => setTimeout(r, 4000));
-  } catch (e) {
-    console.warn("⚠️ #nextbtn not found or skipped");
+
+  // Try clicking the login button manually
+  const loginButton = await page.$("#nextbtn");
+  if (loginButton) {
+    console.log("➡️ Clicking #nextbtn...");
+    await loginButton.click();
+  } else {
+    console.log("Next Button Not found");
   }
+
+  // Wait for successful redirect (Zoho sometimes takes time)
+  try {
+    await page.waitForNavigation({ waitUntil: "networkidle2", timeout: 15000 });
+    console.log("✅ Navigation after login:", page.url());
+  } catch (err) {
+    console.warn("⚠️ No redirect after login — may already be authenticated or blocked");
+  }
+
+  await page.waitForTimeout(2000);
 }
 
 async function navigateToReportPage(page) {
