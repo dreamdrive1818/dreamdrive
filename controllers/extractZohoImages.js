@@ -122,6 +122,8 @@ async function loginToZoho(page) {
     await page.click("#nextbtn");
     console.log("➡️ Clicked #nextbtn");
     await new Promise(r => setTimeout(r, 1500));
+    console.log("Current URL After Login:", page.url());
+        await new Promise(r => setTimeout(r, 4000));
   } catch (e) {
     console.warn("⚠️ #nextbtn not found or skipped");
   }
