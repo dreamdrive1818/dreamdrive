@@ -1,4 +1,4 @@
-require("dotenv").config();
+require('dotenv').config({ path: require('path').resolve(__dirname, '.env') });
 const express = require("express");
 const cors = require("cors");
 
@@ -15,8 +15,8 @@ app.use("/api", emailRoutes);
 const webhookRoutes = require("./routes/webhookRoutes");
 app.use("/api", webhookRoutes);
 
-const zohoAutomationRoutes = require("./routes/zohoAutomationRoutes");
-app.use("/api", zohoAutomationRoutes);
+// const zohoAutomationRoutes = require("./routes/zohoAutomationRoutes");
+// app.use("/api", zohoAutomationRoutes);
 
 
 

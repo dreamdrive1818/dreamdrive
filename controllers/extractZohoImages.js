@@ -14,8 +14,8 @@ exports.extractZohoImages = async (req, res) => {
     return res.status(400).json({ error: "Email is required" });
   }
 
-  const safeEmail = email.replace(/[^a-zA-Z0-9]/g, "_");
-  const downloadDir = path.join(os.tmpdir(), `zoho_images_${safeEmail}`);
+const safeEmail = email.replace(/[^a-zA-Z0-9]/g, "_");
+const downloadDir = path.join(__dirname, "..", "images", safeEmail);
   fs.ensureDirSync(downloadDir);
   console.log("📁 Download directory created:", downloadDir);
 
@@ -106,13 +106,18 @@ async function loginToZoho(page) {
     waitUntil: "networkidle2",
   });
   console.log("🔑 Login page URL:", page.url());
+    await new Promise(r => setTimeout(r, 1000));
+
+    console.log("📦 ZOHO_USERNAME:", ZOHO_USERNAME);
+console.log("📦 ZOHO_PASSWORD:", ZOHO_PASSWORD);
 
   // Enter username
-  console.log("✍️ Typing username...");
-  await page.type("#login_id", ZOHO_USERNAME);
-  await page.keyboard.press("Enter");
-  console.log("✅ Username entered:", ZOHO_USERNAME);
-  await new Promise(r => setTimeout(r, 500));
+console.log("✍️ Typing username...");
+await page.waitForSelector("#login_id", { visible: true, timeout: 10000 });
+await page.type("#login_id", ZOHO_USERNAME);
+await page.keyboard.press("Enter");
+await new Promise(r => setTimeout(r, 1000)); // Wait for password input to appear
+
 
   // Wait and enter password
   console.log("✍️ Waiting for password input...");
@@ -137,7 +142,7 @@ await page.keyboard.press("Enter");
 
   // Wait for successful redirect (Zoho sometimes takes time)
   try {
-    await page.waitForNavigation({ waitUntil: "networkidle2", timeout: 15000 });
+    await page.waitForNavigation({ waitUntil: "networkidle2", timeout: 4000 });
     console.log("✅ Navigation after login:", page.url());
   } catch (err) {
     console.warn("⚠️ No redirect after login — may already be authenticated or blocked");

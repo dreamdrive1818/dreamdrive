@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server.js",
-    "git": "git add -A && git commit -m \"updated 21 - new logic /Updated Link for better propagation/Handled Report page error /more optimized version \" && git push -u -f origin server",
+    "git": "git add -A && git commit -m \"updated 22 - updated webhook logic and otp sending design /new logic /Updated Link for better propagation/Handled Report page error /more optimized version \" && git push -u -f origin server",
     "start": "node server.js",
     "postinstall": "npx puppeteer browsers install chrome"
   },
@@ -20,6 +20,7 @@
     "canvas": "^3.1.2",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
+    "electron": "^37.2.1",
     "express": "^5.1.0",
     "firebase-admin": "^13.4.0",
     "fs-extra": "^11.3.0",
@@ -39,5 +40,6 @@
   "bugs": {
     "url": "https://github.com/dreamdrive1818/dreamdrive/issues"
   },
-  "homepage": "https://github.com/dreamdrive1818/dreamdrive#readme"
+  "homepage": "https://github.com/dreamdrive1818/dreamdrive#readme",
+  "devDependencies": {}
 }
