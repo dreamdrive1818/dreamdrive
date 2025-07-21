@@ -52,7 +52,7 @@ exports.sendOtp = async (req, res) => {
   html: `
     <div style="max-width:600px;margin:auto;padding:20px;border-radius:10px;border:1px solid #eee;font-family:Arial,sans-serif;background:#fff;">
       <div style="text-align:center;">
-        <img src="https://res.cloudinary.com/du4rhbnw8/image/upload/v1713786474/dreamdrive-logo_b1thgd.png" alt="DreamDrive Logo" style="height:70px;margin-bottom:20px;" />
+        <img src="https://res.cloudinary.com/dcf3mojai/image/upload/v1745574199/dream_drive-removebg-preview_x7duqr.png" alt="DreamDrive Logo" style="height:70px;margin-bottom:20px;" />
         <h2 style="color:#111;margin:0;">Email Verification</h2>
         <p style="font-size:15px;color:#333;margin-top:8px;">
           Use the <span style="background-color:#fff3cd;padding:2px 6px;border-radius:4px;font-weight:bold;">OTP</span> below to verify your email address.
