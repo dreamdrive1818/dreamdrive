@@ -15,8 +15,6 @@ app.use("/api", emailRoutes);
 const webhookRoutes = require("./routes/webhookRoutes");
 app.use("/api", webhookRoutes);
 
-// const zohoAutomationRoutes = require("./routes/zohoAutomationRoutes");
-// app.use("/api", zohoAutomationRoutes);
 
 
 
