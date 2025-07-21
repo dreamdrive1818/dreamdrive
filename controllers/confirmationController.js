@@ -36,7 +36,7 @@ exports.sendConfirmation = async (req, res) => {
    const htmlContent = `
   <div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; border: 1px solid #ddd; border-radius: 10px; padding: 24px;">
     <div style="text-align: center; margin-bottom: 20px;">
-      <img src="https://res.cloudinary.com/du4rhbnw8/image/upload/v1693827829/dreamdrive_logo_transparent_s2zvug.png" alt="Dream Drive Logo" style="height: 60px;" />
+      <img src="https://res.cloudinary.com/dcf3mojai/image/upload/v1745574199/dream_drive-removebg-preview_x7duqr.png" alt="Dream Drive Logo" style="height: 60px;" />
     </div>
 
     <h2 style="color: #f4b400; text-align: center;">Booking Partially Confirmed</h2>
