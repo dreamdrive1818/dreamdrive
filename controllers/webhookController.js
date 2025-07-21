@@ -26,36 +26,35 @@ const handleWebhook = async (req, res) => {
     const data = req.body;
     console.log("📩 Webhook received:", data.fname);
 
-    const docId = data.email || `entry_${Date.now()}`;
-    // const folderName = `${data.fname || "user"}_${data.lname || "unknown"}`.replace(/\s+/g, "_");
+    const email = data.email;
+    if (!email) {
+      return res.status(400).send("❌ Email is required in the payload");
+    }
 
-    // 1. Get recordId from email (since webhook does not include it)
-    // const recordId = await getRecordIdFromEmail(data.email);
-    // if (!recordId) {
-    //   console.error("❌ Record ID not found for email:", data.email);
-    //   return res.status(404).send("Record ID not found");
-    // }
+    const formRef = db.collection("form_entries").doc(email);
+    const docSnap = await formRef.get();
 
-    // 2. Fetch attachments from Zoho
-    // const attachments = await fetchAttachmentsFromZoho(recordId);
-    // const fileLinks = {};
-
-    // 3. Upload each file to Cloudinary and store link
-    // for (const file of attachments) {
-    //   const cloudUrl = await uploadToCloudinary(file.download_link, folderName, file.file_name);
-    //   if (cloudUrl) {
-    //     if (!fileLinks[file.field_label]) fileLinks[file.field_label] = [];
-    //     fileLinks[file.field_label].push(cloudUrl);
-    //   }
-    // }
-
-    // 4. Save to Firestore
-    await db.collection("form_entries").doc(docId).set({
+    const bookingData = {
       ...data,
       timestamp: new Date().toISOString(),
-    });
+    };
 
-    res.status(200).send("✅ Data and files saved");
+    if (!docSnap.exists) {
+      // If form entry doesn't exist, create it with initial structure
+      await formRef.set({
+        email,
+        fname: data.fname,
+        lname: data.lname,
+        created_at: new Date().toISOString(),
+      });
+      console.log("📄 Created new form_entries document for:", email);
+    }
+
+    // Save booking inside 'bookings' subcollection
+    await formRef.collection("bookings").add(bookingData);
+    console.log("📝 Booking saved for:", email);
+
+    res.status(200).send("✅ Booking data saved");
   } catch (err) {
     console.error("❌ Webhook error:", err.message);
     res.status(500).send("Something went wrong");
