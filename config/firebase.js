@@ -12,4 +12,6 @@ admin.initializeApp({
   credential: admin.credential.cert(firebaseConfig),
 });
 
-module.exports = admin;
+const db = admin.firestore();
+
+module.exports = db;

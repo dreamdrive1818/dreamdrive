@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server.js",
-    "git": "git add -A && git commit -m \"updated 24 - updated send confirmation/updated webhook logic for destruturing /updated webhook logic and otp sending design /new logic /Updated Link for better propagation/Handled Report page error /more optimized version \"",
+    "git": "git add -A && git commit -m \"updated 25 - webhook logic updated //updated send confirmation/updated webhook logic for destruturing /updated webhook logic and otp sending design /new logic /Updated Link for better propagation/Handled Report page error /more optimized version \"",
     "start": "node server.js",
     "postinstall": "npx puppeteer browsers install chrome"
   },
