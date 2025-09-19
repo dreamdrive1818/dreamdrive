@@ -82,9 +82,12 @@
 }
 
 .fixed-testimonial-btn {
-  position: fixed;
-  bottom: 30px;
-  left: 160px;
+  /* position: fixed;
+  top: 23px;
+  right: 160px; */
+  position: relative;
+  left: 14rem;
+  margin-top: 1rem;
   background-color: var(--primary-color);
   color: white;
   border: none;
@@ -203,5 +206,13 @@
 @media (max-width: 768px) {
   .testimonial-grid {
     grid-template-columns: 1fr;
+  }
+
+  .fixed-testimonial-btn{
+    position: relative;
+    margin: 1rem;
+    left: 0rem;
+    bottom: 1rem;
+    top: 0;
   }
 }

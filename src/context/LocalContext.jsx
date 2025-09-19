@@ -39,7 +39,7 @@ const handleNavigation = () =>{
           });
         } else {
           console.log("No such document!");
-          setCurrentTFN({ intlFormat: "919942027772", localFormat: "+91 (994) 202-7772" });
+          setCurrentTFN({ intlFormat: "919942027772", localFormat: "+91-994-202-7772" });
         }
       } catch (error) {
         console.error("Error fetching TFN: ", error);

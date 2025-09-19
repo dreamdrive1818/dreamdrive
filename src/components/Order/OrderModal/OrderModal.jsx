@@ -79,7 +79,7 @@ const OrderModal = ({ closeModal }) => {
     }
 
     try {
-      const res = await axios.post("https://dreamdrive-1maq.onrender.com/send-otp", { email });
+      const res = await axios.post("https://dreamdrive-1maq.onrender.com/api/send-otp", { email });
       if (res.status === 200) {
         toast.success("OTP sent to your email.");
         setOtpSent(true);
@@ -97,7 +97,7 @@ const OrderModal = ({ closeModal }) => {
   const handleVerifyOtp = async () => {
     if (!otp) return toast.error("Please enter the OTP.");
     try {
-      const res = await axios.post("https://dreamdrive-1maq.onrender.com/verify-otp", { email, otp });
+      const res = await axios.post("https://dreamdrive-1maq.onrender.com/api/verify-otp", { email, otp });
       if (res.data.verified) {
         toast.success("OTP verified. Continue with booking.");
         setStep("booking");

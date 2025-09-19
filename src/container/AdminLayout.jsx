@@ -15,6 +15,7 @@ import ManageRide from '../Admin/ManageRide/ManageRide';
 import ManageUser from '../Admin/ManageUser/ManageUser';
 import ManageMessages from '../Admin/ManageMessages/ManageMessages';
 import ManageTestimonials from '../Admin/ManageTestimonials/ManageTestimonials';
+import ManageFormEntries from '../Admin/ManageFormEntries/ManageFormEntries';
 
 const AdminLayout = () => {
   const location = useLocation();
@@ -83,6 +84,12 @@ const AdminLayout = () => {
             <Route path="/admin/manage-contacts" element={
               <AdminPrivateRoute>
                 <ManageMessages />
+              </AdminPrivateRoute>
+            } />
+
+               <Route path="/admin/manage-form-entries" element={
+              <AdminPrivateRoute>
+                <ManageFormEntries />
               </AdminPrivateRoute>
             } />
 

@@ -262,8 +262,27 @@ const deleteUser = async (userId) => {
 };
 
 
+// ------------------------ form entries -----------------------------
+// 📝 Fetch all form entries
+const fetchFormEntries = async () => {
+  const snapshot = await getDocs(collection(db, "form_entries"));
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+};
+
+// ❌ Delete a form entry
+const deleteFormEntry = async (entryId) => {
+  await deleteDoc(doc(db, "form_entries", entryId));
+  toast.success("Form entry deleted");
+};
+
+// 📝 Update form entry (if you want)
+const updateFormEntry = async (entryId, updatedData) => {
+  await updateDoc(doc(db, "form_entries", entryId), updatedData);
+  toast.success("Form entry updated");
+};
 
 
+// ------------------------end form entries -----------------------------
 
 
 // 📥 Fetch Contact Messages
@@ -467,8 +486,11 @@ const deleteTestimonial = async (id) => {
            updateBookingDateTime,
            fetchTestimonials,
            approveTestimonial,
-           deleteTestimonial
-            
+           deleteTestimonial,
+            fetchFormEntries,
+            deleteFormEntry,
+             updateFormEntry,
+
           //  updateCommentApproval
       }}
     >

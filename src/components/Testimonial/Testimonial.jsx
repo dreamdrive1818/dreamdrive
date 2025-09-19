@@ -14,6 +14,12 @@ import { useTestimonialContext } from "../../context/TestimonialContext";
 const Testimonial = () => {
   const location = useLocation();
   const { testimonials, submitTestimonial } = useTestimonialContext();
+const sortedTestimonials = [...testimonials].sort((a, b) => {
+  const dateA = new Date(a.createdAt?.seconds ? a.createdAt.seconds * 1000 : a.createdAt);
+  const dateB = new Date(b.createdAt?.seconds ? b.createdAt.seconds * 1000 : b.createdAt);
+  return dateA - dateB;
+});
+
 
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -140,7 +146,7 @@ const Testimonial = () => {
   return (
     <section
       className={`testimonial-section ${
-        location.pathname === "/testimonial" ? "full-height" : ""
+        location.pathname === "/testimonials" ? "full-height" : ""
       }`}
     >
       <div className="testimonial-container">
@@ -158,8 +164,8 @@ const Testimonial = () => {
             },
           }}
         >
-          {testimonials.length > 0 ? (
-            testimonials.map((item) => (
+          {sortedTestimonials.length > 0 ? (
+            sortedTestimonials.map((item) => (
               <motion.div
                 key={item.id}
                 className="testimonial-card"
@@ -195,7 +201,7 @@ const Testimonial = () => {
         </motion.div>
       </div>
 
-      {location.pathname === "/testimonial" && (
+      {location.pathname === "/testimonials" && (
         <button
           className="fixed-testimonial-btn"
           onClick={() => setShowModal(true)}
@@ -204,7 +210,7 @@ const Testimonial = () => {
         </button>
       )}
 
-      {location.pathname === "/testimonial" && showModal && (
+      {location.pathname === "/testimonials" && showModal && (
         <motion.div
           className="modal-overlay"
           onClick={() => setShowModal(false)}

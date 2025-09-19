@@ -160,8 +160,9 @@
     }
   
     .how-it-works::before {
-      font-size: 4rem;
-      top: 60%;
+      font-size: 5rem;
+      top: 47%;
+      color: rgba(255, 255, 255, 0.869);
     }
 
       .sub-heading{

@@ -11,6 +11,7 @@ import {
   faSort,
   faCar,
   faContactBook,
+  faFolderOpen
 } from "@fortawesome/free-solid-svg-icons";
 import "./Nav.css";
 
@@ -24,6 +25,7 @@ const Nav = () => {
     { name: "Users", path: "/admin/manage-users", icon: faPeopleGroup },
     { name: "Rides", path: "/admin/manage-rides", icon: faReorder },
       { name: "Testimonials", path: "/admin/manage-testimonials", icon: faPhotoFilm },
+      { name: "Form Entries", path: "/admin/manage-form-entries", icon: faFolderOpen },
      { name: "Messages", path: "/admin/manage-contacts", icon: faContactBook },
     { name: "SEO", path: "/admin/seo", icon: faSort },
     { name: "Blogs", path: "/admin/blog", icon: faFileAlt },

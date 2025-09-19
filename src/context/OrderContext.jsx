@@ -128,7 +128,7 @@ export const OrderProvider = ({ children }) => {
         orders: arrayUnion(orderWithCustomId),
       });
 
-      await axios.post("https://dreamdrive-1maq.onrender.com/send-confirmation", {
+      await axios.post("https://dreamdrive-1maq.onrender.com/api/send-confirmation", {
         user: userInfo,
         order: orderWithCustomId,
       });
