@@ -11,7 +11,7 @@ const Numberattach = () => {
   return (
     <div className="number-float">
       <a href={`tel:${webinfo.phonecall}`}>
-        <FaHeadset className="icon" /> Call Now {webinfo.phone}
+        <FaPhoneAlt className="icon" /> Call Now {webinfo.phone}
       </a>
     </div>
   );
