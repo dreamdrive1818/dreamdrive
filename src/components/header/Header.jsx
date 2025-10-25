@@ -51,7 +51,7 @@ useEffect(() => {
     {/* Logo */}
     <div className="logo" onClick={() => navigate("/")}>
       {/* <h2>DRIVOXE.</h2> */}
-      <img src="https://res.cloudinary.com/dcf3mojai/image/upload/v1745574199/dream_drive-removebg-preview_x7duqr.png" alt="" />
+      <img src={`${webinfo.logo}`} alt="" />
     </div>
 
     {/* Hamburger (Mobile Only) */}

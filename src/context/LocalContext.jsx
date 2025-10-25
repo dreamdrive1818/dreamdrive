@@ -10,6 +10,7 @@ export const LocalProvider = ({ children }) => {
     name: "Dream Drive",
     phone: " ",
     phonecall: "",
+    logo:"https://res.cloudinary.com/df10iqj1i/image/upload/v1761418510/IMG_1646-removebg-preview_trkgki.png",
     address:"105 Jagriti Bhawan, near Adarsh Nagar, Bariatu, Ranchi - 834009 Jharkhand",
     email:"info@hcvatron.com"
 });
