@@ -1,3 +1,8 @@
-# https://www.robotstxt.org/robotstxt.html
+# robots.txt for https://dream-drive.co.in
+# Allow all crawlers to access the site
+
 User-agent: *
-Disallow:
+Allow: /
+
+# Sitemap location
+Sitemap: https://dream-drive.co.in/sitemap.xml
