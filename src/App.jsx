@@ -1,27 +1,33 @@
+// src/App.jsx
 import React from 'react';
 import Container from './container/Container';
-import './assets/style.css'
+import './assets/style.css';
+
 import { LocalProvider } from './context/LocalContext';
 import { AdminProvider } from './context/AdminContext';
 import { OrderProvider } from './context/OrderContext';
 import { BlogProvider } from './context/BlogContext';
 import { TestimonialProvider } from './context/TestimonialContext';
 
+import { HelmetProvider } from 'react-helmet-async';
+
 function App() {
   return (
-    <div className=''>
+    <HelmetProvider>
       <AdminProvider>
-        <BlogProvider >
-      <LocalProvider >
-      <OrderProvider >
-        <TestimonialProvider>
-      <Container  />
-      </TestimonialProvider>
-      </OrderProvider>
-      </LocalProvider>
-      </BlogProvider>
+        <BlogProvider>
+          <LocalProvider>
+            <OrderProvider>
+              <TestimonialProvider>
+                {/* 🔁 Global SEO that reacts to context changes */}
+
+                <Container />
+              </TestimonialProvider>
+            </OrderProvider>
+          </LocalProvider>
+        </BlogProvider>
       </AdminProvider>
-    </div>
+    </HelmetProvider>
   );
 }
 

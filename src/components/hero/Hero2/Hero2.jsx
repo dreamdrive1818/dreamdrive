@@ -1,8 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Hero2.css';
+import { Helmet } from "react-helmet-async";
+import { usePageSeoSuppression } from '../../../utils/usePageSeoSuppression';
 
 const Hero2 = () => {
+  usePageSeoSuppression();
   const navigate = useNavigate();
 
   const handleNavigate = () => {
@@ -10,6 +13,19 @@ const Hero2 = () => {
   };
 
   return (
+    <>
+       {/* Page-specific SEO (overrides defaults where provided) */}
+      <Helmet>
+        <title>Dream Drive | Ranchi’s Trusted Self-Drive Car Rentals</title>
+        <meta
+    name="description"
+    content="Welcome to Dream Drive – Ranchi’s top choice for self-drive car rentals. Book SUVs like Nexon & Compass with flexible packages, 24x7 support, and doorstep delivery."
+  />
+   <meta
+    property="og:title"
+    content="Dream Drive | Self-Drive Car Rentals in Ranchi"
+  />
+      </Helmet>
     <section className="hero-banner">
       <div className="hero-content reveal-bottom">
         <h1>
@@ -45,6 +61,7 @@ const Hero2 = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 
