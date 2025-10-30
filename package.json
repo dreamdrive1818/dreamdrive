@@ -38,7 +38,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "git": "git add -A && git commit -m \"update3010 updated seo meta and local context \" && git push -u -f origin main",
+    "git": "npm run build && git add -A && git commit -m \"update3010 updated seo meta and local context \" && git push -u -f origin main",
     "firebase": "npm run build && firebase deploy --only hosting"
   },
   "eslintConfig": {
