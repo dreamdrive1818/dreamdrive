@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import "./FleetCarousel.css";
 import { useAdminContext } from "../../context/AdminContext";
 import { useOrderContext } from "../../context/OrderContext";
@@ -19,6 +19,11 @@ import { motion } from "framer-motion";
 const FleetCarousel = () => {
   const { fetchCars } = useAdminContext();
   const { handleOrder } = useOrderContext();
+
+  // ✅ OPTION: pricing visible yes/no
+  // set to false => show "—" everywhere pricing appears
+  const pricingVisible = false; // <-- change to false when needed
+
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -32,6 +37,22 @@ const FleetCarousel = () => {
   const isCarsPage = location.pathname === "/cars";
   const intervalRef = useRef(null);
 
+  // ✅ helper to show dash for missing OR when pricingVisible = false
+  const formatPrice = (value, { withDecimals = false } = {}) => {
+    if (!pricingVisible) return "—";
+
+    // treat null/undefined/"" as missing
+    if (value === null || value === undefined || value === "") return "—";
+
+    // if you want 0 to be treated as missing, keep this:
+    // if (Number(value) === 0) return "—";
+
+    const num = Number(value);
+    if (Number.isNaN(num)) return "—";
+
+    return withDecimals ? `₹${num.toFixed(2)}` : `₹${num}`;
+  };
+
   const totalPages = Math.ceil(cars.length / itemsPerPage);
 
   useEffect(() => {
@@ -44,7 +65,7 @@ const FleetCarousel = () => {
       setLoading(false);
     };
     loadCars();
-  }, []);
+  }, [fetchCars]);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -55,7 +76,7 @@ const FleetCarousel = () => {
   const startAutoSlide = () => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      if (!isHovering) {
+      if (!isHovering && totalPages > 0) {
         setCurrentPage((prev) => (prev + 1) % totalPages);
       }
     }, 6000);
@@ -70,12 +91,14 @@ const FleetCarousel = () => {
     }
   }, [totalPages, isHovering]);
 
-  const paginatedCars = isMobile
-    ? cars
-    : cars.slice(
-        currentPage * itemsPerPage,
-        currentPage * itemsPerPage + itemsPerPage
-      );
+  const paginatedCars = useMemo(() => {
+    return isMobile
+      ? cars
+      : cars.slice(
+          currentPage * itemsPerPage,
+          currentPage * itemsPerPage + itemsPerPage
+        );
+  }, [cars, currentPage, isMobile]);
 
   const handleRent = (car) => {
     handleOrder(car);
@@ -94,7 +117,9 @@ const FleetCarousel = () => {
         <div className="fleet-div">
           <h4>THE CARS</h4>
           <h2>Our Impressive Fleet</h2>
-          <p className="fleet-subtitle">Choose your car and get ready to ride in style.</p>
+          <p className="fleet-subtitle">
+            Choose your car and get ready to ride in style.
+          </p>
 
           {loading ? (
             <div className="fleet-spinner">
@@ -107,7 +132,9 @@ const FleetCarousel = () => {
                   <button
                     className="carousel-arrow left"
                     onClick={() => {
-                      setCurrentPage((prev) => (prev === 0 ? totalPages - 1 : prev - 1));
+                      setCurrentPage((prev) =>
+                        prev === 0 ? totalPages - 1 : prev - 1
+                      );
                       startAutoSlide();
                     }}
                   >
@@ -123,7 +150,9 @@ const FleetCarousel = () => {
                     return (
                       <motion.div
                         key={car.id}
-                        className={`fleet-card ${!isAvailable ? "fleet-card-unavailable" : ""}`}
+                        className={`fleet-card ${
+                          !isAvailable ? "fleet-card-unavailable" : ""
+                        }`}
                         onMouseEnter={() => {
                           setHoveredIndex(absoluteIndex);
                           setIsHovering(true);
@@ -139,15 +168,19 @@ const FleetCarousel = () => {
                         <div className="fleet-card-top">
                           <img src={car.images?.[0]} alt={car.name} />
                         </div>
+
                         <div className="fleet-card-bot">
                           <div className="fleet-card-bot-name">
                             <h3>{car.name}</h3>
                           </div>
+
                           <div className="fleet-card-bot-section">
                             <p>
                               Starting at <br />
-                              <span>₹{car?.price ? car.price + ".00" : "--"}</span>
+                              {/* ✅ dash when missing OR pricingVisible = false */}
+                              <span>{formatPrice(car?.price, { withDecimals: true })}</span>
                             </p>
+
                             {isAvailable ? (
                               <button onClick={() => handleRent(car)}>Rent</button>
                             ) : (
@@ -157,45 +190,54 @@ const FleetCarousel = () => {
                             )}
                           </div>
                         </div>
+
                         <div
                           className={`car-hover-info ${
-                            hoveredIndex === absoluteIndex ? "car-hover-info-show" : ""
+                            hoveredIndex === absoluteIndex
+                              ? "car-hover-info-show"
+                              : ""
                           }`}
                         >
                           <div className="hover-top">
                             <div>
-                              <strong>₹{car.twelveHrWeekday}</strong>
+                              <strong>{formatPrice(car?.twelveHrWeekday)}</strong>
                               <p>12 Hr (Weekday)</p>
                             </div>
                             <div>
-                              <strong>₹{car.twentyFourHrWeekday}</strong>
+                              <strong>{formatPrice(car?.twentyFourHrWeekday)}</strong>
                               <p>24 Hr (Weekday)</p>
                             </div>
                             <div>
-                              <strong>{car.details?.extraHr}</strong>
+                              <strong>
+                                {/* extraHr might be "₹50/hr" already. If pricingVisible is false => dash */}
+                                {pricingVisible
+                                  ? car?.details?.extraHr || "—"
+                                  : "—"}
+                              </strong>
                               <p>Extra Hr</p>
                             </div>
                           </div>
+
                           <div className="hover-bottom">
                             <div>
                               <FontAwesomeIcon icon={faCarSide} />
-                              <p>{car.details?.type}</p>
+                              <p>{car.details?.type || "—"}</p>
                             </div>
                             <div>
                               <FontAwesomeIcon icon={faUserFriends} />
-                              <p>{car.details?.seats}</p>
+                              <p>{car.details?.seats || "—"}</p>
                             </div>
                             <div>
                               <FontAwesomeIcon icon={faSuitcaseRolling} />
-                              <p>{car.details?.luggage}</p>
+                              <p>{car.details?.luggage || "—"}</p>
                             </div>
                             <div>
                               <FontAwesomeIcon icon={faGasPump} />
-                              <p>{car.details?.fuel}</p>
+                              <p>{car.details?.fuel || "—"}</p>
                             </div>
                             <div>
                               <FontAwesomeIcon icon={faCogs} />
-                              <p>{car.details?.mt}</p>
+                              <p>{car.details?.mt || "—"}</p>
                             </div>
                           </div>
                         </div>
