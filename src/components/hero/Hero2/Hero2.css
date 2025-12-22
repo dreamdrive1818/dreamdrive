@@ -1,20 +1,26 @@
 .hero-banner {
-   /* background-color: var(--light-bg); */
-    background: linear-gradient(to right, 
-    var(--light-bg) 0%, 
-    var(--light-bg) 25%, 
-    var(--secondary-color) 50%, 
-    var(--light-bg) 75%, 
-    var(--light-bg) 100%);
+  background: linear-gradient(
+    to right,
+    var(--light-bg) 0%,
+    var(--light-bg) 25%,
+    var(--secondary-color) 50%,
+    var(--light-bg) 75%,
+    var(--light-bg) 100%
+  );
   padding: 1rem 2rem;
   text-align: center;
   font-family: var(--font-family-main);
   overflow: hidden;
+  position: relative; /* important for overlays */
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2; /* keep above snow/lights */
 }
 
 .hero-content h1 {
   font-size: 5.5rem;
-  font-weight: 700;
   color: var(--text-dark);
   line-height: 1.3;
   max-width: 1250px;
@@ -33,12 +39,10 @@
   line-height: 1.6;
 }
 
-
 .hero-content .highlight {
-    font-weight: 600;
+  font-weight: 600;
   color: var(--primary-color);
 }
-
 
 .hero-buttons {
   margin-top: 2.5rem;
@@ -78,7 +82,6 @@
   color: white;
 }
 
-
 .car-showcase {
   display: flex;
   justify-content: center;
@@ -87,7 +90,6 @@
   flex-wrap: wrap;
 }
 
-
 .car-showcase img {
   width: 320px;
   max-width: 100%;
@@ -95,38 +97,383 @@
   object-fit: contain;
   margin: 0 -10px;
   transition: transform 0.3s ease;
-   transition: transform 0.3s ease;
-  object-fit: contain;
   margin-right: -15px;
-  
-    /* border: 2px solid black; */
 }
 
 .car-showcase img:hover {
   transform: scale(1.05);
 }
 
-.car-showcase .left-car{
-    margin-top: 1rem;
+.car-showcase .left-car {
+  margin-top: 1rem;
 }
 
 .car-showcase .center-car {
-  width:360px;
-  transform: scale(1.2);
-  transform: rotate(-1deg);
+  width: 460px;
+  transform: rotate(-1deg) scale(1.2);
   z-index: 1;
 }
 
-.car-showcase .center-car:hover{
-    transform: scale(1.05) rotate(-1deg);
+.car-showcase .center-car:hover {
+  transform: scale(1.05) rotate(-1deg);
 }
 
-.car-showcase .left-car, .car-showcase .right-car {
-    z-index: 100;
+.car-showcase .left-car,
+.car-showcase .right-car {
+  z-index: 100;
+}
+
+/* ---------------------------
+   Offer Banner (all themes)
+---------------------------- */
+.hero-offer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.7rem 1.1rem;
+  border-radius: 999px;
+  margin: 0 auto 1.4rem auto;
+  width: fit-content;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(8px);
+}
+
+.hero-offer__badge {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.hero-offer__text {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  opacity: 0.9;
+}
+
+/* ---------------------------
+   Theme: Christmas
+---------------------------- */
+.hero-theme--christmas {
+  position: relative;
+  background: radial-gradient(
+    1200px 500px at 50% 0%,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(224, 242, 255, 0.78) 45%,
+    rgba(240, 250, 245, 0.9) 100%
+  );
+}
+
+/* subtle festive glow */
+.hero-theme--christmas::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+      700px 220px at 50% 5%,
+      rgba(255, 0, 0, 0.11),
+      transparent 60%
+    ),
+    radial-gradient(
+      700px 220px at 50% 15%,
+      rgba(0, 150, 90, 0.11),
+      transparent 60%
+    );
+  opacity: 1;
+  z-index: 0;
+}
+
+/* tiny dim to improve snow contrast */
+.hero-theme--christmas::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.03);
+  z-index: 0;
+}
+
+/* Christmas highlight color tweak */
+.hero-theme--christmas .highlight {
+  color: #0f8a4b;
+}
+
+/* Christmas buttons */
+.hero-theme--christmas .btn-rent {
+  background: #0f8a4b;
+}
+.hero-theme--christmas .btn-rent:hover {
+  background: #0b6a39;
+}
+.hero-theme--christmas .btn-self {
+  border-color: #0f8a4b !important;
+  color: #0f8a4b;
+}
+.hero-theme--christmas .btn-self:hover {
+  background: #0f8a4b;
+}
+
+/* Offer badge festive */
+.hero-theme--christmas .hero-offer__badge {
+  background: #d7263d;
+}
+
+/* ---------------------------
+   Flash animation (Christmas Offer)
+---------------------------- */
+.hero-theme--christmas .hero-offer {
+  animation: offerPulse 1.2s ease-in-out infinite;
+  border-color: rgba(215, 38, 61, 0.25);
+}
+
+.hero-theme--christmas .hero-offer__badge {
+  animation: badgeGlow 1.2s ease-in-out infinite;
+}
+
+@keyframes offerPulse {
+  0% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 10px 26px rgba(215, 38, 61, 0.12);
+  }
+  50% {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 14px 34px rgba(215, 38, 61, 0.22);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 10px 26px rgba(215, 38, 61, 0.12);
+  }
+}
+
+@keyframes badgeGlow {
+  0% {
+    filter: brightness(1);
+    transform: scale(1);
+  }
+  50% {
+    filter: brightness(1.15);
+    transform: scale(1.05);
+  }
+  100% {
+    filter: brightness(1);
+    transform: scale(1);
+  }
+}
+
+/* ---------------------------
+   Decorative: Lights (top)
+---------------------------- */
+.hero-lights {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0.9rem;
+  height: 44px;
+  pointer-events: none;
+  opacity: 0.95;
+  z-index: 1;
+
+  background: radial-gradient(
+      circle at 6% 60%,
+      rgba(255, 85, 85, 0.98) 0 7px,
+      transparent 8px
+    ),
+    radial-gradient(
+      circle at 14% 60%,
+      rgba(255, 210, 60, 0.98) 0 7px,
+      transparent 8px
+    ),
+    radial-gradient(
+      circle at 22% 60%,
+      rgba(90, 220, 255, 0.98) 0 7px,
+      transparent 8px
+    ),
+    radial-gradient(
+      circle at 30% 60%,
+      rgba(130, 255, 150, 0.98) 0 7px,
+      transparent 8px
+    ),
+    radial-gradient(
+      circle at 38% 60%,
+      rgba(255, 85, 85, 0.98) 0 7px,
+      transparent 8px
+    ),
+    radial-gradient(
+      circle at 46% 60%,
+      rgba(255, 210, 60, 0.98) 0 7px,
+      transparent 8px
+    ),
+    radial-gradient(
+      circle at 54% 60%,
+      rgba(90, 220, 255, 0.98) 0 7px,
+      transparent 8px
+    ),
+    radial-gradient(
+      circle at 62% 60%,
+      rgba(130, 255, 150, 0.98) 0 7px,
+      transparent 8px
+    ),
+    radial-gradient(
+      circle at 70% 60%,
+      rgba(255, 85, 85, 0.98) 0 7px,
+      transparent 8px
+    ),
+    radial-gradient(
+      circle at 78% 60%,
+      rgba(255, 210, 60, 0.98) 0 7px,
+      transparent 8px
+    ),
+    radial-gradient(
+      circle at 86% 60%,
+      rgba(90, 220, 255, 0.98) 0 7px,
+      transparent 8px
+    ),
+    radial-gradient(
+      circle at 94% 60%,
+      rgba(130, 255, 150, 0.98) 0 7px,
+      transparent 8px
+    );
+
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.1));
+}
+
+/* string line */
+.hero-theme--christmas .hero-lights::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 11px;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+/* ---------------------------
+   Decorative: Snow overlay (VISIBLE)
+---------------------------- */
+.hero-snow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100000;
+  opacity: 0.9;
+
+  background-image: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.95) 0 2.2px,
+      transparent 2.6px
+    ),
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.85) 0 1.6px,
+      transparent 2px
+    );
+
+  background-size: 180px 180px, 120px 120px;
+  background-position: 0 0, 40px 70px;
+
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.18));
+  animation: snowFall 12s linear infinite;
+  
+}
+
+@keyframes snowFall {
+  from {
+    transform: translateY(-28px);
+  }
+  to {
+    transform: translateY(28px);
+  }
 }
 
 
+/* ===========================
+   Falling Snow (real flakes)
+   Only for Christmas theme
+=========================== */
+.snowflakes{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1; /* under content, above background */
+  overflow: hidden;
+}
 
+/* each layer uses repeating radial gradients as flakes */
+.snowflake{
+  position: absolute;
+  left: -20%;
+  top: -40%;
+  width: 180%;
+  height: 160%;
+  opacity: 0.85;
+  background-repeat: repeat;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.15));
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* Layer 1: bigger flakes */
+.snowflake--1{
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.95) 0 2.4px, transparent 2.8px);
+  background-size: 140px 140px;
+  animation-name: snowDown1;
+  animation-duration: 9s;
+}
+
+/* Layer 2: medium flakes */
+.snowflake--2{
+  opacity: 0.7;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.9) 0 1.9px, transparent 2.3px);
+  background-size: 110px 110px;
+  animation-name: snowDown2;
+  animation-duration: 7s;
+}
+
+/* Layer 3: tiny flakes */
+.snowflake--3{
+  opacity: 0.55;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.85) 0 1.4px, transparent 1.9px);
+  background-size: 90px 90px;
+  animation-name: snowDown3;
+  animation-duration: 6s;
+}
+
+/* Falling + slight sideways drift */
+@keyframes snowDown1{
+  from { transform: translate3d(0,-10%,0); }
+  to   { transform: translate3d(8%,18%,0); }
+}
+@keyframes snowDown2{
+  from { transform: translate3d(0,-12%,0); }
+  to   { transform: translate3d(-10%,20%,0); }
+}
+@keyframes snowDown3{
+  from { transform: translate3d(0,-14%,0); }
+  to   { transform: translate3d(6%,22%,0); }
+}
+
+/* Optional: reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce){
+  .snowflake--1, .snowflake--2, .snowflake--3{
+    animation: none !important;
+  }
+}
+
+
+/* ---------------------------
+   Responsive
+---------------------------- */
 @media (max-width: 768px) {
   .hero-banner {
     padding: 2rem 1.5rem;
@@ -172,5 +519,25 @@
   .car-showcase .center-car {
     width: 150px;
     transform: scale(1.15);
+  }
+
+  /* offer banner smaller */
+  .hero-offer {
+    padding: 0.6rem 0.9rem;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+  }
+  .hero-offer__badge {
+    font-size: 1rem;
+    padding: 0.4rem 0.7rem;
+  }
+  .hero-offer__text {
+    font-size: 1.15rem;
+  }
+
+  .hero-lights {
+    top: 0.6rem;
+    height: 38px;
+    opacity: 0.9;
   }
 }

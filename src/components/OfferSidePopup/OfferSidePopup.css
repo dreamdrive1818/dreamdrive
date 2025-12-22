@@ -1,0 +1,207 @@
+/* ===========================
+   Side Offer Popup + Snow FAB
+=========================== */
+
+/* popup base */
+.offer-pop{
+  position: fixed;
+  right: 18px;
+  bottom: 180px;
+  width: 320px;
+  max-width: calc(100vw - 36px);
+  border-radius: 18px;
+  padding: 18px 18px 16px 18px;
+  z-index: 999999;
+
+  background: rgba(255,255,255,0.90);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0,0,0,0.10);
+  box-shadow: 0 22px 55px rgba(0,0,0,0.20);
+
+  transform: translateX(140%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 420ms ease, opacity 320ms ease;
+}
+
+.offer-pop--open{
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.offer-pop__close{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: rgba(255,255,255,0.85);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.offer-pop__badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.85);
+  margin-bottom: 12px;
+}
+
+.offer-pop__badgeText{
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.offer-pop__title{
+  margin: 0;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--text-dark);
+}
+
+.offer-pop__percent{
+  margin-left: 6px;
+  font-weight: 900;
+}
+
+.offer-pop__subtitle{
+  margin: 8px 0 12px 0;
+  font-size: 14px;
+  color: var(--text-dark);
+  opacity: 0.78;
+  line-height: 1.5;
+}
+
+.offer-pop__divider{
+  height: 1px;
+  width: 100%;
+  background: rgba(0,0,0,0.10);
+  margin: 10px 0 12px 0;
+}
+
+.offer-pop__points{
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text-dark);
+  opacity: 0.85;
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+
+.offer-pop__actions{
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.offer-pop__cta{
+  flex: 1;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 11px 12px;
+  font-weight: 800;
+  font-size: 14px;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+}
+
+.offer-pop__ghost{
+  border: 1px solid rgba(0,0,0,0.14);
+  background: transparent;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 11px 12px;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+/* ---------------------------
+   Christmas theme styling
+---------------------------- */
+.offer-pop--christmas{
+  border-color: rgba(215, 38, 61, 0.18);
+}
+
+.offer-pop--christmas .offer-pop__cta{
+  background: #0f8a4b;
+  color: #fff;
+}
+
+.offer-pop--christmas .offer-pop__cta:hover{
+  filter: brightness(0.95);
+}
+
+.offer-pop--christmas .offer-pop__percent{
+  color: #d7263d;
+}
+
+/* Flashy festive pulse */
+.offer-pop--christmas.offer-pop--open{
+  animation: offerPopPulse 1.3s ease-in-out infinite;
+}
+
+@keyframes offerPopPulse{
+  0%   { box-shadow: 0 22px 55px rgba(0,0,0,0.20); transform: translateX(0) scale(1); }
+  50%  { box-shadow: 0 26px 70px rgba(215,38,61,0.18); transform: translateX(0) scale(1.01); }
+  100% { box-shadow: 0 22px 55px rgba(0,0,0,0.20); transform: translateX(0) scale(1); }
+}
+
+/* ---------------------------
+   Snow floating button (FAB)
+---------------------------- */
+.snow-fab{
+  position: fixed;
+  right: 28px;
+  bottom: 180px;
+  width: 65px;
+  height: 64px;
+  border-radius: 999px;
+  border: 2px solid rgb(183, 12, 12);
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.20);
+  cursor: pointer;
+  font-size: 26px;
+  display: grid;
+  place-items: center;
+  z-index: 999999;
+  animation: snowBob 1.6s ease-in-out infinite;
+}
+
+@keyframes snowBob{
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
+
+.snow-fab--christmas{
+  border-color: rgba(15,138,75,0.22);
+}
+
+.snow-fab--christmas:hover{
+  filter: brightness(0.98);
+}
+
+/* Responsive: move lower on small screens */
+@media (max-width: 768px){
+  .offer-pop{
+    right: 12px;
+    top: 92px;
+    width: min(320px, calc(100vw - 24px));
+  }
+  .snow-fab{
+    right: 12px;
+    top: 120px;
+  }
+}

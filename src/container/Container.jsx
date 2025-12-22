@@ -23,6 +23,7 @@ import Testimonial from '../components/Testimonial/Testimonial';
 import FormEntryChecker from '../components/FormEntryChecker/FormEntryChecker';
 import Numberattach from '../components/Numberattach/Numberattach';
 import SeoDefaults from '../utils/SeoDefaults';
+import OfferSidePopup from '../components/OfferSidePopup/OfferSidePopup';
 
 
 
@@ -98,6 +99,15 @@ const AppRoute = () => {
      {!isAdminPage  && <DreamCarBanner />}
       {!isAdminPage  && <Footer />}
       {!isAdminPage  && <WhatsAppPopup />}
+
+         {!isAdminPage && <OfferSidePopup
+        theme="christmas"
+        percent={10}
+        title="Flat"
+        subtitle="Christmas deal on bookings"
+        ctaText="Explore Cars"
+        onCta={() => window.location.href = "/cars"}
+      />}
        
     </>
   );

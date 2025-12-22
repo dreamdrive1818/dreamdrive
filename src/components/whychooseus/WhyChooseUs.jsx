@@ -21,7 +21,7 @@ const WhyChoose = () => {
 
       <AnimateOnScroll className="why-right delay-3">
         <img
-          src="https://res.cloudinary.com/dcrfks1tq/image/upload/v1750163087/jeep_smrjsp.png"
+          src="https://res.cloudinary.com/dcrfks1tq/image/upload/v1751568965/maruti-suzuki-vitara-brezza-ldi-diesel-pearl-arctic-white-82811366-6pbqe-removebg-preview_pgoccl.png"
           alt="Blue Car"
           className="car-img"
         />
