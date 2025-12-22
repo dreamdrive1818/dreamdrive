@@ -197,11 +197,11 @@
 @media (max-width: 768px){
   .offer-pop{
     right: 12px;
-    top: 92px;
+    bottom: 92px;
     width: min(320px, calc(100vw - 24px));
   }
   .snow-fab{
-    right: 12px;
-    top: 120px;
+    right: 24px;
+    bottom: 175px;
   }
 }
