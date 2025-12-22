@@ -218,6 +218,7 @@
 }
 .hero-theme--christmas .btn-self:hover {
   background: #0f8a4b;
+  color: white;
 }
 
 /* Offer badge festive */
