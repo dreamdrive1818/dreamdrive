@@ -27,7 +27,7 @@ const Home = () => {
   />
       </Helmet>
 
-      <Hero2  themeKey="christmas"/>
+      <Hero2 />
       <FleetCarousel />
       <WhyChoose />
       <HowItWorks />

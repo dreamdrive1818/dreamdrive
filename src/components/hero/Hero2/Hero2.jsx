@@ -1,79 +1,15 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Hero2.css";
 
-/** 🎯 Add / edit themes here anytime */
-const HERO_THEMES = {
-  default: { key: "default", label: "Default", offerText: "", offerBadge: "" },
-  christmas: {
-    key: "christmas",
-    label: "Christmas",
-    offerText: "Flat 10% OFF • Limited Time",
-    offerBadge: "HOLIDAY DEAL",
-  },
-  newyear: {
-    key: "newyear",
-    label: "New Year",
-    offerText: "New Year Offer • Flat 15% OFF",
-    offerBadge: "2026",
-  },
-  diwali: {
-    key: "diwali",
-    label: "Diwali",
-    offerText: "Diwali Offer • Up to 20% OFF",
-    offerBadge: "FESTIVE",
-  },
-};
-
-function getAutoThemeKey(today = new Date()) {
-  const m = today.getMonth();
-  const d = today.getDate();
-
-  if (m === 11 && d >= 10) return "christmas"; // Dec 10 - Dec 31
-  if (m === 0 && d <= 7) return "newyear"; // Jan 1 - Jan 7
-  return "default";
-}
-
-const Hero2 = ({ themeKey }) => {
+const Hero2 = () => {
   const navigate = useNavigate();
-
-  const activeTheme = useMemo(() => {
-    const key = themeKey || getAutoThemeKey(new Date());
-    return HERO_THEMES[key] || HERO_THEMES.default;
-  }, [themeKey]);
 
   const handleNavigate = () => navigate("/cars");
 
   return (
-    <section className={`hero-banner hero-theme--${activeTheme.key}`}>
-      {/* 🎄 Christmas visuals */}
-      {activeTheme.key === "christmas" && (
-        <>
-          {/* soft snow texture */}
-          <div className="hero-snow" aria-hidden="true" />
-
-          {/* falling snow flakes (3 layers) */}
-          <div className="snowflakes" aria-hidden="true">
-            <div className="snowflake snowflake--1" />
-            <div className="snowflake snowflake--2" />
-            <div className="snowflake snowflake--3" />
-          </div>
-
-          {/* top lights */}
-          <div className="hero-lights" aria-hidden="true" />
-        </>
-      )}
-
+    <section className="hero-banner">
       <div className="hero-content reveal-bottom">
-        {activeTheme.offerText ? (
-          <div className="hero-offer" role="note" aria-label="Offer banner">
-            {activeTheme.offerBadge ? (
-              <span className="hero-offer__badge">{activeTheme.offerBadge}</span>
-            ) : null}
-            <span className="hero-offer__text">{activeTheme.offerText}</span>
-          </div>
-        ) : null}
-
         <h1>
           Drive Your <span className="highlight">Freedom!</span>
           <br />

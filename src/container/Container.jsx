@@ -17,13 +17,10 @@ import Success from '../components/Payment/Success/Success';
 import AllBlogs from '../components/blogs/AllBlogs';
 import Blogspage from '../components/blogs/Blogspage';
 import StatusTracking from '../components/statusTracking/StatusTracking';
-import WhatsAppPopup from '../components/WhatsAppPopup/WhatsAppPopup';
-import ContactPopup from '../components/ContactPopup/ContactPopup';
 import Testimonial from '../components/Testimonial/Testimonial';
 import FormEntryChecker from '../components/FormEntryChecker/FormEntryChecker';
 import Numberattach from '../components/Numberattach/Numberattach';
 import SeoDefaults from '../utils/SeoDefaults';
-import OfferSidePopup from '../components/OfferSidePopup/OfferSidePopup';
 
 
 
@@ -95,19 +92,8 @@ const AppRoute = () => {
         )}
       </main>
       {isAdminPage && <AdminLayout />}
-       {!isAdminPage  && <ContactPopup />}
      {!isAdminPage  && <DreamCarBanner />}
       {!isAdminPage  && <Footer />}
-      {!isAdminPage  && <WhatsAppPopup />}
-
-         {!isAdminPage && <OfferSidePopup
-        theme="christmas"
-        percent={10}
-        title="Flat"
-        subtitle="Christmas deal on bookings"
-        ctaText="Explore Cars"
-        onCta={() => window.location.href = "/cars"}
-      />}
        
     </>
   );
