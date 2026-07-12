@@ -23,7 +23,7 @@ const Footer = () => {
       <div className="footer-top">
         <div className="footer-left">
           <h2>Don’t Miss a Thing</h2>
-          <p>Subscribe to our newsletter for exclusive deals and updates.</p>
+          <p>Monsoon Sale alerts — get exclusive rainy-season deals and updates first.</p>
           <div className="newsletter">
             <input
               type="email"

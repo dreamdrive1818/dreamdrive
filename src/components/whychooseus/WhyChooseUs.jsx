@@ -13,10 +13,9 @@ const WhyChoose = () => {
       <AnimateOnScroll className="why-left delay-2">
         <h2>Why Choose <br />{webinfo.name}?</h2>
         <p>
-          We're not just another car rental service — we're here to make your journey easy, comfortable, and worry-free.<br />
-          From quick bookings to clean rides, we've got everything covered so you can hit the road with confidence.
+          Monsoon Sale is live — easy bookings, clean rides, and special rainy-season rates so you can hit the road with confidence.
         </p>
-        <button onClick={() => navigate('/contact')}>Join the Ride</button>
+        <button onClick={() => navigate('/cars')}>View Monsoon Deals</button>
       </AnimateOnScroll>
 
       <AnimateOnScroll className="why-right delay-3">

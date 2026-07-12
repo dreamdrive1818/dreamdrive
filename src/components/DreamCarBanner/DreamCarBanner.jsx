@@ -10,11 +10,11 @@ const DreamCarBanner = () => {
     <section className="dream-banner">
       <div className="banner-content">
         <h2>
-          Reserve Your Dream <br />
-          Car Today and Feel <br />
-          Best Experience Travel
+          Monsoon Sale is On — <br />
+          Reserve Your Dream Car <br />
+          Before Offers End
         </h2>
-        <button className="banner-btn" onClick={handleNavigation}>Let’s Drive with Us</button>
+        <button className="banner-btn" onClick={handleNavigation}>Grab Monsoon Deal</button>
       </div>
       {/* <div className="banner-image">
         <img

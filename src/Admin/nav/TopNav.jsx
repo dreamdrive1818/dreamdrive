@@ -1,35 +1,74 @@
-import React, { useState, useEffect } from 'react';
-import './TopNav.css';
-import { useNavigate } from 'react-router-dom';
-import { useAdminContext } from '../../context/AdminContext';
+import React, { useMemo } from "react";
+import "./TopNav.css";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAdminContext } from "../../context/AdminContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightFromBracket, faUserShield } from "@fortawesome/free-solid-svg-icons";
+
+const PAGE_TITLES = {
+  "/admin/dashboard": { title: "Dashboard", subtitle: "Operations overview" },
+  "/admin/manage-cars": { title: "Fleet", subtitle: "Manage cars and pricing" },
+  "/admin/manage-rides": { title: "Rides", subtitle: "Bookings and trip status" },
+  "/admin/manage-users": { title: "Users", subtitle: "Customer accounts" },
+  "/admin/manage-contacts": { title: "Messages", subtitle: "Contact inquiries" },
+  "/admin/manage-form-entries": { title: "Form Entries", subtitle: "Submitted applications" },
+  "/admin/manage-testimonials": { title: "Testimonials", subtitle: "Customer reviews" },
+  "/admin/blog": { title: "Blogs", subtitle: "Content management" },
+};
 
 const TopNav = () => {
-  const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
   const navigate = useNavigate();
+  const location = useLocation();
   const { admin, AdminLogout } = useAdminContext();
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date().toLocaleTimeString());
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
+  const pageMeta = useMemo(() => {
+    if (location.pathname.startsWith("/admin/blog")) {
+      return PAGE_TITLES["/admin/blog"];
+    }
+    return (
+      PAGE_TITLES[location.pathname] || {
+        title: "Admin",
+        subtitle: "Dream Drive control panel",
+      }
+    );
+  }, [location.pathname]);
 
   const handleLogout = () => {
     AdminLogout();
-    navigate('/admin/login');
+    navigate("/admin/login");
   };
+
+  const displayName =
+    typeof admin === "string" && admin.includes("@")
+      ? admin.split("@")[0]
+      : admin || "Admin";
+
+  const initials = String(displayName).slice(0, 2).toUpperCase();
 
   return (
     <header className="admin-topnav">
       <div className="admin-topnav-left">
-        <h1 className="brand-name">Dream Drive</h1>
+        <div className="admin-topnav-crumb">Admin / {pageMeta.title}</div>
+        <h1 className="admin-topnav-title">{pageMeta.title}</h1>
+        <p className="admin-topnav-sub">{pageMeta.subtitle}</p>
       </div>
+
       <div className="admin-topnav-right">
-        <span className="welcome">Welcome, Admin</span>
-        <span className="clock">{currentTime}</span>
-        <span className='welcome'>{admin}</span>
-        <button className="logout-btn" onClick={handleLogout}>Logout</button>
+        <div className="admin-topnav-user">
+          <div className="admin-topnav-avatar" aria-hidden="true">
+            {initials}
+          </div>
+          <div className="admin-topnav-user-meta">
+            <span className="admin-topnav-user-name">{displayName}</span>
+            <span className="admin-topnav-user-role">
+              <FontAwesomeIcon icon={faUserShield} /> Administrator
+            </span>
+          </div>
+        </div>
+        <button type="button" className="admin-logout-btn" onClick={handleLogout}>
+          <FontAwesomeIcon icon={faRightFromBracket} />
+          <span>Logout</span>
+        </button>
       </div>
     </header>
   );

@@ -2,6 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Hero2.css";
 
+const RainDrops = () => (
+  <div className="monsoon-rain" aria-hidden="true">
+    {Array.from({ length: 10 }).map((_, i) => (
+      <span key={i} />
+    ))}
+  </div>
+);
+
 const Hero2 = () => {
   const navigate = useNavigate();
 
@@ -9,7 +17,12 @@ const Hero2 = () => {
 
   return (
     <section className="hero-banner">
+      <RainDrops />
       <div className="hero-content reveal-bottom">
+        <div className="monsoon-hero-pill">
+          Monsoon Sale · Save on self-drive <strong>now</strong>
+        </div>
+
         <h1>
           Drive Your <span className="highlight">Freedom!</span>
           <br />
@@ -18,13 +31,13 @@ const Hero2 = () => {
         </h1>
 
         <p className="hero-subtitle">
-          Whether you're planning a weekend getaway, a business trip, or just a
-          city ride — we’ve got the perfect wheels ready for you.
+          Rain or shine — book discounted self-drive cars for weekends,
+          business trips, and city rides across Ranchi.
         </p>
 
         <div className="hero-buttons">
           <button className="btn-rent" onClick={handleNavigate}>
-            Rent a Car
+            View Monsoon Deals
           </button>
           <button className="btn-self" onClick={handleNavigate}>
             Self Drive

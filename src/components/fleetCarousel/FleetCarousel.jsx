@@ -16,13 +16,17 @@ import HowItWorks from "../HowItWorks/HowItWorks";
 import AnimateOnScroll from "../../assets/Animation/AnimateOnScroll";
 import { motion } from "framer-motion";
 
+const isDiscountedCar = (car) => {
+  const sale = Number(car?.salePrice);
+  const price = Number(car?.price);
+  return Number.isFinite(sale) && Number.isFinite(price) && sale > price;
+};
+
 const FleetCarousel = () => {
   const { fetchCars } = useAdminContext();
   const { handleOrder } = useOrderContext();
 
-  // ✅ OPTION: pricing visible yes/no
-  // set to false => show "—" everywhere pricing appears
-  const pricingVisible = false; // <-- change to false when needed
+  const pricingVisible = true;
 
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,15 +41,9 @@ const FleetCarousel = () => {
   const isCarsPage = location.pathname === "/cars";
   const intervalRef = useRef(null);
 
-  // ✅ helper to show dash for missing OR when pricingVisible = false
   const formatPrice = (value, { withDecimals = false } = {}) => {
     if (!pricingVisible) return "—";
-
-    // treat null/undefined/"" as missing
     if (value === null || value === undefined || value === "") return "—";
-
-    // if you want 0 to be treated as missing, keep this:
-    // if (Number(value) === 0) return "—";
 
     const num = Number(value);
     if (Number.isNaN(num)) return "—";
@@ -53,14 +51,28 @@ const FleetCarousel = () => {
     return withDecimals ? `₹${num.toFixed(2)}` : `₹${num}`;
   };
 
+  const dealCount = useMemo(
+    () => cars.filter(isDiscountedCar).length,
+    [cars]
+  );
+
   const totalPages = Math.ceil(cars.length / itemsPerPage);
 
   useEffect(() => {
     const loadCars = async () => {
       const carData = await fetchCars();
-      const sortedCars = [...carData].sort(
-        (a, b) => (a.displayOrder ?? 9999) - (b.displayOrder ?? 9999)
-      );
+      const discountPct = (car) => {
+        const sale = Number(car.salePrice);
+        const price = Number(car.price);
+        return ((sale - price) / sale) * 100;
+      };
+      const sortedCars = [...carData].sort((a, b) => {
+        const aDisc = isDiscountedCar(a);
+        const bDisc = isDiscountedCar(b);
+        if (aDisc !== bDisc) return aDisc ? -1 : 1;
+        if (aDisc && bDisc) return discountPct(b) - discountPct(a);
+        return (a.displayOrder ?? 9999) - (b.displayOrder ?? 9999);
+      });
       setCars(sortedCars);
       setLoading(false);
     };
@@ -115,15 +127,27 @@ const FleetCarousel = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <div className="fleet-div">
-          <h4>THE CARS</h4>
-          <h2>Our Impressive Fleet</h2>
-          <p className="fleet-subtitle">
-            Choose your car and get ready to ride in style.
-          </p>
+          <div className="fleet-header">
+            <span className="monsoon-section-tag">Monsoon Sale</span>
+            <h4>THE CARS</h4>
+            <h2>Our Impressive Fleet</h2>
+            <p className="fleet-subtitle">
+              Discounted cars first — grab monsoon offers before they wash away.
+            </p>
+            {dealCount > 0 ? (
+              <div className="fleet-deal-legend">
+                <span className="fleet-deal-legend__swatch" />
+                <span>
+                  Teal-bordered cards are <strong>Monsoon Deals</strong> ({dealCount}{" "}
+                  live)
+                </span>
+              </div>
+            ) : null}
+          </div>
 
           {loading ? (
             <div className="fleet-spinner">
-              <ClipLoader size={75} color="#6366f1" />
+              <ClipLoader size={75} color="#0e7c86" />
             </div>
           ) : (
             <>
@@ -146,13 +170,24 @@ const FleetCarousel = () => {
                   {paginatedCars.map((car, index) => {
                     const absoluteIndex = currentPage * itemsPerPage + index;
                     const isAvailable = car.available === "Available";
+                    const hasDiscount = pricingVisible && isDiscountedCar(car);
+                    const saleNum = Number(car?.salePrice);
+                    const priceNum = Number(car?.price);
+                    const discountPercent = hasDiscount
+                      ? Math.round(((saleNum - priceNum) / saleNum) * 100)
+                      : 0;
+                    const savings = hasDiscount ? saleNum - priceNum : 0;
 
                     return (
                       <motion.div
                         key={car.id}
-                        className={`fleet-card ${
-                          !isAvailable ? "fleet-card-unavailable" : ""
-                        }`}
+                        className={[
+                          "fleet-card",
+                          hasDiscount ? "fleet-card--deal" : "fleet-card--regular",
+                          !isAvailable ? "fleet-card-unavailable" : "",
+                        ]
+                          .filter(Boolean)
+                          .join(" ")}
                         onMouseEnter={() => {
                           setHoveredIndex(absoluteIndex);
                           setIsHovering(true);
@@ -165,24 +200,79 @@ const FleetCarousel = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: index * 0.2, duration: 0.6 }}
                       >
+                        {hasDiscount ? (
+                          <div className="fleet-deal-ribbon" aria-hidden="true">
+                            Monsoon Deal
+                          </div>
+                        ) : null}
+
                         <div className="fleet-card-top">
-                          <img src={car.images?.[0]} alt={car.name} />
+                          {hasDiscount ? (
+                            <span className="fleet-discount-badge">
+                              {discountPercent}% OFF
+                            </span>
+                          ) : null}
+                          <div
+                            className={`fleet-card-media ${
+                              hasDiscount ? "fleet-card-media--deal" : ""
+                            }`}
+                          >
+                            {car.images?.[0] ? (
+                              <img src={car.images[0]} alt={car.name} />
+                            ) : (
+                              <div className="fleet-card-placeholder">
+                                Image coming soon
+                              </div>
+                            )}
+                          </div>
                         </div>
 
                         <div className="fleet-card-bot">
                           <div className="fleet-card-bot-name">
+                            {hasDiscount ? (
+                              <span className="fleet-deal-chip">Sale live</span>
+                            ) : null}
                             <h3>{car.name}</h3>
+                            {car.details?.type ? (
+                              <p className="fleet-card-type">{car.details.type}</p>
+                            ) : null}
                           </div>
 
                           <div className="fleet-card-bot-section">
-                            <p>
-                              Starting at <br />
-                              {/* ✅ dash when missing OR pricingVisible = false */}
-                              <span>{formatPrice(car?.price, { withDecimals: true })}</span>
-                            </p>
+                            <div className="fleet-price-block">
+                              <p className="fleet-price-label">
+                                {hasDiscount ? "Deal price" : "Starting at"}
+                              </p>
+                              <span className="fleet-price-row">
+                                {hasDiscount ? (
+                                  <span className="fleet-sale-price">
+                                    {formatPrice(car.salePrice)}
+                                  </span>
+                                ) : null}
+                                <span
+                                  className={`fleet-discount-price ${
+                                    hasDiscount ? "fleet-discount-price--deal" : ""
+                                  }`}
+                                >
+                                  {formatPrice(car?.price)}
+                                </span>
+                              </span>
+                              {hasDiscount ? (
+                                <span className="fleet-save-note">
+                                  You save ₹{savings}
+                                </span>
+                              ) : null}
+                            </div>
 
                             {isAvailable ? (
-                              <button onClick={() => handleRent(car)}>Rent</button>
+                              <button
+                                className={
+                                  hasDiscount ? "fleet-btn--deal" : undefined
+                                }
+                                onClick={() => handleRent(car)}
+                              >
+                                {hasDiscount ? "Grab Deal" : "Rent"}
+                              </button>
                             ) : (
                               <button className="not-available-btn" disabled>
                                 Not Available
@@ -204,12 +294,13 @@ const FleetCarousel = () => {
                               <p>12 Hr (Weekday)</p>
                             </div>
                             <div>
-                              <strong>{formatPrice(car?.twentyFourHrWeekday)}</strong>
+                              <strong>
+                                {formatPrice(car?.twentyFourHrWeekday)}
+                              </strong>
                               <p>24 Hr (Weekday)</p>
                             </div>
                             <div>
                               <strong>
-                                {/* extraHr might be "₹50/hr" already. If pricingVisible is false => dash */}
                                 {pricingVisible
                                   ? car?.details?.extraHr || "—"
                                   : "—"}

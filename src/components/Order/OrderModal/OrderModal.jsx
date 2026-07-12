@@ -35,7 +35,17 @@ const OrderModal = ({ closeModal }) => {
   useEffect(() => {
     const loadCars = async () => {
       const carData = await fetchCars();
-      const sorted = [...carData].sort((a, b) => (a.displayOrder ?? 9999) - (b.displayOrder ?? 9999));
+      const sorted = [...carData].sort((a, b) => {
+        const hasDiscount = (car) => {
+          const sale = Number(car?.salePrice);
+          const price = Number(car?.price);
+          return Number.isFinite(sale) && Number.isFinite(price) && sale > price;
+        };
+        const aDisc = hasDiscount(a);
+        const bDisc = hasDiscount(b);
+        if (aDisc !== bDisc) return aDisc ? -1 : 1;
+        return (a.displayOrder ?? 9999) - (b.displayOrder ?? 9999);
+      });
       setCars(sorted);
     };
     loadCars();

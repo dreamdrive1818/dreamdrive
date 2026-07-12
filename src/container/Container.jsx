@@ -21,6 +21,8 @@ import Testimonial from '../components/Testimonial/Testimonial';
 import FormEntryChecker from '../components/FormEntryChecker/FormEntryChecker';
 import Numberattach from '../components/Numberattach/Numberattach';
 import SeoDefaults from '../utils/SeoDefaults';
+import SaleModal from '../components/SaleModal/SaleModal';
+import MonsoonPromoBar from '../components/MonsoonPromoBar/MonsoonPromoBar';
 
 
 
@@ -43,7 +45,7 @@ const AppRoute = () => {
   const isFirstRender = useRef(true);
   const isAdminPage = location.pathname.includes("admin");
 
-   useEffect(() => {
+    useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
       setLoading(false);
@@ -55,45 +57,53 @@ const AppRoute = () => {
     return () => clearTimeout(timer);
   }, [location.pathname]);
 
+  useEffect(() => {
+    document.body.classList.toggle("monsoon-sale", !isAdminPage);
+    return () => document.body.classList.remove("monsoon-sale");
+  }, [isAdminPage]);
+
 
   return (
       <>
       <ScrollToTop />
    
 
-<Numberattach />
+{!isAdminPage && <Numberattach />}
+      {!isAdminPage && <MonsoonPromoBar />}
+      {!isAdminPage && <SaleModal />}
       
-      {!isAdminPage  && <Header />}
-      <main className="route-container">
-        {loading ? (
-          <div className="route-spinner">
-            {/* <ClipLoader size={60} color="#c2410c" /> */}
-          </div>
-        ) : (
-          <div className="fade-in-bottom">
-             <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/cars" element={<FleetCarousel />} />
-        <Route path="/blogs" element={<AllBlogs />} />
-        <Route path="/testimonials" element={<Testimonial />} />
-        <Route path="/blogs/:slug" element={<Blogspage />} />
-        <Route path="/order" element={<Order />} />
-        <Route path="/order-tracking" element={<StatusTracking />} />
-        <Route path="/consent-form" element={<FormEntryChecker />} />
-        <Route path="/payment" element={<Payment />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/success" element={<Success />} />
-        <Route path="/howitworks" element={<HowItWorks />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/termsandconditions" element={<TermsAndConditions />} />
-        
-      </Routes>
-          </div>
-        )}
-      </main>
+      {!isAdminPage && <Header />}
+      {!isAdminPage && (
+        <main className="route-container">
+          {loading ? (
+            <div className="route-spinner">
+              {/* <ClipLoader size={60} color="#c2410c" /> */}
+            </div>
+          ) : (
+            <div className="fade-in-bottom">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/cars" element={<FleetCarousel />} />
+                <Route path="/blogs" element={<AllBlogs />} />
+                <Route path="/testimonials" element={<Testimonial />} />
+                <Route path="/blogs/:slug" element={<Blogspage />} />
+                <Route path="/order" element={<Order />} />
+                <Route path="/order-tracking" element={<StatusTracking />} />
+                <Route path="/consent-form" element={<FormEntryChecker />} />
+                <Route path="/payment" element={<Payment />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/success" element={<Success />} />
+                <Route path="/howitworks" element={<HowItWorks />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/termsandconditions" element={<TermsAndConditions />} />
+              </Routes>
+            </div>
+          )}
+        </main>
+      )}
       {isAdminPage && <AdminLayout />}
-     {!isAdminPage  && <DreamCarBanner />}
-      {!isAdminPage  && <Footer />}
+      {!isAdminPage && <DreamCarBanner />}
+      {!isAdminPage && <Footer />}
        
     </>
   );
