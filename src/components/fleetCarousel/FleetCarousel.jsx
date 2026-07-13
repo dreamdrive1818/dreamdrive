@@ -13,7 +13,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { ClipLoader } from "react-spinners";
 import HowItWorks from "../HowItWorks/HowItWorks";
-import AnimateOnScroll from "../../assets/Animation/AnimateOnScroll";
 import { motion } from "framer-motion";
 
 const isDiscountedCar = (car) => {
@@ -35,11 +34,12 @@ const FleetCarousel = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
-  const itemsPerPage = 3;
+  const itemsPerPage = isMobile ? 1 : 3;
   const navigate = useNavigate();
   const location = useLocation();
   const isCarsPage = location.pathname === "/cars";
   const intervalRef = useRef(null);
+  const touchStartX = useRef(null);
 
   const formatPrice = (value, { withDecimals = false } = {}) => {
     if (!pricingVisible) return "—";
@@ -56,25 +56,35 @@ const FleetCarousel = () => {
     [cars]
   );
 
-  const totalPages = Math.ceil(cars.length / itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(cars.length / itemsPerPage));
+
+  useEffect(() => {
+    setCurrentPage((prev) => Math.min(prev, totalPages - 1));
+  }, [totalPages]);
 
   useEffect(() => {
     const loadCars = async () => {
-      const carData = await fetchCars();
-      const discountPct = (car) => {
-        const sale = Number(car.salePrice);
-        const price = Number(car.price);
-        return ((sale - price) / sale) * 100;
-      };
-      const sortedCars = [...carData].sort((a, b) => {
-        const aDisc = isDiscountedCar(a);
-        const bDisc = isDiscountedCar(b);
-        if (aDisc !== bDisc) return aDisc ? -1 : 1;
-        if (aDisc && bDisc) return discountPct(b) - discountPct(a);
-        return (a.displayOrder ?? 9999) - (b.displayOrder ?? 9999);
-      });
-      setCars(sortedCars);
-      setLoading(false);
+      try {
+        const carData = await fetchCars();
+        const discountPct = (car) => {
+          const sale = Number(car.salePrice);
+          const price = Number(car.price);
+          return ((sale - price) / sale) * 100;
+        };
+        const sortedCars = [...(carData || [])].sort((a, b) => {
+          const aDisc = isDiscountedCar(a);
+          const bDisc = isDiscountedCar(b);
+          if (aDisc !== bDisc) return aDisc ? -1 : 1;
+          if (aDisc && bDisc) return discountPct(b) - discountPct(a);
+          return (a.displayOrder ?? 9999) - (b.displayOrder ?? 9999);
+        });
+        setCars(sortedCars);
+      } catch (err) {
+        console.error("Failed to load fleet cars:", err);
+        setCars([]);
+      } finally {
+        setLoading(false);
+      }
     };
     loadCars();
   }, [fetchCars]);
@@ -104,13 +114,34 @@ const FleetCarousel = () => {
   }, [totalPages, isHovering]);
 
   const paginatedCars = useMemo(() => {
-    return isMobile
-      ? cars
-      : cars.slice(
-          currentPage * itemsPerPage,
-          currentPage * itemsPerPage + itemsPerPage
-        );
-  }, [cars, currentPage, isMobile]);
+    return cars.slice(
+      currentPage * itemsPerPage,
+      currentPage * itemsPerPage + itemsPerPage
+    );
+  }, [cars, currentPage, itemsPerPage]);
+
+  const goToPrevPage = () => {
+    setCurrentPage((prev) => (prev === 0 ? totalPages - 1 : prev - 1));
+    startAutoSlide();
+  };
+
+  const goToNextPage = () => {
+    setCurrentPage((prev) => (prev + 1) % totalPages);
+    startAutoSlide();
+  };
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current == null || totalPages <= 1) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) < 50) return;
+    if (dx < 0) goToNextPage();
+    else goToPrevPage();
+  };
 
   const handleRent = (car) => {
     handleOrder(car);
@@ -151,22 +182,50 @@ const FleetCarousel = () => {
             </div>
           ) : (
             <>
-              <AnimateOnScroll className="fleet-carousel-wrapper">
-                {!isMobile && (
+              {isMobile && totalPages > 1 && (
+                <div className="fleet-mobile-pager">
                   <button
+                    type="button"
                     className="carousel-arrow left"
-                    onClick={() => {
-                      setCurrentPage((prev) =>
-                        prev === 0 ? totalPages - 1 : prev - 1
-                      );
-                      startAutoSlide();
-                    }}
+                    aria-label="Previous cars"
+                    onClick={goToPrevPage}
+                  >
+                    &#8249;
+                  </button>
+                  <span className="carousel-page-label" aria-live="polite">
+                    {currentPage + 1} / {totalPages}
+                  </span>
+                  <button
+                    type="button"
+                    className="carousel-arrow right"
+                    aria-label="Next cars"
+                    onClick={goToNextPage}
+                  >
+                    &#8250;
+                  </button>
+                </div>
+              )}
+
+              <div
+                className="fleet-carousel-wrapper"
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+              >
+                {!isMobile && totalPages > 1 && (
+                  <button
+                    type="button"
+                    className="carousel-arrow left"
+                    aria-label="Previous cars"
+                    onClick={goToPrevPage}
                   >
                     &#8249;
                   </button>
                 )}
 
                 <div className="fleet-cards">
+                  {paginatedCars.length === 0 ? (
+                    <p className="fleet-empty">No cars available right now.</p>
+                  ) : null}
                   {paginatedCars.map((car, index) => {
                     const absoluteIndex = currentPage * itemsPerPage + index;
                     const isAvailable = car.available === "Available";
@@ -337,31 +396,31 @@ const FleetCarousel = () => {
                   })}
                 </div>
 
-                {!isMobile && (
+                {!isMobile && totalPages > 1 && (
                   <button
+                    type="button"
                     className="carousel-arrow right"
-                    onClick={() => {
-                      setCurrentPage((prev) => (prev + 1) % totalPages);
-                      startAutoSlide();
-                    }}
+                    aria-label="Next cars"
+                    onClick={goToNextPage}
                   >
                     &#8250;
                   </button>
                 )}
-              </AnimateOnScroll>
+              </div>
 
-              {!isMobile && (
+              {!isMobile && totalPages > 1 && (
                 <div className="carousel-dots">
                   {Array.from({ length: totalPages }).map((_, i) => (
                     <button
                       key={i}
+                      type="button"
                       className={i === currentPage ? "active" : ""}
                       onClick={() => {
                         setCurrentPage(i);
                         startAutoSlide();
                       }}
                     >
-                      {`0${i + 1}`}
+                      {String(i + 1).padStart(2, "0")}
                     </button>
                   ))}
                 </div>
