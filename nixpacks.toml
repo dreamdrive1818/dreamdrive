@@ -1,0 +1,9 @@
+# Railway / Nixpacks — DreamDrive API
+[variables]
+NODE_ENV = "production"
+PUPPETEER_SKIP_DOWNLOAD = "true"
+PUPPETEER_SKIP_CHROMIUM_DOWNLOAD = "true"
+NIXPACKS_NODE_VERSION = "20"
+
+[start]
+cmd = "npm start"

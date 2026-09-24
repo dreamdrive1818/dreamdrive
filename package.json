@@ -1,14 +1,17 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "DreamDrive API",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server.js",
-    "git": "git add -A && git commit -m \"updated 25 - webhook logic updated //updated send confirmation/updated webhook logic for destruturing /updated webhook logic and otp sending design /new logic /Updated Link for better propagation/Handled Report page error /more optimized version \"",
+    "start:split": "node services/run-all.js",
     "start": "node server.js",
-    "postinstall": "npx puppeteer browsers install chrome"
+    "postinstall": "node -e \"if (process.env.PUPPETEER_SKIP_DOWNLOAD === 'true' || process.env.RAILWAY_ENVIRONMENT) process.exit(0);\" && npx puppeteer browsers install chrome || echo \"Puppeteer Chrome skipped\""
+  },
+  "engines": {
+    "node": ">=18"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +28,7 @@
     "firebase-admin": "^13.4.0",
     "fs-extra": "^11.3.0",
     "googleapis": "^148.0.0",
+    "http-proxy-middleware": "^3.0.5",
     "nodemailer": "^7.0.3",
     "nodemon": "^3.1.10",
     "pdf-lib": "^1.17.1",
@@ -40,6 +44,5 @@
   "bugs": {
     "url": "https://github.com/dreamdrive1818/dreamdrive/issues"
   },
-  "homepage": "https://github.com/dreamdrive1818/dreamdrive#readme",
-  "devDependencies": {}
+  "homepage": "https://github.com/dreamdrive1818/dreamdrive#readme"
 }

@@ -1,23 +1,24 @@
-require('dotenv').config({ path: require('path').resolve(__dirname, '.env') });
+require("dotenv").config({ path: require("path").resolve(__dirname, ".env") });
 const express = require("express");
-const cors = require("cors");
+const { createMonolith, applyBase, mountCms } = require("./app");
+const { mountGatewayProxies } = require("./gateway/proxies");
 
-const app = express();
-app.use(cors());
-app.use(express.json());
+const port = Number(process.env.PORT) || 5000;
+const host = process.env.HOST || "0.0.0.0";
+const mode = process.env.RUN_MODE || "monolith";
 
+let app;
 
+if (mode === "split") {
+  app = express();
+  applyBase(app);
+  mountCms(app);
+  mountGatewayProxies(app);
+  app.get("/health", (_req, res) => res.json({ ok: true, mode: "gateway" }));
+} else {
+  app = createMonolith();
+}
 
-// connect routes
-const emailRoutes = require("./routes/emailRoutes");
-app.use("/api", emailRoutes);
-
-const webhookRoutes = require("./routes/webhookRoutes");
-app.use("/api", webhookRoutes);
-
-
-
-
-app.listen(5000, () => {
-  console.log(`Server running`);
+app.listen(port, host, () => {
+  console.log(`DreamDrive API (${mode}) on http://${host}:${port}`);
 });
