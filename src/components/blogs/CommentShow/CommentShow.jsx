@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../../firebase/firebaseConfig";
+import api from "../../../api/http";
 import "./CommentShow.css";
 
 const CommentShow = ({ blogId }) => {
@@ -9,11 +8,8 @@ const CommentShow = ({ blogId }) => {
 
   const fetchComments = async () => {
     try {
-      const snapshot = await getDocs(collection(db, `_blogs/${blogId}/comments`));
-      const data = snapshot.docs
-        .map((doc) => doc.data())
-        .filter((comment) => comment.approved === true); // ✅ only approved
-      setComments(data);
+      const { data } = await api.get(`/api/cms/blogs/${blogId}/comments`);
+      setComments(data.filter((comment) => comment.approved === true));
     } catch (err) {
       console.error("Error loading comments:", err.message);
     } finally {

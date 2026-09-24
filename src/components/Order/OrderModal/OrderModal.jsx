@@ -3,8 +3,8 @@ import "./OrderModal.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useOrderContext } from "../../../context/OrderContext";
-import axios from "axios";
 import { useAdminContext } from "../../../context/AdminContext";
+import api from "../../../api/http";
 
 const OrderModal = ({ closeModal }) => {
   const [fullName, setFullName] = useState("");
@@ -69,10 +69,8 @@ const OrderModal = ({ closeModal }) => {
     setIsChecking(true);
 
     try {
-      const userDoc = await axios.get(
-        `https://firestore.googleapis.com/v1/projects/${process.env.REACT_APP_FIREBASE_PROJECT_ID}/databases/(default)/documents/users/${email}`
-      );
-      if (userDoc?.data?.fields) {
+      const userDoc = await api.get(`/api/identity/users/${encodeURIComponent(email)}`);
+      if (userDoc?.data?.id) {
         toast.info("User already exists, skipping OTP verification.");
         const userData = {
           uid: email,
@@ -89,7 +87,7 @@ const OrderModal = ({ closeModal }) => {
     }
 
     try {
-      const res = await axios.post("https://dreamdrive-1maq.onrender.com/api/send-otp", { email });
+      const res = await api.post("/api/notify/send-otp", { email });
       if (res.status === 200) {
         toast.success("OTP sent to your email.");
         setOtpSent(true);
@@ -107,7 +105,7 @@ const OrderModal = ({ closeModal }) => {
   const handleVerifyOtp = async () => {
     if (!otp) return toast.error("Please enter the OTP.");
     try {
-      const res = await axios.post("https://dreamdrive-1maq.onrender.com/api/verify-otp", { email, otp });
+      const res = await api.post("/api/notify/verify-otp", { email, otp });
       if (res.data.verified) {
         toast.success("OTP verified. Continue with booking.");
         setStep("booking");

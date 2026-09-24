@@ -1,32 +1,28 @@
 import  { useEffect, useState } from "react";
 import "./Blogs.css";
 import { useNavigate } from "react-router-dom";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firebase/firebaseConfig";
-import { useLocalContext } from "../../context/LocalContext";
+import api from "../../api/http";
+import { useBlogContext } from "../../context/BlogContext";
 
 const Blogs = () => {
   const [blogPosts, setBlogPosts] = useState([]);
-  const { setSelectedUserBlog} = useLocalContext();
+  const { setSelectedUserBlog } = useBlogContext();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBlogs = async () => {
-      const querySnapshot = await getDocs(collection(db, "_blogs"));
-      const blogData = querySnapshot.docs.map((doc) => {
-        const data = doc.data();
-        return {
-          id: doc.id, 
-          ...data,
-          formattedDate: data.date
-            ? new Date(data.date).toLocaleDateString("en-US", {
+      const { data } = await api.get("/api/cms/blogs");
+      const blogData = data.map((doc) => ({
+          id: doc.id,
+          ...doc,
+          formattedDate: doc.date
+            ? new Date(doc.date).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
               })
-            : "Date not available", // If the date field is missing
-        };
-      });
+            : "Date not available",
+      }));
       setBlogPosts(blogData);
     };
     

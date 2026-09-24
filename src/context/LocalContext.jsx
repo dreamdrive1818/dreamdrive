@@ -1,7 +1,6 @@
 // src/context/LocalContext.jsx
 import { createContext, useContext, useState, useEffect, useMemo } from "react";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase/firebaseConfig";
+import api from "../api/http";
 
 const LocalContext = createContext();
 
@@ -40,11 +39,9 @@ export const LocalProvider = ({ children }) => {
   useEffect(() => {
     const fetchTFN = async () => {
       try {
-        const docRef = doc(db, "siteNumbers", "dream-drive.co");
-        const docSnap = await getDoc(docRef);
+        const { data } = await api.get("/api/identity/site-numbers/dream-drive.co");
 
-        if (docSnap.exists()) {
-          const data = docSnap.data();
+        if (data?.numberIntl || data?.numberLocal) {
           setCurrentTFN({
             intlFormat: data.numberIntl || "",
             localFormat: data.numberLocal || "",

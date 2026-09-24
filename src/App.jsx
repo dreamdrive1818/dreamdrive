@@ -2,7 +2,6 @@
 import React from 'react';
 import Container from './container/Container';
 import './assets/style.css';
-import './assets/monsoon-sale.css';
 
 import { LocalProvider } from './context/LocalContext';
 import { AdminProvider } from './context/AdminContext';

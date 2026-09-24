@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './ReadBlog.css';
 import { useParams, useNavigate } from 'react-router-dom';
-import { db } from '../../firebase/firebaseConfig';
-import { collection, getDocs } from 'firebase/firestore';
+import api from '../../api/http';
 
 const ReadBlog = () => {
   const { title } = useParams();
@@ -15,8 +14,7 @@ const ReadBlog = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'antivirus_blogs'));
-        const blogs = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const { data: blogs } = await api.get('/api/cms/legacy-blogs');
   
         console.log("Fetched blogs:", blogs.map(b => b.title)); // Debugging
         console.log("Decoded title from URL:", decodedTitle); // Debugging

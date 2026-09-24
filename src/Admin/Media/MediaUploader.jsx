@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { db, storage } from "../../firebase/firebaseConfig";
-import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { storage } from "../../firebase/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import api from "../../api/http";
 import "./MediaUploader.css";
 
 const MediaUploader = ({ onSelectImage }) => {
@@ -25,7 +25,7 @@ const MediaUploader = ({ onSelectImage }) => {
       url = await getDownloadURL(storageRef);
     }
 
-    const docRef = await addDoc(collection(db, "media"), { url, category });
+    await api.post("/api/cms/media", { url, category });
 
     setImage(null);
     setImageUrl("");
@@ -33,14 +33,9 @@ const MediaUploader = ({ onSelectImage }) => {
     fetchImages();
   };
 
-  // Fetch Images from Firestore
   const fetchImages = async () => {
-    const querySnapshot = await getDocs(collection(db, "media"));
-    const images = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    setUploadedImages(images);
+    const { data } = await api.get("/api/cms/media");
+    setUploadedImages(data);
   };
 
   useEffect(() => {
@@ -50,7 +45,7 @@ const MediaUploader = ({ onSelectImage }) => {
   // Handle Delete
   const handleDelete = async (id, url) => {
     if (window.confirm("Are you sure you want to delete this image?")) {
-      await deleteDoc(doc(db, "media", id));
+      await api.delete(`/api/cms/media/${id}`);
 
       // Delete from Firebase Storage if it's an uploaded file
       if (url.startsWith("https://firebasestorage.googleapis.com")) {

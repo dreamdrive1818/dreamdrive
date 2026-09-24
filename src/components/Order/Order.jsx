@@ -82,10 +82,6 @@ const Order = () => {
               <h3>Rental Charges</h3>
               <div className="price-grid">
                 <div className="price-box">
-                  <div className="price-label">12 Hr (Weekday)</div>
-                  <div className="price-value">₹{car.twelveHrWeekday}</div>
-                </div>
-                <div className="price-box">
                   <div className="price-label">24 Hr (Weekday)</div>
                   <div className="price-value">₹{car.twentyFourHrWeekday}</div>
                 </div>

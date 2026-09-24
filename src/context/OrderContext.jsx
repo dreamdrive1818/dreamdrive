@@ -1,8 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { db } from "../firebase/firebaseConfig";
 import { toast } from "react-toastify";
-import { setDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
-import axios from "axios";
+import api from "../api/http";
 
 const OrderContext = createContext();
 
@@ -120,15 +118,10 @@ export const OrderProvider = ({ children }) => {
     };
 
     try {
-      await setDoc(doc(db, "orders", orderWithCustomId.id), orderWithCustomId);
+      await api.post("/api/booking/orders", orderWithCustomId);
       setOrder(orderWithCustomId);
 
-      const userRef = doc(db, "users", order.user.email);
-      await updateDoc(userRef, {
-        orders: arrayUnion(orderWithCustomId),
-      });
-
-      await axios.post("https://dreamdrive-1maq.onrender.com/api/send-confirmation", {
+      await api.post("/api/notify/send-confirmation", {
         user: userInfo,
         order: orderWithCustomId,
       });

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./ContactPopup.css";
 import { useLocalContext } from "../../context/LocalContext"; 
-import { db } from "../../firebase/firebaseConfig";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { faComments } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import api from "../../api/http";
 
 const ContactPopup = () => {
   const [visible, setVisible] = useState(false);
@@ -33,10 +32,7 @@ const ContactPopup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, "contacts"), {
-        ...formData,
-        createdAt: Timestamp.now(),
-      });
+      await api.post("/api/cms/contacts", formData);
       toast.success("Message submitted successfully!");
       setFormData({ name: "", email: "", message: "" });
       setVisible(false);

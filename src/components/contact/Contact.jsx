@@ -3,11 +3,10 @@ import "./Contact.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt, faPhoneAlt, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
-import { db } from "../../firebase/firebaseConfig";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
 import AnimateOnScroll from "../../assets/Animation/AnimateOnScroll";
 import { useLocalContext } from "../../context/LocalContext";
+import api from "../../api/http";
 
 const Contact = () => {
   const { webinfo } = useLocalContext();
@@ -30,10 +29,7 @@ const Contact = () => {
     e.preventDefault();
 
     try {
-      await addDoc(collection(db, "contacts"), {
-        ...formData,
-        createdAt: Timestamp.now()
-      });
+      await api.post("/api/cms/contacts", formData);
 
       toast.success("Message submitted successfully!");
       setFormData({

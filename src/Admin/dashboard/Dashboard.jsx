@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../../firebase/firebaseConfig";
-import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,6 +9,7 @@ import {
   faInbox,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Dashboard.css";
+import api from "../../api/http";
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
@@ -23,17 +22,17 @@ const Dashboard = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const [usersSnap, ordersSnap, carsSnap, latestSnap] = await Promise.all([
-          getDocs(collection(db, "users")),
-          getDocs(collection(db, "orders")),
-          getDocs(collection(db, "cars")),
-          getDocs(query(collection(db, "orders"), orderBy("createdAt", "desc"), limit(5))),
+        const [usersRes, ordersRes, carsRes, latestRes] = await Promise.all([
+          api.get("/api/identity/users"),
+          api.get("/api/booking/orders"),
+          api.get("/api/catalog/cars"),
+          api.get("/api/booking/orders/latest"),
         ]);
 
-        setUsers(usersSnap.docs.map((doc) => doc.data()));
-        setOrders(ordersSnap.docs.map((doc) => doc.data()));
-        setCars(carsSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-        setLatestOrders(latestSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+        setUsers(usersRes.data);
+        setOrders(ordersRes.data);
+        setCars(carsRes.data);
+        setLatestOrders(latestRes.data);
       } catch (err) {
         console.error("Dashboard load failed:", err);
       } finally {

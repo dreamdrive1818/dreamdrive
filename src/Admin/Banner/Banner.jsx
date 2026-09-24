@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../../firebase/firebaseConfig';
-import { doc, setDoc } from 'firebase/firestore';
+import api from '../../api/http';
 import './Banner.css';
 import { toast } from 'react-toastify';
 
@@ -42,7 +41,7 @@ const Banner = () => {
         name: img.name,
         image: img.file || img.link,
       }));
-      await setDoc(doc(db, 'banner_settings', 'Hero'), {
+      await api.put("/api/cms/banners/Hero", {
         section: 'Hero',
         mode: 'carousel',
         carouselBanners: payload,

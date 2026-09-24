@@ -1,7 +1,6 @@
 import  { useState } from "react";
-import { db } from "../../../firebase/firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import api from "../../../api/http";
 import "./CommentForm.css";
 
 const CommentForm = ({ blogId,blogTitle }) => {
@@ -23,7 +22,7 @@ const handleSubmit = async (e) => {
     setLoading(true);
 
     // Add the comment to the blog's comments subcollection
-    await addDoc(collection(db, `_blogs/${blogId}/comments`), {
+    await api.post(`/api/cms/blogs/${blogId}/comments`, {
       name,
       email,
       comment,

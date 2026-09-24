@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { db } from '../../firebase/firebaseConfig';
-import { doc, updateDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAdminContext } from '../../context/AdminContext';

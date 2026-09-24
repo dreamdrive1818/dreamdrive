@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import "./FormEntryChecker.css";
 import { FaEnvelope, FaKey, FaCheckCircle, FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../firebase/firebaseConfig";
+import api from "../../api/http";
 import "react-toastify/dist/ReactToastify.css";
 
 const ZOHO_FORM_BASE_URL =
@@ -23,10 +21,7 @@ const FormEntryChecker = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post(
-        "https://dreamdrive-1maq.onrender.com/api/send-otp",
-        { email }
-      );
+      const res = await api.post("/api/notify/send-otp", { email });
       if (res.status === 200) {
         toast.success("OTP sent to your email.");
         setOtpSent(true);
@@ -53,7 +48,7 @@ const handleVerifyOtp = async (e) => {
 
   try {
     // Step 1: Verify OTP via server
-    const res = await axios.post("https://dreamdrive-1maq.onrender.com/api/verify-otp", {
+    const res = await api.post("/api/notify/verify-otp", {
       email,
       otp,
     });
@@ -66,14 +61,16 @@ const handleVerifyOtp = async (e) => {
 
     toast.success("OTP verified. Redirecting...");
 
-    // Step 2: Fetch form entry from Firestore
-    const docRef = doc(db, "form_entries", email);
-    const docSnap = await getDoc(docRef);
-
     let redirectUrl = ZOHO_FORM_BASE_URL;
+    let data = null;
+    try {
+      const res = await api.get(`/api/crm/form-entries/${encodeURIComponent(email)}`);
+      data = res.data;
+    } catch {
+      data = null;
+    }
 
-    if (docSnap.exists()) {
-      const data = docSnap.data();
+    if (data?.id) {
 
       // Combine all fields from personal_info and address
       const flatData = {

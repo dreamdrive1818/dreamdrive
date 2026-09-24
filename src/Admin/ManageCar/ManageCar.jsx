@@ -31,7 +31,6 @@ const EMPTY_FORM = {
   available: "Available",
   displayOrder: 1,
   images: [""],
-  twelveHrWeekday: "",
   twentyFourHrWeekday: "",
   twentyFourHrWeekend: "",
   securityDeposit: "",
@@ -329,7 +328,6 @@ const ManageCar = () => {
       images,
       available: car.available || "Available",
       salePrice: car.salePrice || "",
-      twelveHrWeekday: car.twelveHrWeekday || "",
       twentyFourHrWeekday: car.twentyFourHrWeekday || "",
       twentyFourHrWeekend: car.twentyFourHrWeekend || "",
       securityDeposit: car.securityDeposit || "",
@@ -521,7 +519,6 @@ const ManageCar = () => {
               <p>
                 Availability: <strong>{car.available}</strong>
               </p>
-              <p>12 Hr Weekday: ₹{car.twelveHrWeekday}</p>
               <p>24 Hr Weekday: ₹{car.twentyFourHrWeekday}</p>
               <p>24 Hr Weekend: ₹{car.twentyFourHrWeekend}</p>
               <p>Security Deposit: ₹{car.securityDeposit}</p>
@@ -681,17 +678,6 @@ const ManageCar = () => {
                           name="price"
                           placeholder="e.g. 2499"
                           value={formData.price}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      <div className="car-field">
-                        <label htmlFor="twelveHrWeekday">12 Hr Weekday (₹)</label>
-                        <input
-                          id="twelveHrWeekday"
-                          type="text"
-                          name="twelveHrWeekday"
-                          placeholder="Enter price"
-                          value={formData.twelveHrWeekday}
                           onChange={handleInputChange}
                         />
                       </div>

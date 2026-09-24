@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./StatusTracking.css";
-import { db } from "../../firebase/firebaseConfig";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import api from "../../api/http";
 import {
   FaCheckCircle,
   FaCarAlt,
@@ -29,14 +28,8 @@ const StatusTracking = () => {
     setNotFound(false);
 
     try {
-      const q = query(collection(db, "orders"), where("id", "==", trackingId));
-      const snapshot = await getDocs(q);
-
-      if (!snapshot.empty) {
-        setOrder(snapshot.docs[0].data());
-      } else {
-        setNotFound(true);
-      }
+      const { data } = await api.get(`/api/booking/track/${encodeURIComponent(trackingId)}`);
+      setOrder(data);
     } catch (err) {
       console.error("Tracking error:", err.message);
       setNotFound(true);

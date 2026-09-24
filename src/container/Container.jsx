@@ -21,8 +21,6 @@ import Testimonial from '../components/Testimonial/Testimonial';
 import FormEntryChecker from '../components/FormEntryChecker/FormEntryChecker';
 import Numberattach from '../components/Numberattach/Numberattach';
 import SeoDefaults from '../utils/SeoDefaults';
-import SaleModal from '../components/SaleModal/SaleModal';
-import MonsoonPromoBar from '../components/MonsoonPromoBar/MonsoonPromoBar';
 
 
 
@@ -57,20 +55,12 @@ const AppRoute = () => {
     return () => clearTimeout(timer);
   }, [location.pathname]);
 
-  useEffect(() => {
-    document.body.classList.toggle("monsoon-sale", !isAdminPage);
-    return () => document.body.classList.remove("monsoon-sale");
-  }, [isAdminPage]);
-
-
   return (
       <>
       <ScrollToTop />
    
 
 {!isAdminPage && <Numberattach />}
-      {!isAdminPage && <MonsoonPromoBar />}
-      {!isAdminPage && <SaleModal />}
       
       {!isAdminPage && <Header />}
       {!isAdminPage && (

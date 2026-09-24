@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { db } from "../firebase/firebaseConfig";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import api from "../api/http";
 
 const BlogContext = createContext();
 
@@ -30,14 +29,10 @@ export const BlogProvider = ({ children }) => {
 
     setLoading(true);
     try {
-      const q = query(collection(db, "_blogs"), where("urlSlug", "==", slug));
-      const snapshot = await getDocs(q);
-
-      if (!snapshot.empty) {
-        const doc = snapshot.docs[0];
-        const data = doc.data();
+      const { data } = await api.get(`/api/cms/blogs/slug/${encodeURIComponent(slug)}`);
+      if (data?.id) {
         const blog = {
-          id: doc.id,
+          id: data.id,
           title: data.title,
           content: data.content,
           author: data.author,
